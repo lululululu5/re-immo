@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+    {% block content %}
+        <h1> Hello, {{ user.username}} </h1>
+        {% for building in buildings  %}
+        <div>
+            <p>
+            Address: {{building.address}}<br> 
+            Reporting year: {{building.reporting_year}}<br>
+            Country: {{building.country}}<br>
+            Zip: {{building.zip}}<br>
+            Property type: {{building.property_type}}<br>
+            Size: {{building.size}}<br>
+            </p>
+        </div>
+        {% endfor %}
+    {% endblock %}

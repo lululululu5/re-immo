@@ -13,20 +13,7 @@ class UserTypes(enum.Enum):
     general = "general"
     partner = "partner"
     admin = "admin"
-
-class User(db.Model):
-    __tablename__ = "users"
     
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    name: so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
-    email: so.Mapped[str] = so.mapped_column(sa.String(128), index=True, unique=True)
-    password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
-    user_type: so.Mapped[UserTypes] = so.mapped_column(sa.Enum(UserTypes, validate_strings=True), default=UserTypes.general)
-    # building = so.WriteOnlyMapped["Building"] = so.relationship(back_populates="owner")
-    
-    def __repr__(self) -> str:
-        return f"<User: {self.name} Email: {self.email} >"
-
 class PropertyTypes(enum.Enum):
     residential_single_family = "RSF"
     residential_multi_family = "RMF"
@@ -138,6 +125,23 @@ class FGasTypes(enum.Enum):
     NITROGEN_TRIFLUORIDE_NF3 = "Nitrogen trifluoride (NF3)"
 
 
+
+class User(db.Model):
+    __tablename__ = "users"
+    
+    id: so.Mapped[str] = so.mapped_column(sa.String(64), primary_key=True, index=True, default=lambda:str(uuid4()))
+    name: so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
+    email: so.Mapped[str] = so.mapped_column(sa.String(128), index=True, unique=True)
+    password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+    user_type: so.Mapped[UserTypes] = so.mapped_column(sa.Enum(UserTypes, validate_strings=True), default=UserTypes.general)
+    
+    #relationship
+    building: so.Mapped["Building"] = so.relationship(back_populates="owner")
+    
+    def __repr__(self) -> str:
+        return f"<User: {self.name} Email: {self.email} >"
+
+
 class Building(db.Model):
     __tablename__ = "buildings"
     
@@ -150,41 +154,57 @@ class Building(db.Model):
     size: so.Mapped[float] = so.mapped_column(nullable=False)
     
     #Energy Procurement
-    grid_elec: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    natural_gas: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    fuel_oil: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    dist_heating: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    dist_cooling: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    grid_elec: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    natural_gas: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    fuel_oil: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    dist_heating: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    dist_cooling: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     o1_energy_type: so.Mapped[Optional[EnergyTypes]] = so.mapped_column(sa.Enum(EnergyTypes, validate_strings=True), nullable=True)
-    o1_consumption: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    o1_consumption: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     #these two cannot be the same energy_type. Create validation. 
     o2_energy_type: so.Mapped[Optional[EnergyTypes]] = so.mapped_column(sa.Enum(EnergyTypes, validate_strings=True), nullable=True)
-    o2_consumption: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    o2_consumption: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     
     #Fugitive Emissions
     f_gas_1_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
-    f_gas_1_amount: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    f_gas_1_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     #these two cannot be the same f_gas_type. Create validation.
     f_gas_2_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
-    f_gas_2_amount: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    f_gas_2_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     
      # Renewable energy
-    pv_wind_consumed: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    pv_wind_exported: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    hp_solar_consumed: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    hp_solar_exported: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
-    off_site_renewables: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    pv_wind_consumed: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    pv_wind_exported: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    hp_solar_consumed: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    hp_solar_exported: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    off_site_renewables: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
 
     # Retrofit
     retrofit_year: so.Mapped[Optional[int]] = so.mapped_column(nullable=True)
-    retrofit_investment: so.Mapped[Optional[float]] = so.mapped_column(default=0, nullable=True)
+    retrofit_investment: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     
+    __table_args__ = (
+        sa.CheckConstraint("size >= 0", name="check_size_non_negative"),
+        sa.CheckConstraint("grid_elec >= 0", name="check_grid_elec_non_negative"),
+        sa.CheckConstraint("natural_gas >= 0", name="check_natural_gas_non_negative"),
+        sa.CheckConstraint("fuel_oil >= 0", name="check_fuel_oil_non_negative"),
+        sa.CheckConstraint("dist_heating >= 0", name="check_dist_heating_non_negative"),
+        sa.CheckConstraint("dist_cooling >= 0", name="check_dist_cooling_non_negative"),
+        sa.CheckConstraint("o1_consumption >= 0", name="check_o1_consumption_non_negative"),
+        sa.CheckConstraint("o2_consumption >= 0", name="check_o2_consumption_non_negative"),
+        sa.CheckConstraint("f_gas_1_amount >= 0", name="check_f_gas_1_amount_non_negative"),
+        sa.CheckConstraint("f_gas_2_amount >= 0", name="check_f_gas_2_amount_non_negative"),
+        sa.CheckConstraint("pv_wind_consumed >= 0", name="check_pv_wind_consumed_non_negative"),
+        sa.CheckConstraint("pv_wind_exported >= 0", name="check_pv_wind_exported_non_negative"),
+        sa.CheckConstraint("hp_solar_consumed >= 0", name="check_hp_solar_consumed_non_negative"),
+        sa.CheckConstraint("hp_solar_exported >= 0", name="check_hp_solar_exported_non_negative"),
+        sa.CheckConstraint("off_site_renewables >= 0", name="check_off_site_renewables_non_negative"),
+        sa.CheckConstraint("retrofit_investment >= 0", name="check_retrofit_investment_non_negative"),
+    )
     
-    
-    #foreign key
-    #Connection to user_id
+    user_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(User.id), index=True)
     #relationship
-    #owner: so.Mapped[User] = so.relationship(back_populates="building")
+    owner: so.Mapped[User] = so.relationship(back_populates="building")
 
     
     
