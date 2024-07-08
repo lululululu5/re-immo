@@ -5,8 +5,10 @@ import enum
 
 import sqlalchemy as sa
 import sqlalchemy.orm as so
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from app import db
+from app import db, login
 
 
 class UserTypes(enum.Enum):
@@ -126,7 +128,7 @@ class FGasTypes(enum.Enum):
 
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
     
     id: so.Mapped[str] = so.mapped_column(sa.String(64), primary_key=True, index=True, default=lambda:str(uuid4()))
@@ -138,8 +140,21 @@ class User(db.Model):
     #relationship
     building: so.Mapped["Building"] = so.relationship(back_populates="owner")
     
+    def set_password(self, password):
+        # Add additional criteria for stable password
+        self.password_hash = generate_password_hash(password)
+        
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+    
+    
+    
     def __repr__(self) -> str:
         return f"<User: {self.name} Email: {self.email} >"
+    
+@login.user_loader
+def load_user(id):
+    return db.session.get(User, id)
 
 
 class Building(db.Model):
