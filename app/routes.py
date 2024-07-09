@@ -3,26 +3,16 @@ from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 
-from .forms import LoginForm, RegistrationForm
-from .models import User
+from .forms import LoginForm, RegistrationForm, BuildingAssessmentForm
+from .models import User, Building
 from app import app, db
 
 @app.route("/")
 @app.route("/index")
 @login_required
 def index():
-    buildings = [
-        {
-            "address": "123",
-            "reporting_year": 2024,
-            "country": "Germany",
-            "zip": "12023",
-            "property_type" : "RSF",
-            "size": 100
-            
-        }
-    ]
-    return render_template("index.html", buildings=buildings)
+    building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
+    return render_template("index.html", building=building)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -59,3 +49,38 @@ def register():
         flash("Congratulation, you are now a registered user!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
+
+@app.route("/building", methods=["GET", "POST"])
+@login_required
+def building():
+    form = BuildingAssessmentForm()
+    if form.validate_on_submit():
+        building = Building(
+            address=form.address.data,
+            zip = form.zip.data,
+            reporting_year=form.reporting_year.data,
+            country = form.country.data,
+            property_type = form.property_type.data,
+            size = form.size.data,
+            grid_elec = form.grid_elec.data,
+            natural_gas = form.natural_gas.data,
+            fuel_oil = form.fuel_oil.data,
+            dist_heating = form.dist_heating.data,
+            dist_cooling = form.dist_cooling.data,
+            o1_energy_type = form.o1_energy_type.data,
+            o1_consumption = form.o1_consumption.data,
+            o2_energy_type = form.o2_energy_type.data,
+            o2_consumption = form.o2_consumption.data,
+            user_id = current_user.id
+        )
+        db.session.add(building)
+        db.session.commit()
+        flash("Building successfully created.")
+        return redirect(url_for("index"))
+    return render_template("building.html", title="Building", form=form)
+
+@app.route("/building/<id>", methods=["DELETE"])
+@login_required
+def delete_building():
+    pass
+    

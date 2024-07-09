@@ -17,8 +17,8 @@ class UserTypes(enum.Enum):
     admin = "admin"
     
 class PropertyTypes(enum.Enum):
-    residential_single_family = "RSF"
-    residential_multi_family = "RMF"
+    RSF = "RSF"
+    RMF = "RMF"
     
 class EnergyTypes(enum.Enum):
     biogas = "Biogas"
@@ -162,10 +162,10 @@ class Building(db.Model):
     
     id: so.Mapped[str] = so.mapped_column(sa.String(64), primary_key=True, default=lambda:str(uuid4()))
     address: so.Mapped[str] = so.mapped_column(sa.String(128), index=True, nullable=False)
-    reporting_year: so.Mapped[int] = so.mapped_column(nullable=False, default=lambda:datetime.date.today().year)
+    reporting_year: so.Mapped[int] = so.mapped_column(nullable=False, default=lambda:datetime.today().year)
     country: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False)
     zip: so.Mapped[str] = so.mapped_column(sa.String(16), nullable=False)
-    property_type: so.Mapped[PropertyTypes] = so.mapped_column(sa.Enum(PropertyTypes, validate_strings=True), default=PropertyTypes.residential_single_family)
+    property_type: so.Mapped[PropertyTypes] = so.mapped_column(sa.Enum(PropertyTypes, validate_strings=True), default=PropertyTypes.RSF)
     size: so.Mapped[float] = so.mapped_column(nullable=False)
     
     #Energy Procurement
@@ -220,23 +220,13 @@ class Building(db.Model):
     user_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(User.id), index=True)
     #relationship
     owner: so.Mapped[User] = so.relationship(back_populates="building")
+    
+    def __repr__(self) -> str:
+        return f"Building with Address:{self.address} "
 
     
     
 
-# class Building(db.Model):
-#     __tablename__ = "buildings"
-    
-#     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-#     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
-#     address: so.Mapped[str] = so.mapped_column(sa.String(128), index=True)
-    
-    
-    
-    
-    
-#     def __repr__(self) -> str:
-#         return f"Building {self.address}"
     
 
     

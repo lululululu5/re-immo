@@ -1,7 +1,9 @@
 {% extends "base.html" %}
     {% block content %}
-        <h1> Hello, {{ current_user.username}} </h1>
-        {% for building in buildings  %}
+        <h1> Hello, {{ current_user.name}} </h1>
+        {% if building is none %}
+        <a href="{{ url_for("building")}}">Add Building</a>
+        {% else %}
         <div>
             <p>
             Address: {{building.address}}<br> 
@@ -12,5 +14,5 @@
             Size: {{building.size}}<br>
             </p>
         </div>
-        {% endfor %}
+        {% endif %}
     {% endblock %}
