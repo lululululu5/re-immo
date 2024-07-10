@@ -46,6 +46,8 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <hr>
+        <h2>Energy Consumption per year</h2>
         <p>
             {{ form.grid_elec.label }}<br>
             {{ form.grid_elec(size=32) }}<br>
@@ -98,6 +100,82 @@
             {{ form.o2_consumption(size=32)}}
             <br>
             {% for error in form.o2_consumption.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <hr>
+        <h2>Fugitive Emissions per year</h2>
+        <p>
+            {{ form.f_gas_1_type.label }}
+            {{ form.f_gas_1_amount.label }} <br>
+            {{ form.f_gas_1_type }}
+            {{ form.f_gas_1_amount(size=32)}}
+            <br>
+            {% for error in form.f_gas_1_amount.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.f_gas_2_type.label }}
+            {{ form.f_gas_2_amount.label }} <br>
+            {{ form.f_gas_2_type }}
+            {{ form.f_gas_2_amount(size=32)}}
+            <br>
+            {% for error in form.f_gas_2_amount.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <hr>
+        <h2>Renewable Energy per year</h2>
+        <p>
+            {{ form.pv_wind_consumed.label }}<br>
+            {{ form.pv_wind_consumed(size=32) }}<br>
+            {% for error in form.pv_wind_consumed.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.pv_wind_exported.label }}<br>
+            {{ form.pv_wind_exported(size=32) }}<br>
+            {% for error in form.pv_wind_exported.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hp_solar_consumed.label }}<br>
+            {{ form.hp_solar_consumed(size=32) }}<br>
+            {% for error in form.hp_solar_consumed.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hp_solar_exported.label }}<br>
+            {{ form.hp_solar_exported(size=32) }}<br>
+            {% for error in form.hp_solar_exported.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.off_site_renewables.label }}<br>
+            {{ form.off_site_renewables(size=32) }}<br>
+            {% for error in form.off_site_renewables.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        
+        <hr>
+        <h2>Planned Retrofit</h2>
+        <p>
+            {{ form.retrofit_year.label }}<br>
+            {{ form.retrofit_year(size=32) }}<br>
+            {% for error in form.retrofit_year.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.retrofit_investment.label }}<br>
+            {{ form.retrofit_investment(size=32) }}<br>
+            {% for error in form.retrofit_investment.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

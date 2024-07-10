@@ -71,6 +71,17 @@ def building():
             o1_consumption = form.o1_consumption.data,
             o2_energy_type = form.o2_energy_type.data,
             o2_consumption = form.o2_consumption.data,
+            f_gas_1_type = form.f_gas_1_type.data,
+            f_gas_1_amount = form.f_gas_1_amount.data,
+            f_gas_2_type = form.f_gas_2_type.data,
+            f_gas_2_amount = form.f_gas_2_amount.data,
+            pv_wind_consumed= form.pv_wind_consumed.data,
+            pv_wind_exported= form.pv_wind_exported.data,
+            hp_solar_consumed= form.hp_solar_consumed.data,
+            hp_solar_exported= form.hp_solar_exported.data,
+            off_site_renewables= form.off_site_renewables.data,
+            retrofit_year = form.retrofit_year.data,
+            retrofit_investment = form.retrofit_investment.data,
             user_id = current_user.id
         )
         db.session.add(building)
