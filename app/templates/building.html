@@ -89,6 +89,9 @@
             {{ form.o1_energy_type }}
             {{ form.o1_consumption(size=32)}}
             <br>
+            {% for error in form.o1_energy_type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
             {% for error in form.o1_consumption.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -99,6 +102,9 @@
             {{ form.o2_energy_type }}
             {{ form.o2_consumption(size=32)}}
             <br>
+            {% for error in form.o2_energy_type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
             {% for error in form.o2_consumption.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -111,6 +117,9 @@
             {{ form.f_gas_1_type }}
             {{ form.f_gas_1_amount(size=32)}}
             <br>
+            {% for error in form.f_gas_1_type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
             {% for error in form.f_gas_1_amount.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -121,6 +130,9 @@
             {{ form.f_gas_2_type }}
             {{ form.f_gas_2_amount(size=32)}}
             <br>
+            {% for error in form.f_gas_2_type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
             {% for error in form.f_gas_2_amount.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
