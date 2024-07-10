@@ -1,19 +1,40 @@
 from datetime import datetime
+import json
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField, DateField
 from wtforms.validators import DataRequired, Email, ValidationError, EqualTo, NumberRange, Optional
 import sqlalchemy as sa
 
-from app import db
+from app import app, db
 from .models import User, FGasTypes, EnergyTypes
 from .utils import DifferentTo
 
 from .data.geo_data import country_nuts0
 from .data.emissions import other_energy_types, f_gas
 
-country_choices = [(country, code) for country, code in country_nuts0.items()]
+country_choices = [(code, country) for country, code in country_nuts0.items()]
 current_year = datetime.today().year
+
+# postal_codes = {}
+
+# @app.before_first_request
+# def load_postal_code():
+#     global postal_codes
+#     with open("app/data/zip_to_nuts3.json", r) as file:
+#         postal_codes = json.load(file)
+        
+postal_codes = {}
+postal_codes_loaded = False
+
+@app.before_request
+def load_postal_codes():
+    global postal_codes, postal_codes_loaded
+    if not postal_codes_loaded:
+        with open("app/data/zip_to_nuts3.json", 'r') as file:
+            postal_codes = json.load(file)
+        postal_codes_loaded = True
+
 
 
 class LoginForm(FlaskForm):
@@ -92,27 +113,14 @@ class BuildingAssessmentForm(FlaskForm):
     retrofit_year = IntegerField("Planned Retrofit Year", validators=[Optional(), NumberRange(min=current_year, max=2050)])
     retrofit_investment = IntegerField("Planned Retrofit Investement in Euro", validators=[Optional(), NumberRange(min=0)])
     
-    def validate_different_other_energy(self, o1_energy_type, o2_energy_type):
-        print(f"O1 Energy: {o1_energy_type.data}")
-        print(f"O2 Energy: {o2_energy_type.data}")
-        if o1_energy_type.data and o2_energy_type.data and (o1_energy_type.data == o2_energy_type.data):
-            raise ValidationError("Energy Type 1 and 2 must be different.")
+    def validate_zip(self, zip):
+        """
+        Check whether the zip value is valid. Cross check with country. 
+        """
+        country_zip = self.country.data + zip.data
+        
+        if country_zip not in postal_codes:
+            raise ValidationError("Postal Code and Country do not match.")
+        
 
-    # def validate(self):
-    #     if not FlaskForm.validate(self):
-    #         return False
-    #     # Call the custom validator only if both fields have data
-    #     if self.o1_energy_type.data and self.o2_energy_type.data:
-    #         self.validate_different_other_energy(self.o1_energy_type, self.o2_energy_type)
-    #     return True
-    
-    # def validate_address(self, address):
-    #     pass
-    
-    # def validate_zip(self, zip):
-    #     pass
-    
-    # def validate_zip_country(self, zip, country):
-    #     pass
-    
     
