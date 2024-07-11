@@ -1,18 +1,40 @@
 {% extends "base.html" %}
-    {% block content %}
-        <h1> Hello, {{ current_user.name}} </h1>
-        {% if building is none %}
-        <a href="{{ url_for("building")}}">Add Building</a>
-        {% else %}
+{% block content %}
+    <h1>Hello, {{ current_user.name }}</h1>
+    {% if building is none %}
+        <a href="{{ url_for("add_building") }}">Add Building</a>
+    {% else %}
+        <a href="{{ url_for("edit_building") }}">Edit Building</a>
+        <a href="#" onclick="deleteBuilding()">Delete Building</a>
         <div>
             <p>
-            Address: {{building.address}}<br> 
-            Reporting year: {{building.reporting_year}}<br>
-            Country: {{building.country}}<br>
-            Zip: {{building.zip}}<br>
-            Property type: {{building.property_type}}<br>
-            Size: {{building.size}}<br>
+                Address: {{ building.address }}<br>
+                Reporting year: {{ building.reporting_year }}<br>
+                Country: {{ building.country }}<br>
+                Zip: {{ building.zip }}<br>
+                Property type: {{ building.property_type.value }}<br>
+                Size: {{ building.size }}<br>
             </p>
         </div>
-        {% endif %}
-    {% endblock %}
+    {% endif %}
+
+
+<script>
+    function deleteBuilding() {
+        fetch('{{ url_for('delete_building') }}', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                alert('Failed to delete building.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}
