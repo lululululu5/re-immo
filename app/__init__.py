@@ -1,3 +1,7 @@
+import logging
+from logging.handlers import RotatingFileHandler
+import os
+
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -11,5 +15,19 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True) # configuration for SQLite and Development server for production change the render as batch.
 login = LoginManager(app)
 login.login_view = "login"
+
+if not app.debug:
+    if not os.path.exists("logs"):
+        os.mkdir("logs")
+    file_handler = RotatingFileHandler("logs/re_immo.log", maxBytes=10240,
+                                       backupCount=10)
+    file_handler.setFormatter(logging.Formatter(
+        "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"))
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    
+    app.logger.setLevel(logging.INFO)
+    app.logger.info("Re:immo startup")
+    
 
 from app import routes, models
