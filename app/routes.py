@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from urllib.parse import urlsplit
@@ -177,4 +177,19 @@ def delete_building():
     flash("Building successfully deleted.")
     return redirect(url_for("index"))
     
+#Admin feature
+@app.route("/delete_user/<user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    if not current_user or not current_user.user_type == "admin":
+        return jsonify({"error": "Unauthorized"}), 403
+    
+    user_to_delete = User.query.get(user_id)
+    
+    if user_to_delete is None:
+        return jsonify({"error": "User not found"}), 404
+    
+    db.session.delete(user_to_delete)
+    db.session.commit()
+    
+    return jsonify({"message": "User deleted successfully"}, 200)
     
