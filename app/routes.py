@@ -1,5 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_babel import _
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 
@@ -22,14 +23,14 @@ def login():
     if form.validate_on_submit():
         user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid username or password")
+            flash(_("Invalid username or password"))
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
         if not next_page or urlsplit(next_page).netloc != "":
             next_page = url_for("index")
         return redirect(next_page)
-    return render_template("login.html", title="Sign In", form=form)
+    return render_template("login.html", title=_("Sign In"), form=form)
 
 @app.route("/logout")
 def logout():
@@ -46,9 +47,9 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratulation, you are now a registered user!")
+        flash(_("Congratulation, you are now a registered user!"))
         return redirect(url_for("login"))
-    return render_template("register.html", title="Register", form=form)
+    return render_template("register.html", title=_("Register"), form=form)
 
 @app.route("/add_building", methods=["GET", "POST"])
 @login_required
@@ -56,7 +57,7 @@ def register():
 def add_building():
     has_building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
     if has_building:
-        flash("You cannot have more than one building. But you can edit or delete your existing building.")
+        flash(_("You cannot have more than one building. But you can edit or delete your existing building."))
         return redirect(url_for("edit_building"))
     form = BuildingAssessmentForm()
     if form.validate_on_submit():
@@ -91,16 +92,16 @@ def add_building():
         )
         db.session.add(building)
         db.session.commit()
-        flash("Building successfully created.")
+        flash(_("Building successfully created."))
         return redirect(url_for("index"))
-    return render_template("add_building.html", title="Add Building", form=form)
+    return render_template("add_building.html", title=_("Add Building"), form=form)
 
 @app.route("/edit_building", methods=["GET", "POST"])
 @login_required
 def edit_building():
     has_building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
     if not has_building:
-        flash("You first need to add a buildign.")
+        flash(_("You first need to add a building."))
         return redirect(url_for("add_building"))
     form = BuildingAssessmentForm()
     if form.validate_on_submit():
@@ -135,7 +136,7 @@ def edit_building():
         )
         db.session.add(building) # Check if update needed for overwriting? 
         db.session.commit()
-        flash("Building successfully updated.")
+        flash(_("Building successfully updated."))
         return redirect(url_for("index"))
     elif request.method == "GET":
         building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
@@ -166,15 +167,15 @@ def edit_building():
         form.retrofit_year.data = building.retrofit_year
         form.retrofit_investment.data = building.retrofit_investment
         
-    form.submit.label.text = "Save Building"
-    return render_template("edit_building.html", title="Edit Building", form=form)
+    form.submit.label.text = _("Save Building")
+    return render_template("edit_building.html", title=_("Edit Building"), form=form)
 
 @app.route("/delete_building", methods=["DELETE"])
 @login_required
 def delete_building():
     db.session.query(Building).where(Building.user_id == current_user.id).delete()
     db.session.commit()
-    flash("Building successfully deleted.")
+    flash(_("Building successfully deleted."))
     return redirect(url_for("index"))
     
 #Admin feature

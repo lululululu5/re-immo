@@ -1,0 +1,294 @@
+# German translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-07-17 13:57+0200\n"
+"PO-Revision-Date: 2024-07-17 13:58+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: app/__init__.py:22
+msgid "Please log in to access this page."
+msgstr "Bitte loggen Sie sich ein, um auf diese Seite zuzugreifen."
+
+#: app/forms.py:35 app/forms.py:42
+msgid "Email"
+msgstr "E-Mail"
+
+#: app/forms.py:36 app/forms.py:43 app/forms.py:44
+msgid "Password"
+msgstr "Passwort"
+
+#: app/forms.py:37
+msgid "Remember Me"
+msgstr "Angemeldet bleiben"
+
+#: app/forms.py:38
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: app/forms.py:44
+msgid "Repeat Password"
+msgstr "Passwort wiederholen"
+
+#: app/forms.py:45 app/routes.py:52 app/templates/register.html:4
+msgid "Register"
+msgstr "Registrieren"
+
+#: app/forms.py:57
+msgid "Address*"
+msgstr "Adresse*"
+
+#: app/forms.py:58
+msgid "Zip*"
+msgstr "PLZ*"
+
+#: app/forms.py:59
+msgid "Country*"
+msgstr "Land*"
+
+#: app/forms.py:60
+msgid "Property Type*"
+msgstr "Immobilientyp*"
+
+#: app/forms.py:61
+msgid "Size in SQM*"
+msgstr "Größe in m²*"
+
+#: app/forms.py:62
+msgid "Reporting Year*"
+msgstr "Berichtsjahr*"
+
+#: app/forms.py:63 app/routes.py:97 app/templates/add_building.html:4
+#: app/templates/index.html:5
+msgid "Add Building"
+msgstr "Gebäude hinzufügen"
+
+#: app/forms.py:66
+msgid "Grid Electricity in kWh"
+msgstr "Netzstrom in kWh"
+
+#: app/forms.py:67
+msgid "Natural Gas in kWh"
+msgstr "Erdgas in kWh"
+
+#: app/forms.py:68
+msgid "Fuel Oil in kWh"
+msgstr "Heizöl in kWh"
+
+#: app/forms.py:69
+msgid "Dist in Heating in kWh"
+msgstr "Fernwärme in kWh"
+
+#: app/forms.py:70
+msgid "District Cooling in kWh"
+msgstr "Fernkälte in kWh"
+
+#: app/forms.py:72
+msgid "Other Type 1"
+msgstr "Sonstiger Typ 1"
+
+#: app/forms.py:73 app/forms.py:79 app/forms.py:87 app/forms.py:94
+msgid "Select any"
+msgstr "Bitte auswählen"
+
+#: app/forms.py:76
+msgid "Other 1 in kWh"
+msgstr "Sonstiges 1 in kWh"
+
+#: app/forms.py:78
+msgid "Other Type 2"
+msgstr "Sonstiger Typ 2"
+
+#: app/forms.py:80
+msgid "Energy Type fields need to be different"
+msgstr "Energietypen müssen unterschiedlich sein"
+
+#: app/forms.py:82
+msgid "Other 2 in kWh"
+msgstr "Sonstiges 2 in kWh"
+
+#: app/forms.py:86
+msgid "F-Gas 1 Type"
+msgstr "F-Gas 1 Typ"
+
+#: app/forms.py:90
+msgid "Leakage F Gas 1"
+msgstr "Leckage F-Gas 1"
+
+#: app/forms.py:93
+msgid "F-Gas 2 Type"
+msgstr "F-Gas 2 Typ"
+
+#: app/forms.py:95
+msgid "F-Gas fields need to be different"
+msgstr "F-Gas Felder müssen unterschiedlich sein"
+
+#: app/forms.py:97
+msgid "Leakage F Gas 2"
+msgstr "Leckage F-Gas 2"
+
+#: app/forms.py:100 app/forms.py:103
+msgid "PV and Wind consumed kWh"
+msgstr "PV und Wind verbraucht in kWh"
+
+#: app/forms.py:101
+msgid "PV and Wind exported kWh"
+msgstr "PV und Wind exportiert in kWh"
+
+#: app/forms.py:102
+msgid "Heatpump and Solar consumed kWh"
+msgstr "Wärmepumpe und Solar verbraucht in kWh"
+
+#: app/forms.py:104
+msgid "Off-site renewable consumed kWh"
+msgstr "Externe erneuerbare Energien verbraucht in kWh"
+
+#: app/forms.py:107
+msgid "Planned Retrofit Year"
+msgstr "Geplantes Retrofit Jahr"
+
+#: app/forms.py:108
+msgid "Planned Retrofit Investement in Euro"
+msgstr "Geplante Investition für Retrofit in Euro"
+
+#: app/forms.py:117
+msgid "Postal Code and Country do not match."
+msgstr "Postleitzahl und Land stimmen nicht überein."
+
+#: app/routes.py:26
+msgid "Invalid username or password"
+msgstr "Ungültiger Benutzername oder Passwort"
+
+#: app/routes.py:33 app/templates/login.html:4
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: app/routes.py:50
+msgid "Congratulation, you are now a registered user!"
+msgstr "Glückwunsch, Sie sind jetzt ein registrierter Benutzer!"
+
+#: app/routes.py:60
+msgid "You cannot have more than one building. But you can edit or delete your existing building."
+msgstr "Sie können nicht mehr als ein Gebäude haben. Aber Sie können Ihr bestehendes Gebäude bearbeiten oder löschen."
+
+#: app/routes.py:95
+msgid "Building successfully created."
+msgstr "Gebäude erfolgreich erstellt."
+
+#: app/routes.py:104
+msgid "You first need to add a building."
+msgstr "Sie müssen zuerst ein Gebäude hinzufügen."
+
+#: app/routes.py:139
+msgid "Building successfully updated."
+msgstr "Gebäude erfolgreich aktualisiert."
+
+#: app/routes.py:170
+msgid "Save Building"
+msgstr "Gebäude speichern"
+
+#: app/routes.py:171 app/templates/edit_building.html:4
+#: app/templates/index.html:7
+msgid "Edit Building"
+msgstr "Gebäude bearbeiten"
+
+#: app/routes.py:178
+msgid "Building successfully deleted."
+msgstr "Gebäude erfolgreich gelöscht."
+
+#: app/utils.py:24
+#, python-format
+msgid "Invalid field name '%s'."
+msgstr "Ungültiger Feldname '%s'."
+
+#: app/utils.py:39
+#, python-format
+msgid "Field must be different to %(other_name)s."
+msgstr "Feld muss sich von %(other_name)s unterscheiden."
+
+#: app/templates/add_building.html:51 app/templates/edit_building.html:51
+msgid "Energy Consumption per year"
+msgstr "Energieverbrauch pro Jahr"
+
+#: app/templates/add_building.html:114 app/templates/edit_building.html:114
+msgid "Fugitive Emissions per year"
+msgstr "Flüchtige Emissionen pro Jahr"
+
+#: app/templates/add_building.html:142 app/templates/edit_building.html:142
+msgid "Renewable Energy per year"
+msgstr "Erneuerbare Energie pro Jahr"
+
+#: app/templates/add_building.html:180 app/templates/edit_building.html:180
+msgid "Planned Retrofit"
+msgstr "Geplantes Retrofit"
+
+#: app/templates/base.html:7
+msgid "Welcome to re:immo"
+msgstr "Willkommen bei re:immo"
+
+#: app/templates/base.html:12
+msgid "Home"
+msgstr "Startseite"
+
+#: app/templates/base.html:14
+msgid "Login"
+msgstr "Anmelden"
+
+#: app/templates/base.html:16
+msgid "Logout"
+msgstr "Abmelden"
+
+#: app/templates/index.html:3
+#, python-format
+msgid "Hi, %(username)s!"
+msgstr "Hallo, %(username)s!"
+
+#: app/templates/index.html:8
+msgid "Delete Building"
+msgstr "Gebäude löschen"
+
+#: app/templates/index.html:11
+msgid "Address:"
+msgstr "Adresse:"
+
+#: app/templates/index.html:12
+msgid "Reporting year:"
+msgstr "Berichtsjahr:"
+
+#: app/templates/index.html:13
+msgid "Country:"
+msgstr "Land:"
+
+#: app/templates/index.html:14
+msgid "Zip:"
+msgstr "PLZ:"
+
+#: app/templates/index.html:15
+msgid "Property type:"
+msgstr "Immobilientyp:"
+
+#: app/templates/index.html:16
+msgid "Size:"
+msgstr "Größe:"
+
+#: app/templates/login.html:24
+msgid "New User?"
+msgstr "Neuer Benutzer?"
+
+#: app/templates/login.html:24
+msgid "Click to Register!"
+msgstr "Klicken Sie hier, um sich zu registrieren!"
+
+

@@ -1,10 +1,12 @@
 alembic==1.13.2
+Babel==2.15.0
 blinker==1.8.2
 click==8.1.7
 DateTime==5.5
 dnspython==2.6.1
 email_validator==2.2.0
 Flask==3.0.3
+flask-babel==4.0.0
 Flask-Login==0.6.3
 Flask-Migrate==4.0.7
 Flask-SQLAlchemy==3.1.1

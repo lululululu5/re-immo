@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Hello, {{ current_user.name }}</h1>
+<h1>{{ _("Hi, %(username)s!", username=current_user.username) }}</h1>
     {% if building is none %}
-        <a href="{{ url_for("add_building") }}">Add Building</a>
+        <a href="{{ url_for("add_building") }}">{{ _("Add Building") }}</a>
     {% else %}
-        <a href="{{ url_for("edit_building") }}">Edit Building</a>
-        <a href="#" onclick="deleteBuilding()">Delete Building</a>
+        <a href="{{ url_for("edit_building") }}">{{ _("Edit Building") }}</a>
+        <a href="#" onclick="deleteBuilding()">{{ _("Delete Building") }}</a>
         <div>
             <p>
-                Address: {{ building.address }}<br>
-                Reporting year: {{ building.reporting_year }}<br>
-                Country: {{ building.country }}<br>
-                Zip: {{ building.zip }}<br>
-                Property type: {{ building.property_type.value }}<br>
-                Size: {{ building.size }}<br>
+                {{ _("Address:") }} {{ building.address }}<br>
+                {{ _("Reporting year:") }} {{ building.reporting_year }}<br>
+                {{ _("Country:") }} {{ building.country }}<br>
+                {{ _("Zip:") }} {{ building.zip }}<br>
+                {{ _("Property type:")}} {{ building.property_type.value }}<br>
+                {{ _("Size:") }} {{ building.size }}<br>
             </p>
         </div>
     {% endif %}
