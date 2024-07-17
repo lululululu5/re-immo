@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ _("Hi, %(username)s!", username=current_user.username) }}</h1>
+    <h1>{{ _("Hi, %(username)s!", username=current_user.name) }}</h1>
     {% if building is none %}
         <a href="{{ url_for("add_building") }}">{{ _("Add Building") }}</a>
     {% else %}

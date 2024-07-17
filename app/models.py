@@ -166,7 +166,7 @@ class Building(db.Model):
     country: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False)
     zip: so.Mapped[str] = so.mapped_column(sa.String(16), nullable=False)
     property_type: so.Mapped[PropertyTypes] = so.mapped_column(sa.Enum(PropertyTypes, validate_strings=True), default=PropertyTypes.RSF)
-    size: so.Mapped[float] = so.mapped_column(nullable=False)
+    size: so.Mapped[int] = so.mapped_column(nullable=False)
     
     #Energy Procurement
     grid_elec: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
