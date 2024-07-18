@@ -3,7 +3,7 @@ import json
 
 from flask_wtf import FlaskForm
 from flask_babel import _, lazy_gettext as _l
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField, DateField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField, DecimalField
 from wtforms.validators import DataRequired, Email, ValidationError, EqualTo, NumberRange, Optional
 import sqlalchemy as sa
 
@@ -63,23 +63,23 @@ class BuildingAssessmentForm(FlaskForm):
     
     
     # Energy consumption
-    grid_elec = IntegerField(_l("Grid Electricity in kWh"), validators=[Optional(), NumberRange(min=0)])
-    natural_gas = IntegerField(_l("Natural Gas in kWh"), validators=[Optional(), NumberRange(min=0)])
-    fuel_oil = IntegerField(_l("Fuel Oil in kWh"), validators=[Optional(), NumberRange(min=0)])
-    dist_heating = IntegerField(_l("Dist in Heating in kWh"), validators=[Optional(), NumberRange(min=0)])
-    dist_cooling = IntegerField(_l("District Cooling in kWh"), validators=[Optional(), NumberRange(min=0)])
+    grid_elec = DecimalField(_l("Grid Electricity in kWh"), validators=[Optional(), NumberRange(min=0)])
+    natural_gas = DecimalField(_l("Natural Gas in kWh"), validators=[Optional(), NumberRange(min=0)])
+    fuel_oil = DecimalField(_l("Fuel Oil in kWh"), validators=[Optional(), NumberRange(min=0)])
+    dist_heating = DecimalField(_l("Dist in Heating in kWh"), validators=[Optional(), NumberRange(min=0)])
+    dist_cooling = DecimalField(_l("District Cooling in kWh"), validators=[Optional(), NumberRange(min=0)])
     o1_energy_type = SelectField(
         _l("Other Type 1"),
         choices=[('', _l('Select any'))] + [(choice.name, choice.value) for choice in EnergyTypes],
         coerce=lambda x: None if x == '' else EnergyTypes[x]
     )
-    o1_consumption = IntegerField(_l("Other 1 in kWh"), validators=[Optional(), NumberRange(min=0)])
+    o1_consumption = DecimalField(_l("Other 1 in kWh"), validators=[Optional(), NumberRange(min=0)])
     o2_energy_type = SelectField(
         _l("Other Type 2"),
         choices=[('', _l('Select any'))] + [(choice.name, choice.value) for choice in EnergyTypes],
         coerce=lambda x: None if x == '' else EnergyTypes[x],  validators=[DifferentTo("o1_energy_type", message=_l("Energy Type fields need to be different"))]
     )
-    o2_consumption = IntegerField(_l("Other 2 in kWh"), validators=[Optional(), NumberRange(min=0)])
+    o2_consumption = DecimalField(_l("Other 2 in kWh"), validators=[Optional(), NumberRange(min=0)])
     
     #Fugitive Emissions
     f_gas_1_type = SelectField(
@@ -87,7 +87,7 @@ class BuildingAssessmentForm(FlaskForm):
         choices=[('', _l('Select any'))] + [(choice.name, choice.value) for choice in FGasTypes],
         coerce=lambda x: None if x == '' else FGasTypes[x]
     )
-    f_gas_1_amount = IntegerField(_l("Leakage F Gas 1"), validators=[Optional(), NumberRange(min=0)])
+    f_gas_1_amount = DecimalField(_l("Leakage F Gas 1"), validators=[Optional(), NumberRange(min=0)])
     # f_gas_2_type = SelectField("Select F Gas 2",  choices=f_gas_types)
     f_gas_2_type = SelectField(
         _l("F-Gas 2 Type"),
@@ -97,15 +97,15 @@ class BuildingAssessmentForm(FlaskForm):
     f_gas_2_amount = IntegerField(_l("Leakage F Gas 2"), validators=[Optional(), NumberRange(min=0)])
     
     #Renewables
-    pv_wind_consumed= IntegerField(_l("PV and Wind consumed kWh"), validators=[Optional(), NumberRange(min=0)])
-    pv_wind_exported= IntegerField(_l("PV and Wind exported kWh"), validators=[Optional(), NumberRange(min=0)])
-    hp_solar_consumed= IntegerField(_l("Heatpump and Solar consumed kWh"), validators=[Optional(), NumberRange(min=0)])
-    hp_solar_exported= IntegerField(_l("PV and Wind consumed kWh"), validators=[Optional(), NumberRange(min=0)])
-    off_site_renewables= IntegerField(_l("Off-site renewable consumed kWh"), validators=[Optional(), NumberRange(min=0)])
+    pv_wind_consumed= DecimalField(_l("PV and Wind consumed kWh"), validators=[Optional(), NumberRange(min=0)])
+    pv_wind_exported= DecimalField(_l("PV and Wind exported kWh"), validators=[Optional(), NumberRange(min=0)])
+    hp_solar_consumed= DecimalField(_l("Heatpump and Solar consumed kWh"), validators=[Optional(), NumberRange(min=0)])
+    hp_solar_exported= DecimalField(_l("PV and Wind consumed kWh"), validators=[Optional(), NumberRange(min=0)])
+    off_site_renewables= DecimalField(_l("Off-site renewable consumed kWh"), validators=[Optional(), NumberRange(min=0)])
     
     # Retrofit
     retrofit_year = IntegerField(_l("Planned Retrofit Year"), validators=[Optional(), NumberRange(min=current_year, max=2050)])
-    retrofit_investment = IntegerField(_l("Planned Retrofit Investement in Euro"), validators=[Optional(), NumberRange(min=0)])
+    retrofit_investment = DecimalField(_l("Planned Retrofit Investement in Euro"), validators=[Optional(), NumberRange(min=0)])
     
     # Submit
     submit = SubmitField(_l("Add Building"))

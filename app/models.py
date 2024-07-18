@@ -183,7 +183,6 @@ class Building(db.Model):
     #Fugitive Emissions
     f_gas_1_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
     f_gas_1_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    #these two cannot be the same f_gas_type. Create validation.
     f_gas_2_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
     f_gas_2_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     
@@ -218,7 +217,6 @@ class Building(db.Model):
     )
     
     user_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(User.id), index=True)
-    #relationship
     owner: so.Mapped[User] = so.relationship(back_populates="building")
     
     def __repr__(self) -> str:
