@@ -1,199 +1,39 @@
 {% extends "base.html" %}
-
+{% import "bootstrap_wtf.html" as wtf %}
 {% block content %}
     <h1> {{ _("Add Building") }} </h1>
-
-    <form action="" method="post">
-        {{form.hidden_tag()}}
-        <p>
-            {{ form.address.label }}<br>
-            {{ form.address(size=32) }}<br>
-            {% for error in form.address.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.zip.label }}<br>
-            {{ form.zip(size=32) }}<br>
-            {% for error in form.zip.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.country.label }}<br>
-            {{ form.country}}<br>
-            {% for error in form.country.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.property_type.label }}<br>
-            {{ form.property_type}}
-            {% for error in form.property_type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.size.label }}<br>
-            {{ form.size(size=32) }}<br>
-            {% for error in form.size.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.reporting_year.label }}<br>
-            {{ form.reporting_year(size=32) }}<br>
-            {% for error in form.reporting_year.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <hr>
-        <h2>{{ _("Energy Consumption per year") }}</h2>
-        <p>
-            {{ form.grid_elec.label }}<br>
-            {{ form.grid_elec(size=32) }}<br>
-            {% for error in form.grid_elec.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.natural_gas.label }}<br>
-            {{ form.natural_gas(size=32) }}<br>
-            {% for error in form.natural_gas.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.fuel_oil.label }}<br>
-            {{ form.fuel_oil(size=32) }}<br>
-            {% for error in form.fuel_oil.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.dist_heating.label }}<br>
-            {{ form.dist_heating(size=32) }}<br>
-            {% for error in form.dist_heating.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.dist_cooling.label }}<br>
-            {{ form.dist_cooling(size=32) }}<br>
-            {% for error in form.dist_cooling.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.o1_energy_type.label }}
-            {{ form.o1_consumption.label }} <br>
-            {{ form.o1_energy_type }}
-            {{ form.o1_consumption(size=32)}}
-            <br>
-            {% for error in form.o1_energy_type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            {% for error in form.o1_consumption.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.o2_energy_type.label }}
-            {{ form.o2_consumption.label }} <br>
-            {{ form.o2_energy_type }}
-            {{ form.o2_consumption(size=32)}}
-            <br>
-            {% for error in form.o2_energy_type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            {% for error in form.o2_consumption.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <hr>
-        <h2>{{_("Fugitive Emissions per year")}}</h2>
-        <p>
-            {{ form.f_gas_1_type.label }}
-            {{ form.f_gas_1_amount.label }} <br>
-            {{ form.f_gas_1_type }}
-            {{ form.f_gas_1_amount(size=32)}}
-            <br>
-            {% for error in form.f_gas_1_type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            {% for error in form.f_gas_1_amount.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.f_gas_2_type.label }}
-            {{ form.f_gas_2_amount.label }} <br>
-            {{ form.f_gas_2_type }}
-            {{ form.f_gas_2_amount(size=32)}}
-            <br>
-            {% for error in form.f_gas_2_type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            {% for error in form.f_gas_2_amount.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <hr>
-        <h2>{{ _("Renewable Energy per year") }}</h2>
-        <p>
-            {{ form.pv_wind_consumed.label }}<br>
-            {{ form.pv_wind_consumed(size=32) }}<br>
-            {% for error in form.pv_wind_consumed.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.pv_wind_exported.label }}<br>
-            {{ form.pv_wind_exported(size=32) }}<br>
-            {% for error in form.pv_wind_exported.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.hp_solar_consumed.label }}<br>
-            {{ form.hp_solar_consumed(size=32) }}<br>
-            {% for error in form.hp_solar_consumed.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.hp_solar_exported.label }}<br>
-            {{ form.hp_solar_exported(size=32) }}<br>
-            {% for error in form.hp_solar_exported.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.off_site_renewables.label }}<br>
-            {{ form.off_site_renewables(size=32) }}<br>
-            {% for error in form.off_site_renewables.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        
-        <hr>
+    <form action ="" method="post">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.address) }}
+        {{ wtf.form_field(form.zip) }}
+        {{ wtf.form_field(form.country) }}
+        {{ wtf.form_field(form.property_type) }}
+        {{ wtf.form_field(form.size) }}
+        {{ wtf.form_field(form.reporting_year) }}
+        <h2>{{ _("Energy Consumption per Year") }}</h2>
+        {{ wtf.form_field(form.grid_elec) }}
+        {{ wtf.form_field(form.natural_gas) }}
+        {{ wtf.form_field(form.fuel_oil) }}
+        {{ wtf.form_field(form.dist_heating) }}
+        {{ wtf.form_field(form.dist_cooling) }}
+        {{ wtf.form_field(form.o1_energy_type) }}
+        {{ wtf.form_field(form.o1_consumption) }}
+        {{ wtf.form_field(form.o2_energy_type) }}
+        {{ wtf.form_field(form.o2_consumption) }}
+        <h2>{{_("Fugitive Emissions per Year")}}</h2>
+        {{ wtf.form_field(form.f_gas_1_type) }}
+        {{ wtf.form_field(form.f_gas_1_amount) }}
+        {{ wtf.form_field(form.f_gas_2_type) }}
+        {{ wtf.form_field(form.f_gas_2_amount) }}
+        <h2>{{ _("Renewable Energy per Year") }}</h2>
+        {{ wtf.form_field(form.pv_wind_consumed) }}
+        {{ wtf.form_field(form.pv_wind_exported) }}3
+        {{ wtf.form_field(form.hp_solar_consumed) }}
+        {{ wtf.form_field(form.hp_solar_exported) }}
+        {{ wtf.form_field(form.off_site_renewables) }}
         <h2>{{ _("Planned Retrofit") }}</h2>
-        <p>
-            {{ form.retrofit_year.label }}<br>
-            {{ form.retrofit_year(size=32) }}<br>
-            {% for error in form.retrofit_year.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.retrofit_investment.label }}<br>
-            {{ form.retrofit_investment(size=32) }}<br>
-            {% for error in form.retrofit_investment.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-
-
+        {{ wtf.form_field(form.retrofit_year) }}
+        {{ wtf.form_field(form.retrofit_investment) }}
+        {{ wtf.form_field(form.submit) }}
     </form>
-{% endblock  %}
+{% endblock %}

@@ -60,7 +60,7 @@ class BuildingAssessmentForm(FlaskForm):
     property_type = SelectField(_l("Property Type*"), choices=[("RMF", "Residential Multi Family"), ("RSF", "Residential Single Family")], validators=[DataRequired()])
     size = IntegerField(_l("Size in SQM*"), validators=[DataRequired(), NumberRange(min=0)])
     reporting_year = IntegerField(_l("Reporting Year*"), validators=[DataRequired(), NumberRange(min=1400, max=current_year)])
-    submit = SubmitField(_l("Add Building"))
+    
     
     # Energy consumption
     grid_elec = IntegerField(_l("Grid Electricity in kWh"), validators=[Optional(), NumberRange(min=0)])
@@ -106,6 +106,9 @@ class BuildingAssessmentForm(FlaskForm):
     # Retrofit
     retrofit_year = IntegerField(_l("Planned Retrofit Year"), validators=[Optional(), NumberRange(min=current_year, max=2050)])
     retrofit_investment = IntegerField(_l("Planned Retrofit Investement in Euro"), validators=[Optional(), NumberRange(min=0)])
+    
+    # Submit
+    submit = SubmitField(_l("Add Building"))
     
     def validate_zip(self, zip):
         """
