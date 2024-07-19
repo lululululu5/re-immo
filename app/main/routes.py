@@ -1,64 +1,29 @@
-from flask import render_template, flash, redirect, url_for, request, jsonify
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import current_user, login_required
 from flask_babel import _
 import sqlalchemy as sa
-from urllib.parse import urlsplit
 
-from .forms import LoginForm, RegistrationForm, BuildingAssessmentForm
-from .models import User, Building
-from app import app, db
+from app.main.forms import BuildingAssessmentForm
+from app.models import Building
+from app import db
+from app.main import bp
 
-@app.route("/")
-@app.route("/index")
+@bp.route("/")
+@bp.route("/index")
 @login_required
 def index():
     building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
     return render_template("index.html", building=building)
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for("index"))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
-        if user is None or not user.check_password(form.password.data):
-            flash(_("Invalid username or password"))
-            return redirect(url_for("login"))
-        login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get("next")
-        if not next_page or urlsplit(next_page).netloc != "":
-            next_page = url_for("index")
-        return redirect(next_page)
-    return render_template("login.html", title=_("Sign In"), form=form)
 
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for("index"))
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for("index"))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(name=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash(_("Congratulation, you are now a registered user!"))
-        return redirect(url_for("login"))
-    return render_template("register.html", title=_("Register"), form=form)
-
-@app.route("/add_building", methods=["GET", "POST"])
+@bp.route("/add_building", methods=["GET", "POST"])
 @login_required
 # Add check for only having one building per person
 def add_building():
     has_building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
     if has_building:
         flash(_("You cannot have more than one building. But you can edit or delete your existing building."))
-        return redirect(url_for("edit_building"))
+        return redirect(url_for("main.edit_building"))
     form = BuildingAssessmentForm()
     if form.validate_on_submit():
         building = Building(
@@ -93,16 +58,16 @@ def add_building():
         db.session.add(building)
         db.session.commit()
         flash(_("Building successfully created."))
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     return render_template("add_building.html", title=_("Add Building"), form=form)
 
-@app.route("/edit_building", methods=["GET", "POST"])
+@bp.route("/edit_building", methods=["GET", "POST"])
 @login_required
 def edit_building():
     has_building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
     if not has_building:
         flash(_("You first need to add a building."))
-        return redirect(url_for("add_building"))
+        return redirect(url_for("main.add_building"))
     form = BuildingAssessmentForm()
     if form.validate_on_submit():
         building = Building(
@@ -137,7 +102,7 @@ def edit_building():
         db.session.add(building) # Check if update needed for overwriting? 
         db.session.commit()
         flash(_("Building successfully updated."))
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     elif request.method == "GET":
         building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
         form.address.data = building.address
@@ -170,27 +135,14 @@ def edit_building():
     form.submit.label.text = _("Save Building")
     return render_template("edit_building.html", title=_("Edit Building"), form=form)
 
-@app.route("/delete_building", methods=["DELETE"])
+@bp.route("/delete_building", methods=["DELETE"])
 @login_required
 def delete_building():
     db.session.query(Building).where(Building.user_id == current_user.id).delete()
     db.session.commit()
     flash(_("Building successfully deleted."))
-    return redirect(url_for("index"))
+    return redirect(url_for("main.index"))
     
 #Admin feature
-@app.route("/delete_user/<user_id>", methods=["DELETE"])
-def delete_user(user_id):
-    if not current_user or not current_user.user_type == "admin":
-        return jsonify({"error": "Unauthorized"}), 403
-    
-    user_to_delete = User.query.get(user_id)
-    
-    if user_to_delete is None:
-        return jsonify({"error": "User not found"}), 404
-    
-    db.session.delete(user_to_delete)
-    db.session.commit()
-    
-    return jsonify({"message": "User deleted successfully"}, 200)
+
     

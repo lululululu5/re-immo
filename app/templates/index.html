@@ -2,9 +2,9 @@
 {% block content %}
     <h1>{{ _("Hi, %(username)s!", username=current_user.name) }}</h1>
     {% if building is none %}
-        <a href="{{ url_for("add_building") }}">{{ _("Add Building") }}</a>
+        <a href="{{ url_for("main.add_building") }}">{{ _("Add Building") }}</a>
     {% else %}
-        <a href="{{ url_for("edit_building") }}">{{ _("Edit Building") }}</a>
+        <a href="{{ url_for("main.edit_building") }}">{{ _("Edit Building") }}</a>
         <a href="#" onclick="deleteBuilding()">{{ _("Delete Building") }}</a>
         <div>
             <p>
@@ -21,7 +21,7 @@
 
 <script>
     function deleteBuilding() {
-        fetch('{{ url_for('delete_building') }}', {
+        fetch('{{ url_for('main.delete_building') }}', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

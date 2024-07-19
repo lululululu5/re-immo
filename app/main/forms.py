@@ -3,16 +3,15 @@ import json
 
 from flask_wtf import FlaskForm
 from flask_babel import _, lazy_gettext as _l
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField, DecimalField
-from wtforms.validators import DataRequired, Email, ValidationError, EqualTo, NumberRange, Optional
-import sqlalchemy as sa
+from wtforms import StringField, SubmitField, SelectField, IntegerField, DecimalField
+from wtforms.validators import DataRequired, ValidationError, NumberRange, Optional
 
-from app import app, db
-from .models import User, FGasTypes, EnergyTypes
-from .utils import DifferentTo
+from app.main import bp
+from app.models import FGasTypes, EnergyTypes
+from app.utils import DifferentTo
 
-from .data.geo_data import country_nuts0
-from .data.emissions import other_energy_types, f_gas
+from app.data.geo_data import country_nuts0
+from app.data.emissions import other_energy_types, f_gas
 
 country_choices = [(code, country) for country, code in country_nuts0.items()]
 current_year = datetime.today().year
@@ -21,7 +20,7 @@ current_year = datetime.today().year
 postal_codes = {}
 postal_codes_loaded = False
 
-@app.before_request
+@bp.before_request
 def load_postal_codes():
     global postal_codes, postal_codes_loaded
     if not postal_codes_loaded:
@@ -31,27 +30,6 @@ def load_postal_codes():
 
 
 
-class LoginForm(FlaskForm):
-    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
-    password = PasswordField(_l(_l("Password")), validators=[DataRequired()])
-    remember_me = BooleanField(_l("Remember Me"))
-    submit = SubmitField(_l("Sign in"))
-    
-class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
-    password = PasswordField(_l(_l("Password")), validators=[DataRequired()])
-    password2 = PasswordField(_l("Repeat Password"), validators=[DataRequired(), EqualTo(_l(_l("Password")), message="Password needs to be the same.")])
-    submit = SubmitField(_l("Register"))
-    
-    
-    def validate_email(self,email):
-        user = db.session.scalar(sa.select(User).where(User.email == email.data))
-        if user is not None: 
-            raise ValidationError("User already exists, please use different email")
-        
-    # def validate_password_strength(self, password):
-    #     pass
         
 class BuildingAssessmentForm(FlaskForm):
     address = StringField(_l("Address*"), validators=[DataRequired()])
