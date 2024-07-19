@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-17 13:57+0200\n"
+"POT-Creation-Date: 2024-07-19 09:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,196 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app/__init__.py:22
+#: app/__init__.py:20
 msgid "Please log in to access this page."
-msgstr ""
-
-#: app/forms.py:35 app/forms.py:42
-msgid "Email"
-msgstr ""
-
-#: app/forms.py:36 app/forms.py:43 app/forms.py:44
-msgid "Password"
-msgstr ""
-
-#: app/forms.py:37
-msgid "Remember Me"
-msgstr ""
-
-#: app/forms.py:38
-msgid "Sign in"
-msgstr ""
-
-#: app/forms.py:44
-msgid "Repeat Password"
-msgstr ""
-
-#: app/forms.py:45 app/routes.py:52 app/templates/register.html:4
-msgid "Register"
-msgstr ""
-
-#: app/forms.py:57
-msgid "Address*"
-msgstr ""
-
-#: app/forms.py:58
-msgid "Zip*"
-msgstr ""
-
-#: app/forms.py:59
-msgid "Country*"
-msgstr ""
-
-#: app/forms.py:60
-msgid "Property Type*"
-msgstr ""
-
-#: app/forms.py:61
-msgid "Size in SQM*"
-msgstr ""
-
-#: app/forms.py:62
-msgid "Reporting Year*"
-msgstr ""
-
-#: app/forms.py:63 app/routes.py:97 app/templates/add_building.html:4
-#: app/templates/index.html:5
-msgid "Add Building"
-msgstr ""
-
-#: app/forms.py:66
-msgid "Grid Electricity in kWh"
-msgstr ""
-
-#: app/forms.py:67
-msgid "Natural Gas in kWh"
-msgstr ""
-
-#: app/forms.py:68
-msgid "Fuel Oil in kWh"
-msgstr ""
-
-#: app/forms.py:69
-msgid "Dist in Heating in kWh"
-msgstr ""
-
-#: app/forms.py:70
-msgid "District Cooling in kWh"
-msgstr ""
-
-#: app/forms.py:72
-msgid "Other Type 1"
-msgstr ""
-
-#: app/forms.py:73 app/forms.py:79 app/forms.py:87 app/forms.py:94
-msgid "Select any"
-msgstr ""
-
-#: app/forms.py:76
-msgid "Other 1 in kWh"
-msgstr ""
-
-#: app/forms.py:78
-msgid "Other Type 2"
-msgstr ""
-
-#: app/forms.py:80
-msgid "Energy Type fields need to be different"
-msgstr ""
-
-#: app/forms.py:82
-msgid "Other 2 in kWh"
-msgstr ""
-
-#: app/forms.py:86
-msgid "F-Gas 1 Type"
-msgstr ""
-
-#: app/forms.py:90
-msgid "Leakage F Gas 1"
-msgstr ""
-
-#: app/forms.py:93
-msgid "F-Gas 2 Type"
-msgstr ""
-
-#: app/forms.py:95
-msgid "F-Gas fields need to be different"
-msgstr ""
-
-#: app/forms.py:97
-msgid "Leakage F Gas 2"
-msgstr ""
-
-#: app/forms.py:100 app/forms.py:103
-msgid "PV and Wind consumed kWh"
-msgstr ""
-
-#: app/forms.py:101
-msgid "PV and Wind exported kWh"
-msgstr ""
-
-#: app/forms.py:102
-msgid "Heatpump and Solar consumed kWh"
-msgstr ""
-
-#: app/forms.py:104
-msgid "Off-site renewable consumed kWh"
-msgstr ""
-
-#: app/forms.py:107
-msgid "Planned Retrofit Year"
-msgstr ""
-
-#: app/forms.py:108
-msgid "Planned Retrofit Investement in Euro"
-msgstr ""
-
-#: app/forms.py:117
-msgid "Postal Code and Country do not match."
-msgstr ""
-
-#: app/routes.py:26
-msgid "Invalid username or password"
-msgstr ""
-
-#: app/routes.py:33 app/templates/login.html:4
-msgid "Sign In"
-msgstr ""
-
-#: app/routes.py:50
-msgid "Congratulation, you are now a registered user!"
-msgstr ""
-
-#: app/routes.py:60
-msgid ""
-"You cannot have more than one building. But you can edit or delete your "
-"existing building."
-msgstr ""
-
-#: app/routes.py:95
-msgid "Building successfully created."
-msgstr ""
-
-#: app/routes.py:104
-msgid "You first need to add a building."
-msgstr ""
-
-#: app/routes.py:139
-msgid "Building successfully updated."
-msgstr ""
-
-#: app/routes.py:170
-msgid "Save Building"
-msgstr ""
-
-#: app/routes.py:171 app/templates/edit_building.html:4
-#: app/templates/index.html:7
-msgid "Edit Building"
-msgstr ""
-
-#: app/routes.py:178
-msgid "Building successfully deleted."
 msgstr ""
 
 #: app/utils.py:24
@@ -219,35 +31,225 @@ msgstr ""
 msgid "Field must be different to %(other_name)s."
 msgstr ""
 
-#: app/templates/add_building.html:51 app/templates/edit_building.html:51
-msgid "Energy Consumption per year"
+#: app/auth/forms.py:11 app/auth/forms.py:18
+msgid "Email"
 msgstr ""
 
-#: app/templates/add_building.html:114 app/templates/edit_building.html:114
-msgid "Fugitive Emissions per year"
+#: app/auth/forms.py:12 app/auth/forms.py:19 app/auth/forms.py:20
+msgid "Password"
 msgstr ""
 
-#: app/templates/add_building.html:142 app/templates/edit_building.html:142
-msgid "Renewable Energy per year"
+#: app/auth/forms.py:13
+msgid "Remember Me"
 msgstr ""
 
-#: app/templates/add_building.html:180 app/templates/edit_building.html:180
+#: app/auth/forms.py:14
+msgid "Sign in"
+msgstr ""
+
+#: app/auth/forms.py:20
+msgid "Repeat Password"
+msgstr ""
+
+#: app/auth/forms.py:21 app/auth/routes.py:47
+#: app/templates/auth/register.html:5
+msgid "Register"
+msgstr ""
+
+#: app/auth/routes.py:21
+msgid "Invalid username or password"
+msgstr ""
+
+#: app/auth/routes.py:28 app/templates/auth/login.html:5
+msgid "Sign In"
+msgstr ""
+
+#: app/auth/routes.py:45
+msgid "Congratulation, you are now a registered user!"
+msgstr ""
+
+#: app/main/forms.py:35
+msgid "Address*"
+msgstr ""
+
+#: app/main/forms.py:36
+msgid "Zip*"
+msgstr ""
+
+#: app/main/forms.py:37
+msgid "Country*"
+msgstr ""
+
+#: app/main/forms.py:38
+msgid "Property Type*"
+msgstr ""
+
+#: app/main/forms.py:39
+msgid "Size in SQM*"
+msgstr ""
+
+#: app/main/forms.py:40
+msgid "Reporting Year*"
+msgstr ""
+
+#: app/main/forms.py:44
+msgid "Grid Electricity in kWh"
+msgstr ""
+
+#: app/main/forms.py:45
+msgid "Natural Gas in kWh"
+msgstr ""
+
+#: app/main/forms.py:46
+msgid "Fuel Oil in kWh"
+msgstr ""
+
+#: app/main/forms.py:47
+msgid "Dist in Heating in kWh"
+msgstr ""
+
+#: app/main/forms.py:48
+msgid "District Cooling in kWh"
+msgstr ""
+
+#: app/main/forms.py:50
+msgid "Other Type 1"
+msgstr ""
+
+#: app/main/forms.py:51 app/main/forms.py:57 app/main/forms.py:65
+#: app/main/forms.py:72
+msgid "Select any"
+msgstr ""
+
+#: app/main/forms.py:54
+msgid "Other 1 in kWh"
+msgstr ""
+
+#: app/main/forms.py:56
+msgid "Other Type 2"
+msgstr ""
+
+#: app/main/forms.py:58
+msgid "Energy Type fields need to be different"
+msgstr ""
+
+#: app/main/forms.py:60
+msgid "Other 2 in kWh"
+msgstr ""
+
+#: app/main/forms.py:64
+msgid "F-Gas 1 Type"
+msgstr ""
+
+#: app/main/forms.py:68
+msgid "Leakage F Gas 1"
+msgstr ""
+
+#: app/main/forms.py:71
+msgid "F-Gas 2 Type"
+msgstr ""
+
+#: app/main/forms.py:73
+msgid "F-Gas fields need to be different"
+msgstr ""
+
+#: app/main/forms.py:75
+msgid "Leakage F Gas 2"
+msgstr ""
+
+#: app/main/forms.py:78 app/main/forms.py:81
+msgid "PV and Wind consumed kWh"
+msgstr ""
+
+#: app/main/forms.py:79
+msgid "PV and Wind exported kWh"
+msgstr ""
+
+#: app/main/forms.py:80
+msgid "Heatpump and Solar consumed kWh"
+msgstr ""
+
+#: app/main/forms.py:82
+msgid "Off-site renewable consumed kWh"
+msgstr ""
+
+#: app/main/forms.py:85
+msgid "Planned Retrofit Year"
+msgstr ""
+
+#: app/main/forms.py:86
+msgid "Planned Retrofit Investement in Euro"
+msgstr ""
+
+#: app/main/forms.py:89 app/main/routes.py:62 app/templates/add_building.html:4
+#: app/templates/index.html:5
+msgid "Add Building"
+msgstr ""
+
+#: app/main/forms.py:98
+msgid "Postal Code and Country do not match."
+msgstr ""
+
+#: app/main/routes.py:25
+msgid ""
+"You cannot have more than one building. But you can edit or delete your "
+"existing building."
+msgstr ""
+
+#: app/main/routes.py:60
+msgid "Building successfully created."
+msgstr ""
+
+#: app/main/routes.py:69
+msgid "You first need to add a building."
+msgstr ""
+
+#: app/main/routes.py:104
+msgid "Building successfully updated."
+msgstr ""
+
+#: app/main/routes.py:135
+msgid "Save Building"
+msgstr ""
+
+#: app/main/routes.py:136 app/templates/edit_building.html:5
+#: app/templates/index.html:7
+msgid "Edit Building"
+msgstr ""
+
+#: app/main/routes.py:143
+msgid "Building successfully deleted."
+msgstr ""
+
+#: app/templates/add_building.html:13 app/templates/edit_building.html:15
+msgid "Energy Consumption per Year"
+msgstr ""
+
+#: app/templates/add_building.html:23 app/templates/edit_building.html:25
+msgid "Fugitive Emissions per Year"
+msgstr ""
+
+#: app/templates/add_building.html:28 app/templates/edit_building.html:30
+msgid "Renewable Energy per Year"
+msgstr ""
+
+#: app/templates/add_building.html:34 app/templates/edit_building.html:36
 msgid "Planned Retrofit"
 msgstr ""
 
-#: app/templates/base.html:7
+#: app/templates/base.html:9
 msgid "Welcome to re:immo"
 msgstr ""
 
-#: app/templates/base.html:12
+#: app/templates/base.html:27
 msgid "Home"
 msgstr ""
 
-#: app/templates/base.html:14
+#: app/templates/base.html:33
 msgid "Login"
 msgstr ""
 
-#: app/templates/base.html:16
+#: app/templates/base.html:37
 msgid "Logout"
 msgstr ""
 
@@ -284,11 +286,27 @@ msgstr ""
 msgid "Size:"
 msgstr ""
 
-#: app/templates/login.html:24
+#: app/templates/auth/login.html:7
 msgid "New User?"
 msgstr ""
 
-#: app/templates/login.html:24
+#: app/templates/auth/login.html:7
 msgid "Click to Register!"
+msgstr ""
+
+#: app/templates/error/404.html:4
+msgid "Not Found"
+msgstr ""
+
+#: app/templates/error/404.html:5 app/templates/error/500.html:6
+msgid "Back"
+msgstr ""
+
+#: app/templates/error/500.html:4
+msgid "An unexpected error has occurred"
+msgstr ""
+
+#: app/templates/error/500.html:5
+msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr ""
 
