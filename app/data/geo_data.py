@@ -30,3 +30,4 @@ country_nuts0 = {
   "Switzerland": "CH",
   "United Kingdom": "UK"
 }
+

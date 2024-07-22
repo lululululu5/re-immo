@@ -17,7 +17,7 @@ class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField(_l("Email"), validators=[DataRequired(), Email()])
     password = PasswordField((_l("Password")), validators=[DataRequired()])
-    password2 = PasswordField(_l("Repeat Password"), validators=[DataRequired(), EqualTo((_l("Password")), message="Password needs to be the same.")])
+    password2 = PasswordField(_l("Repeat Password"), validators=[DataRequired(), EqualTo((_l("password")), message="Password needs to be the same.")])
     submit = SubmitField(_l("Register"))
     
     

@@ -1,14 +1,26 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from uuid import uuid4
 from typing import Optional
 import enum
+import json
 
+from sqlalchemy import event
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
+from app.data.geo_data import country_nuts0
+
+
+with open("app/data/nuts_code_to_nuts_name.json", "r") as f:
+    nuts_3_id_to_name = json.load(f)
+    
+with open("app/data/zip_to_nuts3.json", "r") as f:
+    zip_to_nuts3 = json.load(f)
+
+
 
 
 class UserTypes(enum.Enum):
@@ -167,7 +179,16 @@ class Building(db.Model):
     zip: so.Mapped[str] = so.mapped_column(sa.String(16), nullable=False)
     property_type: so.Mapped[PropertyTypes] = so.mapped_column(sa.Enum(PropertyTypes, validate_strings=True), default=PropertyTypes.RSF)
     size: so.Mapped[int] = so.mapped_column(nullable=False)
+    nuts0: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False)
+    nuts3_id: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False)
+    nuts3_name: so.Mapped[str] = so.mapped_column(sa.String(128), nullable=False)
     
+    def set_nuts_fields(self):
+        self.nuts0 = self.country
+        self.nuts3_id = zip_to_nuts3[self.country + str(self.zip)]
+        self.nuts3_name = nuts_3_id_to_name[self.nuts3_id]
+        
+
     #Energy Procurement
     grid_elec: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     natural_gas: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
@@ -197,6 +218,8 @@ class Building(db.Model):
     retrofit_year: so.Mapped[Optional[int]] = so.mapped_column(nullable=True)
     retrofit_investment: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
     
+
+    
     __table_args__ = (
         sa.CheckConstraint("size >= 0", name="check_size_non_negative"),
         sa.CheckConstraint("grid_elec >= 0", name="check_grid_elec_non_negative"),
@@ -222,8 +245,26 @@ class Building(db.Model):
     def __repr__(self) -> str:
         return f"Building with Address:{self.address} "
 
+@event.listens_for(Building, "before_insert")
+@event.listens_for(Building, "before_update")
+def receive_before_insert_or_update(mapper, connection, target):
+    target.set_nuts_fields()
+
     
+class Settings(db.Model):
+    id: so.Mapped[str] = so.mapped_column(sa.String(64), primary_key=True, index=True, default=lambda:str(uuid4()))
+    inclusion: so.Mapped[bool] = so.mapped_column(sa.Boolean(), default=True)
+    heat_norm: so.Mapped[float] = so.mapped_column(default=1.0)
+    weather_norm_heat: so.Mapped[float] = so.mapped_column(default=1.0)
+    weather_norm_cold: so.Mapped[float] = so.mapped_column(default=1.0)
+    dist_heating_norm: so.Mapped[float] = so.mapped_column(default=1.0)
+    dist_cooling_norm: so.Mapped[float] = so.mapped_column(default=1.0)
+    reporting_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    off_site_settings: so.Mapped[float] = so.mapped_column(default=1.0)
+    heat_norm: so.Mapped[float] = so.mapped_column(default=1.0)
+    occupancy_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     
+    building_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Building.id), index=True)
 
     
 
