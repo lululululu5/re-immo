@@ -12,6 +12,9 @@ with open("app/data/emission_factors_energy.json", "r") as f:
 
 with open("app/data/emission_factors_coolants.json", "r") as f:
     emission_factors_coolants = json.load(f)
+    
+with open("app/data/nuts3_to_CDD_HDD.json", "r") as f:
+    nuts_hdd_cdd = json.load(f)
 
 class BuildingCalculations:
     
@@ -77,4 +80,32 @@ class BuildingCalculations:
             baseline_emissions += f_gas_2_emissions
 
         return baseline_emissions
-        
+    
+    @staticmethod
+    def hdd_calculation(building: Building, year_of_interest, settings="low") -> float:
+        """
+        HDD calculates the heating days required for a future year of interest.
+        The formula relies on datapoints that maps the nuts3 Level to hdd projections. There are two scenarios depending on the heat needed 45 and 85
+        """
+        hdd_2015 = nuts_hdd_cdd[building.nuts3_id]["HDD_2015"]
+        index_year = year_of_interest - building.reporting_year + 1
+        hdd_factor = nuts_hdd_cdd[building.nuts3_id]["HDD_45_pa"]
+        if settings == "high":
+            hdd_factor = nuts_hdd_cdd[building.nuts3_id]["HDD_85_pa"]
+            
+        return (hdd_2015 + index_year * hdd_factor)/ (hdd_2015 + hdd_factor)
+    
+    @staticmethod
+    def cdd_calculation(building: Building, year_of_interest, settings="low") -> float:
+        """
+        CDD calculates the cooling days required for a future year of interest.
+        The formula relies on datapoints that maps the nuts3 Level to cdd projections. There are two scenarios depending on the cooling needed 45 and 85
+        """
+        cdd_2015 = nuts_hdd_cdd[building.nuts3_id]["CDD_2015"]
+        index_year = year_of_interest - building.reporting_year + 1
+        cdd_factor = nuts_hdd_cdd[building.nuts3_id]["CDD_45_pa"]
+        if settings == "high":
+            cdd_factor = nuts_hdd_cdd[building.nuts3_id]["CDD_85_pa"]
+            
+        return (cdd_2015 + index_year * cdd_factor)/ (cdd_2015 + cdd_factor)
+    
