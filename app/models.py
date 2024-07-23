@@ -255,13 +255,13 @@ class Settings(db.Model):
     id: so.Mapped[str] = so.mapped_column(sa.String(64), primary_key=True, index=True, default=lambda:str(uuid4()))
     inclusion: so.Mapped[bool] = so.mapped_column(sa.Boolean(), default=True)
     heat_norm: so.Mapped[float] = so.mapped_column(default=1.0)
+    cool_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     weather_norm_heat: so.Mapped[float] = so.mapped_column(default=1.0)
     weather_norm_cold: so.Mapped[float] = so.mapped_column(default=1.0)
     dist_heating_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     dist_cooling_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     reporting_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
     off_site_settings: so.Mapped[float] = so.mapped_column(default=1.0)
-    heat_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     occupancy_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     
     # Energy Coverage for size

@@ -143,7 +143,7 @@ class BuildingCalculations:
 
     @staticmethod
     def fuel_consumption(building:Building, settings: Settings, year_of_interest) -> float:
-        """"""
+        """Calculate fuel consumption based on projectiond of required heating days"""
         country_share_ffuel_heating = share_ffuel_heating[building.nuts0]
         hdd_year_interest = BuildingCalculations.hdd_calculation(building, year_of_interest)
         factor = 1 + country_share_ffuel_heating * \
@@ -152,3 +152,16 @@ class BuildingCalculations:
         usage = (building.natural_gas * settings.natural_gas_coverage +
                  building.fuel_oil * settings.fuel_oil_coverage + building.o1_consumption * settings.o1_coverage + building.o2_consumption * settings.o2_coverage)
         return settings.occupancy_norm * factor * usage * hdd_year_interest * settings.heat_norm
+    
+    @staticmethod
+    def dist_heating_cooling_year(building:Building, settings:Settings, year_of_interest) -> float:
+        """Calculate usage of district heating and cooling based on location and required heating and cooling days"""
+        hdd_year_interest = BuildingCalculations.hdd_calculation(building, year_of_interest)
+        cdd_year_interest = BuildingCalculations.cdd_calculation(building, year_of_interest)
+        heating = building.dist_heating * hdd_year_interest * \
+            settings.dist_heating_coverage * settings.weather_norm_heat * settings.heat_norm
+        cooling = building.dist_cooling * cdd_year_interest * \
+            settings.dist_cooling_coverage * settings.weather_norm_cold * settings.cool_norm
+        return settings.occupancy_norm * (heating + cooling)
+
+        
