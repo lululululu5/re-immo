@@ -190,29 +190,29 @@ class Building(db.Model):
         
 
     #Energy Procurement
-    grid_elec: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    natural_gas: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    fuel_oil: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    dist_heating: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    dist_cooling: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    grid_elec: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    natural_gas: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    fuel_oil: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    dist_heating: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    dist_cooling: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
     o1_energy_type: so.Mapped[Optional[EnergyTypes]] = so.mapped_column(sa.Enum(EnergyTypes, validate_strings=True), nullable=True)
-    o1_consumption: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    o1_consumption: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
     #these two cannot be the same energy_type. Create validation. 
     o2_energy_type: so.Mapped[Optional[EnergyTypes]] = so.mapped_column(sa.Enum(EnergyTypes, validate_strings=True), nullable=True)
-    o2_consumption: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    o2_consumption: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
     
     #Fugitive Emissions
-    f_gas_1_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
-    f_gas_1_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    f_gas_1_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True, default=None)
+    f_gas_1_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
     f_gas_2_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
-    f_gas_2_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    f_gas_2_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
     
      # Renewable energy
-    pv_wind_consumed: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    pv_wind_exported: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    hp_solar_consumed: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    hp_solar_exported: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
-    off_site_renewables: so.Mapped[Optional[float]] = so.mapped_column(nullable=True)
+    pv_wind_consumed: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    pv_wind_exported: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    hp_solar_consumed: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    hp_solar_exported: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
+    off_site_renewables: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
 
     # Retrofit
     retrofit_year: so.Mapped[Optional[int]] = so.mapped_column(nullable=True)
@@ -243,7 +243,7 @@ class Building(db.Model):
     owner: so.Mapped[User] = so.relationship(back_populates="building")
     
     def __repr__(self) -> str:
-        return f"Building with Address:{self.address} "
+        return f"Building with Address: {self.address} "
 
 @event.listens_for(Building, "before_insert")
 @event.listens_for(Building, "before_update")

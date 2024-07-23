@@ -1,0 +1,14 @@
+{
+  "Gas": 0.18316,
+  "Oil": 0.24677,
+  "District Heating": 0.20431,
+  "District Cooling": 0.20431,
+  "Biogas": 0.00022,
+  "Wood logs": 0.01513,
+  "Wood chips": 0.01513,
+  "Wood pellets": 1.0,
+  "Grass/straw": 0.01314,
+  "Coal": 0.34473,
+  "Landfill gas": 0.0002,
+  "LPGs": 0.21419
+}
