@@ -264,6 +264,16 @@ class Settings(db.Model):
     heat_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     occupancy_norm: so.Mapped[float] = so.mapped_column(default=1.0)
     
+    # Energy Coverage for size
+    grid_elec_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    natural_gas_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    fuel_oil_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    dist_heating_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    dist_cooling_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    o1_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    o2_coverage: so.Mapped[float] = so.mapped_column(default=1.0)
+    
+    # Relationship to Building
     building_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Building.id), index=True)
 
     

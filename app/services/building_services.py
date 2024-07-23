@@ -13,8 +13,14 @@ with open("app/data/emission_factors_energy.json", "r") as f:
 with open("app/data/emission_factors_coolants.json", "r") as f:
     emission_factors_coolants = json.load(f)
     
-with open("app/data/nuts3_to_CDD_HDD.json", "r") as f:
+with open("app/data/nuts3_to_CDD_HDD_long.json", "r") as f:
     nuts_hdd_cdd = json.load(f)
+    
+with open("app/data/share_electricity_heating_cooling.json", "r") as f:
+    country_share_heating_cooling = json.load(f)
+    
+with open(file="app/data/share_fossil_fuels_heating.json") as file:
+    share_ffuel_heating = json.load(file)
 
 class BuildingCalculations:
     
@@ -109,3 +115,40 @@ class BuildingCalculations:
             
         return (cdd_2015 + index_year * cdd_factor)/ (cdd_2015 + cdd_factor)
     
+    @staticmethod
+    def grid_calculation(building: Building, year_of_interest, settings="Default") -> float:
+        """Calculates the energy efficiency ratio. Based on projection of efficiencies for various EU countries"""
+        if building.reporting_year > year_of_interest:
+            return 1
+        reporting_year = str(building.reporting_year)
+        year_of_interest = str(year_of_interest)
+        if settings != "Default":
+            return "Custom grid calculation settings are not supported for the time being."
+        return eef_data[building.nuts0][year_of_interest] / eef_data[building.nuts0][reporting_year]
+    
+    @staticmethod
+    def total_energy_procurement_year(building: Building, year_of_interest, ac_dummy = 0) -> float:
+        """Calculates total energy procurement for a given year. Relies on other static method like hdd and cdd calculation.
+        The formula only focuses on elecricity/ energy without heating"""
+        base = building.grid_elec
+        country_share_elec_heating = country_share_heating_cooling[building.nuts0]["Heating"]
+        country_share_elec_cooling = country_share_heating_cooling[building.nuts0]["Cooling"]
+        hdd_year_interest = BuildingCalculations.hdd_calculation(building, year_of_interest)
+        cdd_year_interest = BuildingCalculations.cdd_calculation(building, year_of_interest)
+        total_energy_factor = 1 + country_share_elec_heating * (hdd_year_interest - 1) +\
+            ac_dummy * country_share_elec_cooling * (cdd_year_interest - 1)
+        total_energy_procurement = (base + building.pv_wind_consumed) * total_energy_factor - building.pv_wind_consumed
+        return total_energy_procurement
+        
+
+    @staticmethod
+    def fuel_consumption(building:Building, settings: Settings, year_of_interest) -> float:
+        """"""
+        country_share_ffuel_heating = share_ffuel_heating[building.nuts0]
+        hdd_year_interest = BuildingCalculations.hdd_calculation(building, year_of_interest)
+        factor = 1 + country_share_ffuel_heating * \
+            (hdd_year_interest * settings.weather_norm_heat - 1
+             )
+        usage = (building.natural_gas * settings.natural_gas_coverage +
+                 building.fuel_oil * settings.fuel_oil_coverage + building.o1_consumption * settings.o1_coverage + building.o2_consumption * settings.o2_coverage)
+        return settings.occupancy_norm * factor * usage * hdd_year_interest * settings.heat_norm
