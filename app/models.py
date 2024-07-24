@@ -275,6 +275,7 @@ class Settings(db.Model):
     
     # Relationship to Building
     building_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Building.id), index=True)
+    
 
     
 

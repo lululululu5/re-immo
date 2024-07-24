@@ -1,8 +1,11 @@
 import sqlalchemy as sa
 import json
+import math
 
 from app.models import Building, Settings
 from app import db
+
+from app.data.abatement_factors import abatement_factors, abatement_factors_countries, abatement_factors_property_type
 
 with open("app/data/energy_efficiency.json", "r") as f:
     eef_data = json.load(f)
@@ -19,18 +22,31 @@ with open("app/data/nuts3_to_CDD_HDD_long.json", "r") as f:
 with open("app/data/share_electricity_heating_cooling.json", "r") as f:
     country_share_heating_cooling = json.load(f)
     
-with open(file="app/data/share_fossil_fuels_heating.json") as file:
-    share_ffuel_heating = json.load(file)
+with open("app/data/share_fossil_fuels_heating.json", "r") as f:
+    share_ffuel_heating = json.load(f)
+    
+with open("app/data/share_electricity_heating_cooling.json", "r") as f:
+    share_elec_heating_cooling = json.load(f)
+    
 
 class BuildingCalculations:
     
-    @staticmethod
-    def calculate_total_area(building: Building) -> float:
-        return building.size * 2
     
     @staticmethod
-    def baseline_emissions(building: Building) -> float:
+    def baseline_emissions(building: Building) -> dict:
         """Calculate energy efficiency ratio in comparison with UK"""
+        results = {
+            "grid_elec": {"emissions": 0},
+            "natural_gas": {"emissions": 0},
+            "fuel_oil": {"emissions": 0},
+            "dist_heating": {"emissions": 0},
+            "dist_cooling": {"emissions": 0},
+            "o1_energy": {"emissions": 0},
+            "o2_energy": {"emissions": 0},
+            "f_gas_1": {"emissions": 0},
+            "f_gas_2": {"emissions": 0}
+        }
+        
         electricity_efficiency = eef_data[building.nuts0][str(building.reporting_year)]
         electricity_efficiency_uk = eef_data["UK"][str(building.reporting_year)]
         electricity_efficiency_ratio = electricity_efficiency/electricity_efficiency_uk
@@ -44,48 +60,65 @@ class BuildingCalculations:
                 building.hp_solar_exported * \
                 emission_factors["District Heating"] * \
                 electricity_efficiency_ratio
-            baseline_emissions += electricity_emissions_usage - electricity_emissions_export
+            net_electricity_emissions = electricity_emissions_usage - electricity_emissions_export
+            results["grid_elec"] = {"emissions": net_electricity_emissions}
+            baseline_emissions += net_electricity_emissions
 
         if building.natural_gas > 0:
             natural_gas_emissions = building.natural_gas * \
                 emission_factors["Gas"]
+            results["natural_gas"] = {"emissions": natural_gas_emissions}
             baseline_emissions += natural_gas_emissions
 
         if building.fuel_oil > 0:
             fuel_oil_emissions = building.fuel_oil * emission_factors["Oil"]
+            results["fuel_oil"] = {"emissions": fuel_oil_emissions}
             baseline_emissions += fuel_oil_emissions
 
         if building.dist_heating > 0:
             district_heating_emissions = building.dist_heating * emission_factors["District Heating"] * electricity_efficiency/electricity_efficiency_uk
+            results["dist_heating"] = {"emissions": district_heating_emissions}
             baseline_emissions += district_heating_emissions
 
         if building.dist_cooling > 0:
             district_cooling_emissions = building.dist_cooling * \
                 emission_factors["District Cooling"] * \
                 electricity_efficiency/electricity_efficiency_uk
+            results["dist_cooling"] = {"emissions": district_cooling_emissions}
             baseline_emissions += district_cooling_emissions
 
         if building.o1_energy_type is not None and building.o1_consumption > 0:
             o1_emissions = building.o1_consumption * \
                 emission_factors[building.o1_energy_type]
+            results["o1_energy"] = {"emissions":o1_emissions}
             baseline_emissions += o1_emissions
 
         if building.o2_energy_type is not None and building.o2_consumption > 0:
             o2_emissions = building.o2_consumption * \
                 emission_factors[building.o2_energy_type]
+            results["o2_energy"]= {"emissions": o2_emissions}
             baseline_emissions += o2_emissions
 
         if building.f_gas_1_type is not None and building.f_gas_1_amount > 0:
             f_gas_1_emissions = building.f_gas_1_amount * \
                 emission_factors_coolants[building.f_gas_1_type]
+            results["f_gas_1"] = {"emissions": f_gas_1_emissions}
             baseline_emissions += f_gas_1_emissions
 
         if building.f_gas_2_type is not None and building.f_gas_2_amount > 0:
             f_gas_2_emissions = building.f_gas_2_amount * \
                 emission_factors_coolants[building.f_gas_2_type]
+            results["f_gas_2"] = {"emissions":f_gas_2_emissions}
             baseline_emissions += f_gas_2_emissions
+            
+        results["baseline_emissions"] = baseline_emissions
+        
+        for key, value in results.items():
+            if key != "baseline_emissions":
+                share = value["emissions"] / baseline_emissions if baseline_emissions > 0 else 0
+                results[key]["share"] = share
 
-        return baseline_emissions
+        return results
     
     @staticmethod
     def hdd_calculation(building: Building, year_of_interest, settings="low") -> float:
@@ -163,5 +196,94 @@ class BuildingCalculations:
         cooling = building.dist_cooling * cdd_year_interest * \
             settings.dist_cooling_coverage * settings.weather_norm_cold * settings.cool_norm
         return settings.occupancy_norm * (heating + cooling)
-
+    
+    @staticmethod
+    def total_energy_year(building:Building, settings:Settings, year_of_interest) -> float:
+        """Total energy required for a year of interest based on growth assumption"""
+        elec_procurement_target = BuildingCalculations.total_energy_procurement_year(building, year_of_interest)
+        fuel_consumption_target = BuildingCalculations.fuel_consumption(building, settings, year_of_interest)
+        dist_heat_cool_target = BuildingCalculations.dist_heating_cooling_year(building, settings, year_of_interest)
         
+        return (elec_procurement_target + fuel_consumption_target + dist_heat_cool_target + building.pv_wind_consumed + building.hp_solar_consumed) * settings.reporting_coverage
+        
+    
+    @staticmethod
+    def ghg_for_year(building:Building, settings:Settings, year_of_interest, ac_dummy=0) -> float:
+        if building.reporting_year > year_of_interest:
+            return None
+        country_share_elec_heating = share_elec_heating_cooling[building.nuts0]["Heating"]
+        country_share_elec_cooling = share_elec_heating_cooling[building.nuts0]["Cooling"]
+        country_share_ffuel_heating = share_ffuel_heating[building.nuts0]
+        
+        baseline_emissions = BuildingCalculations.baseline_emissions(building)
+
+        hdd_year_interest = BuildingCalculations.hdd_calculation(building, year_of_interest)
+        hdd_2020 = 1  # For now this is hardcoded at, but might change in the future
+        hdd_ratio = hdd_year_interest/hdd_2020
+
+        cdd_year_interest = BuildingCalculations.cdd_calculation(building, year_of_interest)
+        cdd_2020 = 1  # For now this is hardcoded at, but might change in the future
+        cdd_ratio = cdd_year_interest/cdd_2020
+
+        grid_y_reporting = BuildingCalculations.grid_calculation(building, building.reporting_year)
+        grid_y_interest = BuildingCalculations.grid_calculation(building, year_of_interest)
+        grid_ratio = grid_y_interest/grid_y_reporting
+
+        total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, 2020) # For calculations we need to use the first year which is 2020
+        energy_ratio = building.grid_elec / total_energy_procurement
+
+       
+        electricity_factor = baseline_emissions["grid_elec"]["share"] * ((grid_ratio * energy_ratio + (1-energy_ratio)) * (
+            1+country_share_elec_heating * (hdd_year_interest-1) + ac_dummy * country_share_elec_cooling * (cdd_year_interest-1)))
+        fossils_factor = (baseline_emissions["natural_gas"]["share"] + baseline_emissions["fuel_oil"]["share"] + baseline_emissions["o1_energy"]["share"] + baseline_emissions["o2_energy"]["share"]) * \
+            hdd_ratio * (1+country_share_ffuel_heating *
+                         (hdd_year_interest - 1))
+        dist_cooling_factor = baseline_emissions["dist_cooling"]["share"] * cdd_ratio
+        dist_heating_factor = baseline_emissions["dist_heating"]["share"] * hdd_year_interest * grid_ratio
+        f_gas_factor = baseline_emissions["f_gas_1"]["share"] + baseline_emissions["f_gas_2"]["share"]
+
+        ghg_emissions_year = baseline_emissions["baseline_emissions"] * \
+            (electricity_factor + fossils_factor +
+             dist_cooling_factor + dist_heating_factor + f_gas_factor)
+
+        return ghg_emissions_year
+    
+    @staticmethod
+    def building_conversion_factor(building:Building, settings:Settings, year_of_interest) -> float:
+        return BuildingCalculations.ghg_for_year(building, settings, year_of_interest)/BuildingCalculations.total_energy_year(building, settings, year_of_interest)
+    
+    @staticmethod
+    def energy_intensity_retrofit(building:Building, settings:Settings, year_of_interest) -> float:
+        energy_consumption = BuildingCalculations.total_energy_year(building, settings, year_of_interest)
+        if building.retrofit_year > year_of_interest or building.retrofit_year is None:
+            return energy_consumption/building.size
+
+        values_surpassed = []
+
+        for target in range(1, 502):
+            A = building.size * abatement_factors["mac_f"] / abatement_factors["mac_g"] * \
+                abatement_factors_countries[building.nuts0] * \
+                abatement_factors_property_type[building.property_type]
+
+            B = (math.exp(abatement_factors["mac_g"] * energy_consumption / building.size) -
+                 math.exp(abatement_factors["mac_g"] * target))
+
+            C = (1 - (abatement_factors["depreciation_a"] *
+                      (1 - target / energy_consumption) ** 2 +
+                      abatement_factors["depreciation_b"] *
+                      (1 - target / energy_consumption) +
+                      abatement_factors["depreciation_b"])) ** (year_of_interest - 2015)
+
+            result = A * B * C
+
+            if result >= building.retrofit_investment:
+                values_surpassed.append(target)
+
+        if values_surpassed:
+            return max(values_surpassed)
+        else:
+            return energy_consumption/building.size
+
+    @staticmethod
+    def retro_fit_changes(building:Building, settings:Settings, year_of_interest):
+        return BuildingCalculations.energy_intensity_retrofit(building, settings, year_of_interest) * BuildingCalculations.building_conversion_factor(building, settings, year_of_interest)
