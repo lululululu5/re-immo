@@ -254,16 +254,23 @@ class BuildingCalculations:
     
     @staticmethod
     def energy_intensity_retrofit(building:Building, settings:Settings, year_of_interest) -> float:
+        """The energy_intensity_retrofit function calculates the energy intensity of a building after a retrofit, 
+        based on its total energy consumption, size, and various factors such as abatement and depreciation. 
+        It returns the maximum target energy intensity achievable given the building's retrofit investment, or zero if no target is achievable."""
+        if building.size == 0:
+            raise ValueError("Non valid Building size. Needs to be bigger than zero")
+        
         energy_consumption = BuildingCalculations.total_energy_year(building, settings, year_of_interest)
-        if building.retrofit_year > year_of_interest or building.retrofit_year is None:
+        if building.retrofit_year > year_of_interest or building.retrofit_year is None or energy_consumption==0:
             return energy_consumption/building.size
+    
 
         values_surpassed = []
 
         for target in range(1, 502):
             A = building.size * abatement_factors["mac_f"] / abatement_factors["mac_g"] * \
                 abatement_factors_countries[building.nuts0] * \
-                abatement_factors_property_type[building.property_type]
+                abatement_factors_property_type[building.property_type.value]
 
             B = (math.exp(abatement_factors["mac_g"] * energy_consumption / building.size) -
                  math.exp(abatement_factors["mac_g"] * target))
@@ -278,12 +285,15 @@ class BuildingCalculations:
 
             if result >= building.retrofit_investment:
                 values_surpassed.append(target)
+                
+            # What about the case where the value is 1 -> Net zero
 
         if values_surpassed:
             return max(values_surpassed)
         else:
-            return energy_consumption/building.size
+            return 0
 
     @staticmethod
     def retro_fit_changes(building:Building, settings:Settings, year_of_interest):
+        """Calculates Energy and Carbon with respect to retrofit investment"""
         return BuildingCalculations.energy_intensity_retrofit(building, settings, year_of_interest) * BuildingCalculations.building_conversion_factor(building, settings, year_of_interest)
