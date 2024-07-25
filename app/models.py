@@ -179,6 +179,7 @@ class Building(db.Model):
     zip: so.Mapped[str] = so.mapped_column(sa.String(16), nullable=False)
     property_type: so.Mapped[PropertyTypes] = so.mapped_column(sa.Enum(PropertyTypes, validate_strings=True), default=PropertyTypes.RSF)
     size: so.Mapped[int] = so.mapped_column(nullable=False)
+    construction_year: so.Mapped[int] = so.mapped_column(nullable=False)
     nuts0: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False)
     nuts3_id: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False)
     nuts3_name: so.Mapped[str] = so.mapped_column(sa.String(128), nullable=False)
@@ -204,7 +205,7 @@ class Building(db.Model):
     #Fugitive Emissions
     f_gas_1_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True, default=None)
     f_gas_1_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
-    f_gas_2_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True)
+    f_gas_2_type: so.Mapped[Optional[FGasTypes]] = so.mapped_column(sa.Enum(FGasTypes, validate_strings=True), nullable=True, default=None)
     f_gas_2_amount: so.Mapped[Optional[float]] = so.mapped_column(nullable=True, default=0.0)
     
      # Renewable energy

@@ -35,9 +35,10 @@ class BuildingAssessmentForm(FlaskForm):
     address = StringField(_l("Address*"), validators=[DataRequired()])
     zip = StringField(_l("Zip*"), validators=[DataRequired()])
     country = SelectField(_l("Country*"), choices=country_choices, validators=[DataRequired()])
+    construction_year = IntegerField(_l("Construction Year*"), validators=[DataRequired(), NumberRange(min=1400, max=current_year)])
     property_type = SelectField(_l("Property Type*"), choices=[("RMF", "Residential Multi Family"), ("RSF", "Residential Single Family")], validators=[DataRequired()])
     size = IntegerField(_l("Size in SQM*"), validators=[DataRequired(), NumberRange(min=0)])
-    reporting_year = IntegerField(_l("Reporting Year*"), validators=[DataRequired(), NumberRange(min=1400, max=current_year)])
+    reporting_year = IntegerField(_l("Reporting Year*"), validators=[DataRequired(), NumberRange(min=2000, max=current_year)])
     
     
     # Energy consumption
@@ -66,13 +67,12 @@ class BuildingAssessmentForm(FlaskForm):
         coerce=lambda x: None if x == '' else FGasTypes[x]
     )
     f_gas_1_amount = DecimalField(_l("Leakage F Gas 1"), validators=[Optional(), NumberRange(min=0)])
-    # f_gas_2_type = SelectField("Select F Gas 2",  choices=f_gas_types)
     f_gas_2_type = SelectField(
         _l("F-Gas 2 Type"),
         choices=[('', _l('Select any'))] + [(choice.name, choice.value) for choice in FGasTypes],
         coerce=lambda x: None if x == '' else FGasTypes[x],  validators=[DifferentTo("f_gas_1_type", message=_l("F-Gas fields need to be different"))]
     )
-    f_gas_2_amount = IntegerField(_l("Leakage F Gas 2"), validators=[Optional(), NumberRange(min=0)])
+    f_gas_2_amount = DecimalField(_l("Leakage F Gas 2"), validators=[Optional(), NumberRange(min=0)])
     
     #Renewables
     pv_wind_consumed= DecimalField(_l("PV and Wind consumed kWh"), validators=[Optional(), NumberRange(min=0)])

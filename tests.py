@@ -5,7 +5,7 @@ from app.services.building_services import BuildingCalculations
 from config import Config
 
 class TestConfig(Config):
-    Testing=True
+    TESTING=True
     SQLALCHEMY_DATABASE_URI = "sqlite://"
 
 class UserModelCase(unittest.TestCase):
