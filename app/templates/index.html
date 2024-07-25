@@ -1,23 +1,74 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>{{ _("Hi, %(username)s!", username=current_user.name) }}</h1>
-    {% if building is none %}
-        <a href="{{ url_for("main.add_building") }}">{{ _("Add Building") }}</a>
-    {% else %}
-        <a href="{{ url_for("main.edit_building") }}">{{ _("Edit Building") }}</a>
-        <a href="#" onclick="deleteBuilding()">{{ _("Delete Building") }}</a>
-        <div>
-            <p>
-                {{ _("Address:") }} {{ building.address }}<br>
-                {{ _("Construction year:") }} {{ building.construction_year }}<br>
-                {{ _("Reporting year:") }} {{ building.reporting_year }}<br>
-                {{ _("Country:") }} {{ building.country }}<br>
-                {{ _("Zip:") }} {{ building.zip }}<br>
-                {{ _("Property type:")}} {{ building.property_type.value }}<br>
-                {{ _("Size:") }} {{ building.size }}<br>
-            </p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>{{ _("Hi, %(username)s!", username=current_user.name) }}</h1>
+            {% if building is none %}
+                <a href="{{ url_for("main.add_building") }}" class="btn mt-3">{{ _("Add Building") }}</a>
+            {% else %}
+                <div class="mt-4 text-left">
+                    <p>
+                        <strong>{{ _("Address:") }}</strong> {{ building.address }}
+                        <strong>{{ _("Construction year:") }}</strong> {{ building.construction_year }}
+                        <strong>{{ _("Reporting year:") }}</strong> {{ building.reporting_year }}
+                        <strong>{{ _("Country:") }}</strong> {{ building.country }}
+                        <strong>{{ _("Zip:") }}</strong> {{ building.zip }}
+                        <strong>{{ _("Property type:")}}</strong> {{ building.property_type.value }}
+                        <strong>{{ _("Size:") }}</strong> {{ building.size }} m²
+                    </p>
+                </div>
+                <a href="{{ url_for("main.edit_building") }}" class="btn btn-primary mt-3">{{ _("Edit Building") }}</a>
+                <a href="#" onclick="deleteBuilding()" class="btn btn-danger mt-3">{{ _("Delete Building") }}</a>
+                
+            {% endif %}
         </div>
+    </div>
+    
+    {% if building is not none %}
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header">{{ _("Overall Emissions") }} </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span style="display: block; font-size: 0.75em; color: gray;">{{ _("Current") }}</span>
+                        {{ building.baseline_emissions }} <span style="font-size: 0.75em;">kg CO₂e</span>
+                    </h5>
+                    <br>
+                    <h6 class="card-title">
+                        <span style="display: block; font-size: 0.75em; color: gray;">{{ _("2035 (Estimated)") }}</span>
+                        {{ building.ghg_emissions_2035 }} <span style="font-size: 0.75em;">kg CO₂e</span>
+                    </h6>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header">{{ _("Stranding Year") }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ building.stranding_year }} Comming soon</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header">{{ _("Emission Costs") }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ building.emission_costs }} Comming soon</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            {% include '_crrem_graph.html' %}
+        </div>
+    </div>
     {% endif %}
+</div>
 
 
 <script>

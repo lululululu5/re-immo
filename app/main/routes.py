@@ -5,6 +5,7 @@ import sqlalchemy as sa
 
 from app.main.forms import BuildingAssessmentForm
 from app.models import Building, Settings
+from app.services.building_services import BuildingCalculations
 from app import db
 from app.main import bp
 
@@ -13,6 +14,9 @@ from app.main import bp
 @login_required
 def index():
     building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
+    settings = db.session.scalar(sa.select(Settings).where(Settings.building_id == building.id))
+    building.baseline_emissions = round(BuildingCalculations.baseline_emissions(building)["baseline_emissions"], 2)
+    building.ghg_emissions_2035 = round(BuildingCalculations.ghg_for_year(building, settings, 2035), 2)
     return render_template("index.html", building=building)
 
 
