@@ -89,25 +89,25 @@ class BuildingCalculations:
 
         if building.o1_energy_type is not None and building.o1_consumption > 0:
             o1_emissions = building.o1_consumption * \
-                emission_factors[building.o1_energy_type]
+                emission_factors[building.o1_energy_type.value]
             results["o1_energy"] = {"emissions":o1_emissions}
             baseline_emissions += o1_emissions
 
         if building.o2_energy_type is not None and building.o2_consumption > 0:
             o2_emissions = building.o2_consumption * \
-                emission_factors[building.o2_energy_type]
+                emission_factors[building.o2_energy_type.value]
             results["o2_energy"]= {"emissions": o2_emissions}
             baseline_emissions += o2_emissions
 
         if building.f_gas_1_type is not None and building.f_gas_1_amount > 0:
             f_gas_1_emissions = building.f_gas_1_amount * \
-                emission_factors_coolants[building.f_gas_1_type]
+                emission_factors_coolants[building.f_gas_1_type.value]
             results["f_gas_1"] = {"emissions": f_gas_1_emissions}
             baseline_emissions += f_gas_1_emissions
 
         if building.f_gas_2_type is not None and building.f_gas_2_amount > 0:
             f_gas_2_emissions = building.f_gas_2_amount * \
-                emission_factors_coolants[building.f_gas_2_type]
+                emission_factors_coolants[building.f_gas_2_type.value]
             results["f_gas_2"] = {"emissions":f_gas_2_emissions}
             baseline_emissions += f_gas_2_emissions
             
@@ -229,17 +229,19 @@ class BuildingCalculations:
         grid_y_interest = BuildingCalculations.grid_calculation(building, year_of_interest)
         grid_ratio = grid_y_interest/grid_y_reporting
 
-        total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, 2020) # For calculations we need to use the first year which is 2020
+        total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, building.reporting_year) # For calculations we need to use the first year which is 2020
         energy_ratio = building.grid_elec / total_energy_procurement
 
        
         electricity_factor = baseline_emissions["grid_elec"]["share"] * ((grid_ratio * energy_ratio + (1-energy_ratio)) * (
             1+country_share_elec_heating * (hdd_year_interest-1) + ac_dummy * country_share_elec_cooling * (cdd_year_interest-1)))
-        fossils_factor = (baseline_emissions["natural_gas"]["share"] + baseline_emissions["fuel_oil"]["share"] + baseline_emissions["o1_energy"]["share"] + baseline_emissions["o2_energy"]["share"]) * \
-            hdd_ratio * (1+country_share_ffuel_heating *
-                         (hdd_year_interest - 1))
+        
+        fossils_factor = (baseline_emissions["natural_gas"]["share"] + baseline_emissions["fuel_oil"]["share"] + baseline_emissions["o1_energy"]["share"] + baseline_emissions["o2_energy"]["share"]) * hdd_ratio * (1+country_share_ffuel_heating * (hdd_year_interest - 1))
+        
         dist_cooling_factor = baseline_emissions["dist_cooling"]["share"] * cdd_ratio
+        
         dist_heating_factor = baseline_emissions["dist_heating"]["share"] * hdd_year_interest * grid_ratio
+        
         f_gas_factor = baseline_emissions["f_gas_1"]["share"] + baseline_emissions["f_gas_2"]["share"]
 
         ghg_emissions_year = baseline_emissions["baseline_emissions"] * \
@@ -257,14 +259,8 @@ class BuildingCalculations:
         """The energy_intensity_retrofit function calculates the energy intensity of a building after a retrofit, 
         based on its total energy consumption, size, and various factors such as abatement and depreciation. 
         It returns the maximum target energy intensity achievable given the building's retrofit investment, or zero if no target is achievable."""
-        if building.size == 0:
-            raise ValueError("Non valid Building size. Needs to be bigger than zero")
         
         energy_consumption = BuildingCalculations.total_energy_year(building, settings, year_of_interest)
-        if building.retrofit_year > year_of_interest or building.retrofit_year is None or energy_consumption==0:
-            return energy_consumption/building.size
-    
-
         values_surpassed = []
 
         for target in range(1, 502):
@@ -273,27 +269,49 @@ class BuildingCalculations:
                 abatement_factors_property_type[building.property_type.value]
 
             B = (math.exp(abatement_factors["mac_g"] * energy_consumption / building.size) -
-                 math.exp(abatement_factors["mac_g"] * target))
+                math.exp(abatement_factors["mac_g"] * target))
 
             C = (1 - (abatement_factors["depreciation_a"] *
-                      (1 - target / energy_consumption) ** 2 +
-                      abatement_factors["depreciation_b"] *
-                      (1 - target / energy_consumption) +
-                      abatement_factors["depreciation_b"])) ** (year_of_interest - 2015)
+                    (1 - target / energy_consumption) ** 2 +
+                    abatement_factors["depreciation_b"] *
+                    (1 - target / energy_consumption) +
+                    abatement_factors["depreciation_b"])) ** (year_of_interest - 2015)
 
             result = A * B * C
 
             if result >= building.retrofit_investment:
                 values_surpassed.append(target)
                 
-            # What about the case where the value is 1 -> Net zero
 
-        if values_surpassed:
+        if len(values_surpassed) > 0:
             return max(values_surpassed)
         else:
-            return 0
-
+            return 0 # Return Net-Zero 
+    
+        
+    @staticmethod
+    def energy_consumption_retrofit(building:Building, settings:Settings, year_of_interest) -> float:
+        """Depending on the year of interest and the retrofit year we calculate the energy consumption in the case of a retrofit event."""
+        if building.size == 0:
+            raise ValueError("Non valid Building size. Needs to be bigger than zero")
+        
+        energy_consumption = BuildingCalculations.total_energy_year(building, settings, year_of_interest)
+        if building.retrofit_year:
+            energy_intensity_retro = BuildingCalculations.energy_intensity_retrofit(building, settings, building.retrofit_year)
+        
+        if year_of_interest < building.retrofit_year or building.retrofit_year is None or energy_consumption==0:
+            return energy_consumption/building.size
+        
+        elif year_of_interest == building.retrofit_year:
+            return energy_intensity_retro
+        
+        elif year_of_interest > building.retrofit_year:
+            base_year = building.retrofit_year + 2
+            energy_ratio = energy_consumption/BuildingCalculations.total_energy_year(building, settings, base_year)
+            return energy_intensity_retro * energy_ratio
+        
+        
     @staticmethod
     def retro_fit_changes(building:Building, settings:Settings, year_of_interest):
         """Calculates Energy and Carbon with respect to retrofit investment"""
-        return BuildingCalculations.energy_intensity_retrofit(building, settings, year_of_interest) * BuildingCalculations.building_conversion_factor(building, settings, year_of_interest)
+        return BuildingCalculations.energy_consumption_retrofit(building, settings, year_of_interest) * BuildingCalculations.building_conversion_factor(building, settings, year_of_interest)
