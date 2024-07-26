@@ -43,7 +43,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash(_("Congratulation, you are now a registered user!"))
+        flash(_("Congratulation, you are now a registered user. Confirm your email to access the platform!"))
         return redirect(url_for("auth.login"))
     return render_template("auth/register.html", title=_("Register"), form=form)
 
