@@ -12,6 +12,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import URLSafeTimedSerializer
 
 from app import db, login
 from app.data.geo_data import country_nuts0
@@ -151,6 +152,7 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(128), index=True, unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     user_type: so.Mapped[UserTypes] = so.mapped_column(sa.Enum(UserTypes, validate_strings=True), default=UserTypes.general)
+    confirmed_email: so.Mapped[bool] = so.mapped_column(sa.Boolean(), default=False)
     
     #relationship
     building: so.Mapped["Building"] = so.relationship(back_populates="owner")
@@ -176,8 +178,26 @@ class User(UserMixin, db.Model):
             return
         return db.session.get(User,id)
     
+    def get_confirm_email_token(self):
+        s = URLSafeTimedSerializer(
+            current_app.config["SECRET_KEY"], salt="email-confirm"
+        )
+        return s.dumps(self.email, salt="email-confirm")
+        
+    @staticmethod
+    def verify_confirm_email_token(token):
+        try:
+            s = URLSafeTimedSerializer(
+                current_app.config["SECRET_KEY"], salt="email-confirm"
+            )
+            email = s.loads(token, salt="email-confirm", max_age=3600)
+            return email
+        except:
+            return None
+    
     def __repr__(self) -> str:
         return f"<User: {self.name} Email: {self.email} >"
+    
     
 @login.user_loader
 def load_user(id):

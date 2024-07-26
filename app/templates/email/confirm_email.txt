@@ -1,0 +1,15 @@
+Dear {{ user.name }},
+
+Thank you for registering with re:immo! To complete your registration and verify your email address, please click the link below:
+
+{{ url_for('auth.confirm_email', token=token, _external=True) }}
+
+Alternatively, you can paste the following link in your browser's address bar:
+
+{{ url_for('auth.confirm_email', token=token, _external=True) }}
+
+If you did not register for a re:immo account, please disregard this email.
+
+Sincerely,
+
+The re:immo Team

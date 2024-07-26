@@ -8,7 +8,7 @@ from urllib.parse import urlsplit
 from app import db
 from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.auth.email import send_password_reset_email
+from app.auth.email import send_password_reset_email, send_email_confirmation
 from app.models import User
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -20,6 +20,9 @@ def login():
         user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
         if user is None or not user.check_password(form.password.data):
             flash(_("Invalid username or password"))
+            return redirect(url_for("auth.login"))
+        if user.confirmed_email == False:
+            flash(_("Email Address not confirmed. Please confirm to access the platform."))
             return redirect(url_for("auth.login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
@@ -43,6 +46,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+        send_email_confirmation(user)
         flash(_("Congratulation, you are now a registered user. Confirm your email to access the platform!"))
         return redirect(url_for("auth.login"))
     return render_template("auth/register.html", title=_("Register"), form=form)
@@ -89,3 +93,17 @@ def reset_password(token):
         flash(_("Your password has been reset."))
         return redirect(url_for("auth.login"))
     return render_template("auth/reset_password.html", title=_("Reset Password"), form=form)
+
+@bp.route("/confirm_email/<token>", methods=["GET", "POST"])
+def confirm_email(token):
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    email = User.verify_confirm_email_token(token)
+    if not email:
+        flash(_("Invalid email address or token expired. Please contact us."))
+        return redirect(url_for("auth.login"))
+    user = db.session.scalar(sa.select(User).where(User.email == email))
+    user.confirmed_email = True
+    db.session.commit()
+    flash(_("Email Address confirmed you will redirected to the Login page."))
+    return redirect(url_for("auth.login"))

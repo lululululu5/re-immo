@@ -13,3 +13,14 @@ def send_password_reset_email(user):
                                          user=user, token=token),
                html_body=render_template("email/reset_password.html", 
                                          user=user, token=token))
+    
+def send_email_confirmation(user):
+    token = user.get_confirm_email_token()
+    send_email(_("re:immo PLease confirm your Email"),
+               sender=current_app.config["ADMINS"][0],
+               recipients=[user.email],
+               text_body=render_template("email/confirm_email.txt",
+                                         user=user, token=token),
+               html_body= render_template("email/confirm_email.html",
+                                         user=user, token=token)
+               )

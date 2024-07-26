@@ -13,12 +13,14 @@ from app.main import bp
 @bp.route("/index")
 @login_required
 def index():
-    
     building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
     if building:
         settings = db.session.scalar(sa.select(Settings).where(Settings.building_id == building.id))
-        building.baseline_emissions = round(BuildingCalculations.baseline_emissions(building)["baseline_emissions"], 2)
-        building.ghg_emissions_2035 = round(BuildingCalculations.ghg_for_year(building, settings, 2035), 2)
+        baseline_emissions =  BuildingCalculations.baseline_emissions(building)["baseline_emissions"]
+        ghg_emissions_2035 = BuildingCalculations.ghg_for_year(building, settings, 2035)
+        if baseline_emissions > 0:
+            building.baseline_emissions = round(baseline_emissions, 2)
+            building.ghg_emissions_2035 = round(ghg_emissions_2035, 2)
     return render_template("index.html", building=building)
 
 

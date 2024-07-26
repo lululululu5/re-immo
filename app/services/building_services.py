@@ -216,7 +216,7 @@ class BuildingCalculations:
         country_share_ffuel_heating = share_ffuel_heating[building.nuts0]
         
         baseline_emissions = BuildingCalculations.baseline_emissions(building)
-
+        
         hdd_year_interest = BuildingCalculations.hdd_calculation(building, year_of_interest)
         hdd_2020 = 1  # For now this is hardcoded at, but might change in the future
         hdd_ratio = hdd_year_interest/hdd_2020
@@ -224,31 +224,35 @@ class BuildingCalculations:
         cdd_year_interest = BuildingCalculations.cdd_calculation(building, year_of_interest)
         cdd_2020 = 1  # For now this is hardcoded at, but might change in the future
         cdd_ratio = cdd_year_interest/cdd_2020
-
-        grid_y_reporting = BuildingCalculations.grid_calculation(building, building.reporting_year)
-        grid_y_interest = BuildingCalculations.grid_calculation(building, year_of_interest)
-        grid_ratio = grid_y_interest/grid_y_reporting
-
-        total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, building.reporting_year) # For calculations we need to use the first year which is 2020
-        energy_ratio = building.grid_elec / total_energy_procurement
-
-       
-        electricity_factor = baseline_emissions["grid_elec"]["share"] * ((grid_ratio * energy_ratio + (1-energy_ratio)) * (
-            1+country_share_elec_heating * (hdd_year_interest-1) + ac_dummy * country_share_elec_cooling * (cdd_year_interest-1)))
         
-        fossils_factor = (baseline_emissions["natural_gas"]["share"] + baseline_emissions["fuel_oil"]["share"] + baseline_emissions["o1_energy"]["share"] + baseline_emissions["o2_energy"]["share"]) * hdd_ratio * (1+country_share_ffuel_heating * (hdd_year_interest - 1))
+        if baseline_emissions["baseline_emissions"] == 0:
+            return None
         
-        dist_cooling_factor = baseline_emissions["dist_cooling"]["share"] * cdd_ratio
-        
-        dist_heating_factor = baseline_emissions["dist_heating"]["share"] * hdd_year_interest * grid_ratio
-        
-        f_gas_factor = baseline_emissions["f_gas_1"]["share"] + baseline_emissions["f_gas_2"]["share"]
+        else:
+            grid_y_reporting = BuildingCalculations.grid_calculation(building, building.reporting_year)
+            grid_y_interest = BuildingCalculations.grid_calculation(building, year_of_interest)
+            grid_ratio = grid_y_interest/grid_y_reporting
 
-        ghg_emissions_year = baseline_emissions["baseline_emissions"] * \
-            (electricity_factor + fossils_factor +
-             dist_cooling_factor + dist_heating_factor + f_gas_factor)
+            total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, building.reporting_year) # For calculations we need to use the first year which is 2020
+            energy_ratio = building.grid_elec / total_energy_procurement
 
-        return ghg_emissions_year
+        
+            electricity_factor = baseline_emissions["grid_elec"]["share"] * ((grid_ratio * energy_ratio + (1-energy_ratio)) * (
+                1+country_share_elec_heating * (hdd_year_interest-1) + ac_dummy * country_share_elec_cooling * (cdd_year_interest-1)))
+            
+            fossils_factor = (baseline_emissions["natural_gas"]["share"] + baseline_emissions["fuel_oil"]["share"] + baseline_emissions["o1_energy"]["share"] + baseline_emissions["o2_energy"]["share"]) * hdd_ratio * (1+country_share_ffuel_heating * (hdd_year_interest - 1))
+            
+            dist_cooling_factor = baseline_emissions["dist_cooling"]["share"] * cdd_ratio
+            
+            dist_heating_factor = baseline_emissions["dist_heating"]["share"] * hdd_year_interest * grid_ratio
+            
+            f_gas_factor = baseline_emissions["f_gas_1"]["share"] + baseline_emissions["f_gas_2"]["share"]
+
+            ghg_emissions_year = baseline_emissions["baseline_emissions"] * \
+                (electricity_factor + fossils_factor +
+                dist_cooling_factor + dist_heating_factor + f_gas_factor)
+
+            return ghg_emissions_year
     
     @staticmethod
     def building_conversion_factor(building:Building, settings:Settings, year_of_interest) -> float:
