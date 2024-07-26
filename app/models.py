@@ -1,9 +1,12 @@
-from datetime import datetime
+from datetime import datetime, timezone
+from time import time
 from uuid import uuid4
 from typing import Optional
 import enum
 import json
+import jwt
 
+from flask import current_app
 from sqlalchemy import event
 import sqlalchemy as sa
 import sqlalchemy.orm as so
@@ -153,13 +156,25 @@ class User(UserMixin, db.Model):
     building: so.Mapped["Building"] = so.relationship(back_populates="owner")
     
     def set_password(self, password):
-        # Add additional criteria for stable password
         self.password_hash = generate_password_hash(password)
         
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {"reset_password":self.id, "exp":time()+expires_in},
+            current_app.config["SECRET_KEY"], algorithm="HS256"
+        )
     
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, current_app.config["SECRET_KEY"],
+                            algorithms=["HS256"])["reset_password"]
+        except:
+            return
+        return db.session.get(User,id)
     
     def __repr__(self) -> str:
         return f"<User: {self.name} Email: {self.email} >"

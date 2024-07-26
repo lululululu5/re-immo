@@ -28,3 +28,12 @@ class RegistrationForm(FlaskForm):
         
     # def validate_password_strength(self, password):
     #     pass
+    
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
+    submit = SubmitField(_l("Request Password Reset"))
+    
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField(_l("New Password"), validators=[DataRequired()])
+    password2 = PasswordField(_l("Repeat New Password"), validators=[DataRequired(), EqualTo("password", message=_l("Passwords must match."))])
+    submit = SubmitField(_l("Update Password"))
