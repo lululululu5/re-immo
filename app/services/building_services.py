@@ -28,6 +28,9 @@ with open("app/data/share_fossil_fuels_heating.json", "r") as f:
 with open("app/data/share_electricity_heating_cooling.json", "r") as f:
     share_elec_heating_cooling = json.load(f)
     
+with open("app/data/structured_emission_targets.json", "r") as f:
+    emission_target_data = json.load(f)
+    
 
 class BuildingCalculations:
     
@@ -303,7 +306,11 @@ class BuildingCalculations:
         if building.retrofit_year:
             energy_intensity_retro = BuildingCalculations.energy_intensity_retrofit(building, settings, building.retrofit_year)
         
-        if year_of_interest < building.retrofit_year or building.retrofit_year is None or energy_consumption==0:
+        if building.retrofit_year is None or energy_consumption==0:
+            return energy_consumption/building.size
+        
+        if year_of_interest < building.retrofit_year:
+            """In case of no retrofitting this will yield the same results as the general energy formula"""
             return energy_consumption/building.size
         
         elif year_of_interest == building.retrofit_year:
@@ -319,3 +326,59 @@ class BuildingCalculations:
     def retro_fit_changes(building:Building, settings:Settings, year_of_interest):
         """Calculates Energy and Carbon with respect to retrofit investment"""
         return BuildingCalculations.energy_consumption_retrofit(building, settings, year_of_interest) * BuildingCalculations.building_conversion_factor(building, settings, year_of_interest)
+    
+    
+    @staticmethod
+    def decarbonisation_targets(building:Building, settings:Settings) -> dict:
+        property_type = building.property_type.value
+        scenario = "1.5"
+        country = building.country
+        emission_targets = {}
+        
+        for year in range(2020,2051):
+            year_string = str(year)
+            try: 
+                target_value = emission_target_data[country][property_type][scenario][year_string]
+            except: 
+                raise ValueError("Target Value is not accessible. Please contact us.")
+                # How to make sure to log such a problem
+            emission_targets[year_string] = target_value
+            
+        return emission_targets
+    
+        
+    @staticmethod
+    def emissions_per_year(building:Building, settings:Settings) -> dict:
+        """Based on the nature of retrofit changes the non retrofit energy intensity is also included and hence the emissions are correct"""
+        emissions_with_retro = {}
+        
+        for year_of_interest in range(2020, 2051):
+            emissions = BuildingCalculations.ghg_for_year(building, settings, year_of_interest)
+            if emissions is None:
+                emissions_with_retro[str(year_of_interest)] = None
+                continue
+            if year_of_interest < building.reporting_year:
+                emissions_with_retro[str(year_of_interest)] = None
+                continue
+            if building.size > 0:
+                emissions_with_retro[str(year_of_interest)] = BuildingCalculations.retro_fit_changes(building, settings, year_of_interest)
+            else:
+                raise ValueError("Building size must be a positive number")
+            
+        return emissions_with_retro
+            
+    @staticmethod
+    def excess_emissions(building:Building, settings:Settings) -> dict:
+        """Carbon after retro which also includes the non zero case - decarbonisation target"""
+        actual_emissions = BuildingCalculations.emissions_per_year(building, settings)
+        target_emissions = BuildingCalculations.decarbonisation_targets(building, settings)
+        
+        excess_emissions = {}
+        
+        for year_of_interest in range(2020, 2051):
+            if year_of_interest < building.reporting_year or actual_emissions[str(year_of_interest)] is None:
+                excess_emissions[str(year_of_interest)] = None
+                continue
+            excess_emissions[str(year_of_interest)] = (actual_emissions[str(year_of_interest)] - target_emissions[str(year_of_interest)])
+        
+        return excess_emissions

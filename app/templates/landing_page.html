@@ -1,0 +1,119 @@
+<p> What up mofos <p>
+<script>
+    const crremChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: years,
+            datasets: [
+                {
+                    label: "Decarbonisation Targets",
+                    data: decarbonisationTargets,
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                    fill: false
+                },
+                {
+                    label: "Emissions Per Year",
+                    data: emissionsPerYear,
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1,
+                    fill: false
+                },
+                {
+                    label: "Excess Emissions",
+                    data: excessEmissions,
+                    borderColor: "rgba(153, 102, 255, 1)",
+                    borderWidth: 1,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: false
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Emissions (tons of CO2e)"
+                    }
+                }
+            },
+            plugins: {
+                annotation: {
+                    annotations: {
+                        strandingLine: {
+                            type: 'line',
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            borderDash: [6, 6],
+                            value: strandingYear,
+                            scaleID: 'x-axis-0',
+                        },
+                        retrofitLine: {
+                            type: 'line',
+                            borderColor: 'blue',
+                            borderWidth: 2,
+                            borderDash: [6, 6],
+                            value: retrofitYear,
+                            scaleID: 'x-axis-0',
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            if (tooltipItem.dataset.label === "Decarbonisation Targets") {
+                                return `Decarbonisation Targets: ${tooltipItem.raw}`;
+                            } else if (tooltipItem.dataset.label === "Emissions Per Year") {
+                                return `Emissions Per Year: ${tooltipItem.raw}`;
+                            } else if (tooltipItem.dataset.label === "Excess Emissions") {
+                                return `Excess Emissions: ${tooltipItem.raw}`;
+                            }
+                        },
+                        afterLabel: function(tooltipItem) {
+                            const index = tooltipItem.dataIndex;
+                            if (years[index] == strandingYear) {
+                                return `Stranding Year: ${strandingYear}`;
+                            } else if (years[index] == retrofitYear) {
+                                return `Retrofit Year: ${retrofitYear}`;
+                            }
+                            return '';
+                        }
+                    }
+                },
+                legend: {
+                    display: true,
+                    labels: {
+                        generateLabels: function(chart) {
+                            const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                            labels.push({
+                                text: 'Stranding Year',
+                                fillStyle: 'red',
+                                strokeStyle: 'red',
+                                lineCap: 'butt',
+                                lineDash: [6, 6],
+                                lineDashOffset: 0,
+                                lineJoin: 'miter',
+                                lineWidth: 2,
+                            });
+                            labels.push({
+                                text: 'Retrofit Year',
+                                fillStyle: 'blue',
+                                strokeStyle: 'blue',
+                                lineCap: 'butt',
+                                lineDash: [6, 6],
+                                lineDashOffset: 0,
+                                lineJoin: 'miter',
+                                lineWidth: 2,
+                            });
+                            return labels;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>

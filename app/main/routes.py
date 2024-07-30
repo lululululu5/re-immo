@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 from flask_babel import _
 import sqlalchemy as sa
@@ -14,6 +14,10 @@ from app.main import bp
 @login_required
 def index():
     building = db.session.scalar(sa.select(Building).where(Building.user_id == current_user.id))
+    crrem_data = {}
+    stranding_year = {"year": None}
+    retrofit_year = {"year": None}
+    
     if building:
         settings = db.session.scalar(sa.select(Settings).where(Settings.building_id == building.id))
         baseline_emissions =  BuildingCalculations.baseline_emissions(building)["baseline_emissions"]
@@ -21,7 +25,27 @@ def index():
         if baseline_emissions > 0:
             building.baseline_emissions = round(baseline_emissions, 2)
             building.ghg_emissions_2035 = round(ghg_emissions_2035, 2)
-    return render_template("index.html", building=building)
+        
+        decarbonisation_targets = BuildingCalculations.decarbonisation_targets(building, settings)
+        emissions_per_year = BuildingCalculations.emissions_per_year(building, settings)
+        excess_emissions = BuildingCalculations.excess_emissions(building, settings)
+        for k,v in excess_emissions.items():
+            if v is None:
+                continue
+            if v > 0:
+                stranding_year["year"] = k
+                building.stranding_year = k
+                break
+        retrofit_year["year"] = building.retrofit_year
+        
+        crrem_data = {
+            "decarbonisation_targets": decarbonisation_targets,
+            "emissions_per_year": emissions_per_year,
+            "excess_emissions": excess_emissions, 
+            "stranding_year": stranding_year,
+            "retrofit_year": retrofit_year}
+        
+    return render_template("index.html", building=building, crrem_data=crrem_data)
 
 
 @bp.route("/add_building", methods=["GET", "POST"])

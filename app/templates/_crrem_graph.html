@@ -1,6 +1,144 @@
 <div class="card">
     <div class="card-body text-center">
         <h5 class="card-title">{{ _("CRREM Graph") }}</h5>
-        <img src="{{ url_for('static', filename='crrem_graph.png') }}" alt="CRREM Graph" class="img-fluid">
+        <canvas id="crremChart" width="400" height="200"></canvas></br>
+        <blockquote class="blockquote alert alert-light mt-4" role="alert">
+            <p>This chart illustrates the building's greenhouse gas emissions over time in relation to CRREM targets. 
+            The <span style="color:rgba(75, 192, 192, 1);">blue line</span> represents the decarbonisation targets, 
+            the <span style="color:rgba(255, 99, 132, 1);">red line</span> shows the actual emissions per year, 
+            and the <span style="color:rgba(153, 102, 255, 1);">purple line</span> indicates excess emissions compared to the targets. 
+            The vertical lines mark significant events: <strong>Stranding Year</strong> (when emissions first exceed the target) and 
+            <strong>Retrofit Year</strong> (when a major retrofit is completed).</p>
+        </blockquote>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+<script>
+    const crremData = {{ crrem_data | tojson }};
+
+    const years = Object.keys(crremData.decarbonisation_targets);
+    const decarbonisationTargets = Object.values(crremData.decarbonisation_targets);
+    const emissionsPerYear = Object.values(crremData.emissions_per_year);
+    const excessEmissions = Object.values(crremData.excess_emissions)
+    const strandingYear = Object.values(crremData.stranding_year)
+    const retrofitYear = Object.values(crremData.retrofit_year)
+    
+    const ctx = document.getElementById("crremChart").getContext("2d");
+    let crremChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: "Decarbonisation Targets",
+                        data: decarbonisationTargets,
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: "Emissions Per Year",
+                        data: emissionsPerYear,
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: "Excess Emissions",
+                        data: excessEmissions,
+                        borderColor: "rgba(153, 102, 255, 1)",
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: false
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Emissions (tons of CO2e)"
+                        }
+                    }
+                },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            strandingLine: {
+                                type: 'line',
+                                xMin: years.indexOf(strandingYear.toString()),
+                                xMax: years.indexOf(strandingYear.toString()),
+                                borderColor: 'red',
+                                borderWidth: 1,
+                                borderDash: [6, 6]
+                            },
+                            retrofitLine: {
+                                type: 'line',
+                                xMin: years.indexOf(retrofitYear.toString()),
+                                xMax: years.indexOf(retrofitYear.toString()),
+                                borderColor: 'blue',
+                                borderWidth: 1,
+                                borderDash: [6, 6]
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                if (tooltipItem.dataset.label === "Decarbonisation Targets") {
+                                    return `Decarbonisation Targets: ${tooltipItem.raw}`;
+                                } else if (tooltipItem.dataset.label === "Emissions Per Year") {
+                                    return `Emissions Per Year: ${tooltipItem.raw}`;
+                                } else if (tooltipItem.dataset.label === "Excess Emissions") {
+                                    return `Excess Emissions: ${tooltipItem.raw}`;
+                                }
+                            },
+                            afterLabel: function(tooltipItem) {
+                                const index = tooltipItem.dataIndex;
+                                if (years[index] == strandingYear) {
+                                    return `Stranding Year: ${strandingYear}`;
+                                } else if (years[index] == retrofitYear) {
+                                    return `Retrofit Year: ${retrofitYear}`;
+                                }
+                                return '';
+                            }
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            generateLabels: function(chart) {
+                                const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                labels.push({
+                                    text: 'Stranding Year',
+                                    fillStyle: 'red',
+                                    strokeStyle: 'red',
+                                    lineCap: 'butt',
+                                    lineDash: [6, 6],
+                                    lineDashOffset: 0,
+                                    lineJoin: 'miter',
+                                    lineWidth: 2,
+                                });
+                                labels.push({
+                                    text: 'Retrofit Year',
+                                    fillStyle: 'blue',
+                                    strokeStyle: 'blue',
+                                    lineCap: 'butt',
+                                    lineDash: [6, 6],
+                                    lineDashOffset: 0,
+                                    lineJoin: 'miter',
+                                    lineWidth: 2,
+                                });
+                                return labels;
+                            }
+                        }
+                    }
+                }
+            }
+        });    
+    </script>
