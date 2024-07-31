@@ -10,6 +10,12 @@ from app import db
 from app.main import bp
 
 @bp.route("/")
+def home():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    else:
+        return redirect(url_for("main.landing_page"))
+
 @bp.route("/index")
 @login_required
 def index():
@@ -46,6 +52,10 @@ def index():
             "retrofit_year": retrofit_year}
         
     return render_template("index.html", building=building, crrem_data=crrem_data)
+
+@bp.route("/landing")
+def landing_page():
+    return render_template("landing_page.html")
 
 
 @bp.route("/add_building", methods=["GET", "POST"])

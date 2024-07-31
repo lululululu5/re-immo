@@ -1,115 +1,146 @@
-<p> What up mofos <p>
+{% extends "base.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center my-5" style="background-image: url('static/images/hero_background.jpg'); background-size: cover; background-position: center center; height: 400px; color: white;">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-center">
+                <h1 class="display-4">Assess Your Home's Carbon Risk in Minutes</h1>
+                <p class="lead">Discover how easy it is to assess and improve your property's compliance with climate goals.</p>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg">Check Your Property Now</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- How It Works Section -->
+    <div class="row text-center my-5">
+        <div class="col-md-4">
+            <div class="border rounded p-4">
+                <i class="fas fa-pencil-alt fa-3x mb-3"></i>
+                <h5>Step 1</h5>
+                <p>Enter details about your property with just a few clicks.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="border rounded p-4">
+                <i class="fas fa-bolt fa-3x mb-3"></i>
+                <h5>Step 2</h5>
+                <p>Instantly see if your property aligns with climate change goals.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="border rounded p-4">
+                <i class="fas fa-check-circle fa-3x mb-3"></i>
+                <h5>Step 3</h5>
+                <p>Understand what investments might be necessary to comply.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Features & Benefits Section -->
+    <div class="row my-5">
+        <div class="col-md-6">
+            <i class="fas fa-hand-pointer fa-3x mb-3"></i>
+            <h5>Ease of Use</h5>
+            <p>No complicated processes. Get results with a few clicks.</p>
+        </div>
+        <div class="col-md-6">
+            <i class="fas fa-flask fa-3x mb-3"></i>
+            <h5>Scientific Accuracy</h5>
+            <p>Powered by CRREM models, our assessments follow the highest scientific standards.</p>
+        </div>
+    </div>
+
+    <!-- Why It Matters Section -->
+    <div class="border rounded p-4">
+        <div class="row my-5">
+            <div class="col-md-6">
+                <h5>Why It Matters</h5>
+                <p>Real estate is one of the biggest climate change contributing sectors. Let's understand how we can combat this.</p>
+                <p>With climate change regulations tightening, knowing your property's carbon risk is essential for future-proofing your investment.</p>
+                <p>Ensure your property meets national and international climate targets.</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <h5 class="card-title">{{ _("Share of global CO2 Emissions By Sector") }}</h5>
+                <canvas id="emissionsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FAQ Section -->
+    <div class="accordion my-5" id="faqAccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        How accurate are the assessments?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                <div class="card-body">
+                    Our assessments are based on CRREM models, which are known for their scientific rigor and accuracy in measuring carbon risks.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        What data do I need to provide?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                <div class="card-body">
+                    You'll need to provide basic information about your property, such as location, size, and energy usage.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-light py-4">
+        <div class="container">
+
+        <h5>Contact Information</h5>
+        <p>Email: support@example.com</p>
+        <p>Phone: +123 456 7890</p>
+
+        </div>
+    </footer>
+</div>
+
 <script>
-    const crremChart = new Chart(ctx, {
-        type: "line",
+    var ctx = document.getElementById('emissionsChart').getContext('2d');
+    var emissionsChart = new Chart(ctx, {
+        type: 'pie',
         data: {
-            labels: years,
-            datasets: [
-                {
-                    label: "Decarbonisation Targets",
-                    data: decarbonisationTargets,
-                    borderColor: "rgba(75, 192, 192, 1)",
-                    borderWidth: 1,
-                    fill: false
-                },
-                {
-                    label: "Emissions Per Year",
-                    data: emissionsPerYear,
-                    borderColor: "rgba(255, 99, 132, 1)",
-                    borderWidth: 1,
-                    fill: false
-                },
-                {
-                    label: "Excess Emissions",
-                    data: excessEmissions,
-                    borderColor: "rgba(153, 102, 255, 1)",
-                    borderWidth: 1,
-                    fill: false
-                }
-            ]
+            labels: ['Buildings', 'Construction', 'Transportation', 'Other', 'Industry (non-construction)'],
+            datasets: [{
+                data: [28, 11, 22, 9, 29],
+                backgroundColor: ['#26846C', '#26846C', '#6c757d', '#6c757d', '#6c757d'], // Highlighted colors for Buildings and Construction, others in grey
+                borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
+                borderWidth: 1
+            }]
         },
         options: {
-            scales: {
-                x: {
-                    beginAtZero: false
-                },
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: "Emissions (tons of CO2e)"
-                    }
-                }
-            },
+            responsive: true,
             plugins: {
-                annotation: {
-                    annotations: {
-                        strandingLine: {
-                            type: 'line',
-                            borderColor: 'red',
-                            borderWidth: 2,
-                            borderDash: [6, 6],
-                            value: strandingYear,
-                            scaleID: 'x-axis-0',
-                        },
-                        retrofitLine: {
-                            type: 'line',
-                            borderColor: 'blue',
-                            borderWidth: 2,
-                            borderDash: [6, 6],
-                            value: retrofitYear,
-                            scaleID: 'x-axis-0',
-                        }
-                    }
+                legend: {
+                    position: 'top',
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(tooltipItem) {
-                            if (tooltipItem.dataset.label === "Decarbonisation Targets") {
-                                return `Decarbonisation Targets: ${tooltipItem.raw}`;
-                            } else if (tooltipItem.dataset.label === "Emissions Per Year") {
-                                return `Emissions Per Year: ${tooltipItem.raw}`;
-                            } else if (tooltipItem.dataset.label === "Excess Emissions") {
-                                return `Excess Emissions: ${tooltipItem.raw}`;
-                            }
-                        },
-                        afterLabel: function(tooltipItem) {
-                            const index = tooltipItem.dataIndex;
-                            if (years[index] == strandingYear) {
-                                return `Stranding Year: ${strandingYear}`;
-                            } else if (years[index] == retrofitYear) {
-                                return `Retrofit Year: ${retrofitYear}`;
-                            }
-                            return '';
-                        }
-                    }
-                },
-                legend: {
-                    display: true,
-                    labels: {
-                        generateLabels: function(chart) {
-                            const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
-                            labels.push({
-                                text: 'Stranding Year',
-                                fillStyle: 'red',
-                                strokeStyle: 'red',
-                                lineCap: 'butt',
-                                lineDash: [6, 6],
-                                lineDashOffset: 0,
-                                lineJoin: 'miter',
-                                lineWidth: 2,
-                            });
-                            labels.push({
-                                text: 'Retrofit Year',
-                                fillStyle: 'blue',
-                                strokeStyle: 'blue',
-                                lineCap: 'butt',
-                                lineDash: [6, 6],
-                                lineDashOffset: 0,
-                                lineJoin: 'miter',
-                                lineWidth: 2,
-                            });
-                            return labels;
+                        label: function(context) {
+                            var label = context.label || '';
+                            var value = context.raw || '';
+                            return label + ': ' + value + '%';
                         }
                     }
                 }
@@ -117,3 +148,4 @@
         }
     });
 </script>
+{% endblock %}
