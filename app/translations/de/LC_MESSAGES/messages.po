@@ -33,7 +33,6 @@ msgid "Field must be different to %(other_name)s."
 msgstr "Feld muss sich von %(other_name)s unterscheiden."
 
 #: app/auth/email.py:9
-#, fuzzy
 msgid "re:immo Reset your Password"
 msgstr "Passwort wiederholen"
 
@@ -70,7 +69,6 @@ msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
 #: app/auth/forms.py:24
-#, fuzzy
 msgid "password"
 msgstr "Passwort"
 
@@ -80,17 +78,14 @@ msgid "Register"
 msgstr "Registrieren"
 
 #: app/auth/forms.py:38
-#, fuzzy
 msgid "Request Password Reset"
 msgstr "Passwort wiederholen"
 
 #: app/auth/forms.py:41
-#, fuzzy
 msgid "New Password"
 msgstr "Passwort"
 
 #: app/auth/forms.py:46
-#, fuzzy
 msgid "Repeat New Password"
 msgstr "Passwort wiederholen"
 
@@ -99,7 +94,6 @@ msgid "Passwords must match."
 msgstr "Passwörter müssen übereinstimmen."
 
 #: app/auth/forms.py:47
-#, fuzzy
 msgid "Update Password"
 msgstr "Passwort wiederholen"
 
@@ -118,7 +112,6 @@ msgid "Sign In"
 msgstr "Anmelden"
 
 #: app/auth/routes.py:50
-#, fuzzy
 msgid ""
 "Congratulation, you are now a registered user. Confirm your email to "
 "access the platform!"
@@ -131,7 +124,6 @@ msgstr ""
 "Passworts."
 
 #: app/auth/routes.py:80
-#, fuzzy
 msgid "Reset Password Request"
 msgstr "Passwort wiederholen"
 
@@ -140,7 +132,6 @@ msgid "Your password has been reset."
 msgstr "Ihr Passwort wurde zurückgesetzt."
 
 #: app/auth/routes.py:95
-#, fuzzy
 msgid "Reset Password"
 msgstr "Passwort wiederholen"
 
@@ -167,9 +158,8 @@ msgid "Country*"
 msgstr "Land*"
 
 #: app/main/forms.py:38
-#, fuzzy
 msgid "Construction Year*"
-msgstr "Energieverbrauch pro Jahr"
+msgstr "Baujahr"
 
 #: app/main/forms.py:39
 msgid "Property Type*"
@@ -355,31 +345,26 @@ msgstr ""
 "sind. Die vertikalen Linien markieren wichtige Ereignisse:  "
 
 #: app/templates/_crrem_graph.html:10 app/templates/index.html:49
-#, fuzzy
 msgid "Stranding Year"
 msgstr "Strandungsjahr"
 
 #: app/templates/_crrem_graph.html:11
-#, fuzzy
 msgid "Retrofit Year"
-msgstr "Geplantes Retrofit Jahr"
+msgstr "Retrofit Jahr"
 
 #: app/templates/_crrem_graph.html:11
 msgid "(when a major retrofit is completed)."
 msgstr "(wenn eine größere Renovierung abgeschlossen ist)."
 
 #: app/templates/add_building.html:14 app/templates/edit_building.html:16
-#, fuzzy
 msgid "Energy Consumption per Year"
 msgstr "Energieverbrauch pro Jahr"
 
 #: app/templates/add_building.html:24 app/templates/edit_building.html:26
-#, fuzzy
 msgid "Fugitive Emissions per Year"
 msgstr "Flüchtige Emissionen pro Jahr"
 
 #: app/templates/add_building.html:29 app/templates/edit_building.html:31
-#, fuzzy
 msgid "Renewable Energy per Year"
 msgstr "Erneuerbare Energie pro Jahr"
 
@@ -413,7 +398,6 @@ msgid "Address:"
 msgstr "Adresse:"
 
 #: app/templates/index.html:13
-#, fuzzy
 msgid "Construction year:"
 msgstr "Baujahr:"
 
@@ -588,12 +572,10 @@ msgid "Click to Register!"
 msgstr "Klicken Sie hier, um sich zu registrieren!"
 
 #: app/templates/auth/login.html:8
-#, fuzzy
 msgid "Forgot Password?"
 msgstr "Passwort wiederholen"
 
 #: app/templates/auth/login.html:8
-#, fuzzy
 msgid "Click to Reset!"
 msgstr "Klicken Sie hier, um sich zu registrieren!"
 

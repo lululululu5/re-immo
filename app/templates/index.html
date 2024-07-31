@@ -7,7 +7,7 @@
             {% if building is none %}
                 <a href="{{ url_for("main.add_building") }}" class="btn btn-primary mt-3">{{ _("Add Building") }}</a>
             {% else %}
-                <div class="mt-4 text-left">
+                <div class="mt-4 text-center">
                     <p>
                         <strong>{{ _("Address:") }}</strong> {{ building.address }}
                         <strong>{{ _("Construction year:") }}</strong> {{ building.construction_year }}
