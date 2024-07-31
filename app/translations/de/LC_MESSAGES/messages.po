@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-19 09:25+0200\n"
+"POT-Creation-Date: 2024-07-31 10:47+0200\n"
 "PO-Revision-Date: 2024-07-17 13:58+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app/__init__.py:20
+#: app/__init__.py:21
 msgid "Please log in to access this page."
 msgstr "Bitte loggen Sie sich ein, um auf diese Seite zuzugreifen."
 
@@ -32,11 +32,20 @@ msgstr "Ungültiger Feldname '%s'."
 msgid "Field must be different to %(other_name)s."
 msgstr "Feld muss sich von %(other_name)s unterscheiden."
 
-#: app/auth/forms.py:11 app/auth/forms.py:18
+#: app/auth/email.py:9
+#, fuzzy
+msgid "re:immo Reset your Password"
+msgstr "Passwort wiederholen"
+
+#: app/auth/email.py:19
+msgid "re:immo PLease confirm your Email"
+msgstr "re:immo Bitte bestätigen Sie Ihre Email Adresse"
+
+#: app/auth/forms.py:11 app/auth/forms.py:18 app/auth/forms.py:37
 msgid "Email"
 msgstr "E-Mail"
 
-#: app/auth/forms.py:12 app/auth/forms.py:19 app/auth/forms.py:20
+#: app/auth/forms.py:12 app/auth/forms.py:19
 msgid "Password"
 msgstr "Passwort"
 
@@ -48,26 +57,90 @@ msgstr "Angemeldet bleiben"
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: app/auth/forms.py:20
+#: app/auth/forms.py:23 app/auth/forms.py:45
+msgid "Password must contain at least one uppercase letter, one number, and one special character, and be at least 8 characters long."
+msgstr "Das Passwort muss mindestens einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten und mindestens 8 Zeichen lang sein."
+
+#: app/auth/forms.py:24
 msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
-#: app/auth/forms.py:21 app/auth/routes.py:47
+#: app/auth/forms.py:24
+#, fuzzy
+msgid "password"
+msgstr "Passwort"
+
+#: app/auth/forms.py:25 app/auth/routes.py:52
 #: app/templates/auth/register.html:5
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/auth/routes.py:21
+#: app/auth/forms.py:38
+#, fuzzy
+msgid "Request Password Reset"
+msgstr "Passwort wiederholen"
+
+#: app/auth/forms.py:41
+#, fuzzy
+msgid "New Password"
+msgstr "Passwort"
+
+#: app/auth/forms.py:46
+#, fuzzy
+msgid "Repeat New Password"
+msgstr "Passwort wiederholen"
+
+#: app/auth/forms.py:46
+msgid "Passwords must match."
+msgstr "Passwörter müssen übereinstimmen."
+
+#: app/auth/forms.py:47
+#, fuzzy
+msgid "Update Password"
+msgstr "Passwort wiederholen"
+
+#: app/auth/routes.py:22
 msgid "Invalid username or password"
 msgstr "Ungültiger Benutzername oder Passwort"
 
-#: app/auth/routes.py:28 app/templates/auth/login.html:5
+#: app/auth/routes.py:25
+msgid "Email Address not confirmed. Please confirm to access the platform."
+msgstr "E-Mail Adresse nicht bestätigt. Bitte bestätigen Sie, um auf die Plattform zuzugreifen."
+
+#: app/auth/routes.py:32 app/templates/auth/login.html:5
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: app/auth/routes.py:45
-msgid "Congratulation, you are now a registered user!"
+#: app/auth/routes.py:50
+#, fuzzy
+msgid "Congratulation, you are now a registered user. Confirm your email to access the platform!"
 msgstr "Glückwunsch, Sie sind jetzt ein registrierter Benutzer!"
+
+#: app/auth/routes.py:78
+msgid "Check your email for the instructions to reset your password"
+msgstr "Überprüfen Sie Ihre E-Mail auf die Anweisungen zum Zurücksetzen Ihres Passworts."
+
+#: app/auth/routes.py:80
+#, fuzzy
+msgid "Reset Password Request"
+msgstr "Passwort wiederholen"
+
+#: app/auth/routes.py:93
+msgid "Your password has been reset."
+msgstr "Ihr Passwort wurde zurückgesetzt."
+
+#: app/auth/routes.py:95
+#, fuzzy
+msgid "Reset Password"
+msgstr "Passwort wiederholen"
+
+#: app/auth/routes.py:103
+msgid "Invalid email address or token expired. Please contact us."
+msgstr "Ungültige E-Mail-Adresse oder das Token ist abgelaufen. Bitte kontaktieren Sie uns."
+
+#: app/auth/routes.py:108
+msgid "Email Address confirmed you will redirected to the Login page."
+msgstr "E-Mail Adresse bestätigt. Sie werden zur Login-Seite weitergeleitet."
 
 #: app/main/forms.py:35
 msgid "Address*"
@@ -82,67 +155,72 @@ msgid "Country*"
 msgstr "Land*"
 
 #: app/main/forms.py:38
+#, fuzzy
+msgid "Construction Year*"
+msgstr "Energieverbrauch pro Jahr"
+
+#: app/main/forms.py:39
 msgid "Property Type*"
 msgstr "Immobilientyp*"
 
-#: app/main/forms.py:39
+#: app/main/forms.py:40
 msgid "Size in SQM*"
 msgstr "Größe in m²*"
 
-#: app/main/forms.py:40
+#: app/main/forms.py:41
 msgid "Reporting Year*"
 msgstr "Berichtsjahr*"
 
-#: app/main/forms.py:44
+#: app/main/forms.py:45
 msgid "Grid Electricity in kWh"
 msgstr "Netzstrom in kWh"
 
-#: app/main/forms.py:45
+#: app/main/forms.py:46
 msgid "Natural Gas in kWh"
 msgstr "Erdgas in kWh"
 
-#: app/main/forms.py:46
+#: app/main/forms.py:47
 msgid "Fuel Oil in kWh"
 msgstr "Heizöl in kWh"
 
-#: app/main/forms.py:47
+#: app/main/forms.py:48
 msgid "Dist in Heating in kWh"
 msgstr "Fernwärme in kWh"
 
-#: app/main/forms.py:48
+#: app/main/forms.py:49
 msgid "District Cooling in kWh"
 msgstr "Fernkälte in kWh"
 
-#: app/main/forms.py:50
+#: app/main/forms.py:51
 msgid "Other Type 1"
 msgstr "Sonstiger Typ 1"
 
-#: app/main/forms.py:51 app/main/forms.py:57 app/main/forms.py:65
+#: app/main/forms.py:52 app/main/forms.py:58 app/main/forms.py:66
 #: app/main/forms.py:72
 msgid "Select any"
 msgstr "Bitte auswählen"
 
-#: app/main/forms.py:54
+#: app/main/forms.py:55
 msgid "Other 1 in kWh"
 msgstr "Sonstiges 1 in kWh"
 
-#: app/main/forms.py:56
+#: app/main/forms.py:57
 msgid "Other Type 2"
 msgstr "Sonstiger Typ 2"
 
-#: app/main/forms.py:58
+#: app/main/forms.py:59
 msgid "Energy Type fields need to be different"
 msgstr "Energietypen müssen unterschiedlich sein"
 
-#: app/main/forms.py:60
+#: app/main/forms.py:61
 msgid "Other 2 in kWh"
 msgstr "Sonstiges 2 in kWh"
 
-#: app/main/forms.py:64
+#: app/main/forms.py:65
 msgid "F-Gas 1 Type"
 msgstr "F-Gas 1 Typ"
 
-#: app/main/forms.py:68
+#: app/main/forms.py:69
 msgid "Leakage F Gas 1"
 msgstr "Leckage F-Gas 1"
 
@@ -182,8 +260,8 @@ msgstr "Geplantes Retrofit Jahr"
 msgid "Planned Retrofit Investement in Euro"
 msgstr "Geplante Investition für Retrofit in Euro"
 
-#: app/main/forms.py:89 app/main/routes.py:62 app/templates/add_building.html:4
-#: app/templates/index.html:5
+#: app/main/forms.py:89 app/main/routes.py:108
+#: app/templates/add_building.html:4 app/templates/index.html:8
 msgid "Add Building"
 msgstr "Gebäude hinzufügen"
 
@@ -191,55 +269,56 @@ msgstr "Gebäude hinzufügen"
 msgid "Postal Code and Country do not match."
 msgstr "Postleitzahl und Land stimmen nicht überein."
 
-#: app/main/routes.py:25
-msgid ""
-"You cannot have more than one building. But you can edit or delete your "
+#: app/main/routes.py:67
+msgid "You cannot have more than one building. But you can edit or delete your "
 "existing building."
-msgstr ""
-"Sie können nicht mehr als ein Gebäude haben. Aber Sie können Ihr "
-"bestehendes Gebäude bearbeiten oder löschen."
+msgstr "Sie können nicht mehr als ein Gebäude haben. Aber Sie können Ihr bestehendes Gebäude bearbeiten oder löschen."
 
-#: app/main/routes.py:60
+#: app/main/routes.py:106
 msgid "Building successfully created."
 msgstr "Gebäude erfolgreich erstellt."
 
-#: app/main/routes.py:69
+#: app/main/routes.py:115
 msgid "You first need to add a building."
 msgstr "Sie müssen zuerst ein Gebäude hinzufügen."
 
-#: app/main/routes.py:104
+#: app/main/routes.py:149
 msgid "Building successfully updated."
 msgstr "Gebäude erfolgreich aktualisiert."
 
-#: app/main/routes.py:135
+#: app/main/routes.py:182
 msgid "Save Building"
 msgstr "Gebäude speichern"
 
-#: app/main/routes.py:136 app/templates/edit_building.html:5
-#: app/templates/index.html:7
+#: app/main/routes.py:183 app/templates/edit_building.html:5
+#: app/templates/index.html:21
 msgid "Edit Building"
 msgstr "Gebäude bearbeiten"
 
-#: app/main/routes.py:143
+#: app/main/routes.py:190
 msgid "Building successfully deleted."
 msgstr "Gebäude erfolgreich gelöscht."
 
-#: app/templates/add_building.html:13 app/templates/edit_building.html:15
+#: app/templates/_crrem_graph.html:3
+msgid "CRREM Graph"
+msgstr "CRREM Graph"
+
+#: app/templates/add_building.html:14 app/templates/edit_building.html:16
 #, fuzzy
 msgid "Energy Consumption per Year"
 msgstr "Energieverbrauch pro Jahr"
 
-#: app/templates/add_building.html:23 app/templates/edit_building.html:25
+#: app/templates/add_building.html:24 app/templates/edit_building.html:26
 #, fuzzy
 msgid "Fugitive Emissions per Year"
 msgstr "Flüchtige Emissionen pro Jahr"
 
-#: app/templates/add_building.html:28 app/templates/edit_building.html:30
+#: app/templates/add_building.html:29 app/templates/edit_building.html:31
 #, fuzzy
 msgid "Renewable Energy per Year"
 msgstr "Erneuerbare Energie pro Jahr"
 
-#: app/templates/add_building.html:34 app/templates/edit_building.html:36
+#: app/templates/add_building.html:35 app/templates/edit_building.html:37
 msgid "Planned Retrofit"
 msgstr "Geplantes Retrofit"
 
@@ -247,50 +326,80 @@ msgstr "Geplantes Retrofit"
 msgid "Welcome to re:immo"
 msgstr "Willkommen bei re:immo"
 
-#: app/templates/base.html:27
-msgid "Home"
-msgstr "Startseite"
+#: app/templates/base.html:29
+msgid "Info"
+msgstr "Info"
 
-#: app/templates/base.html:33
+#: app/templates/base.html:35
 msgid "Login"
 msgstr "Anmelden"
 
-#: app/templates/base.html:37
+#: app/templates/base.html:39
 msgid "Logout"
 msgstr "Abmelden"
 
-#: app/templates/index.html:3
+#: app/templates/index.html:6
 #, python-format
 msgid "Hi, %(username)s!"
 msgstr "Hallo, %(username)s!"
 
-#: app/templates/index.html:8
-msgid "Delete Building"
-msgstr "Gebäude löschen"
-
-#: app/templates/index.html:11
+#: app/templates/index.html:12
 msgid "Address:"
 msgstr "Adresse:"
 
-#: app/templates/index.html:12
+#: app/templates/index.html:13
+#, fuzzy
+msgid "Construction year:"
+msgstr "Energieverbrauch pro Jahr"
+
+#: app/templates/index.html:14
 msgid "Reporting year:"
 msgstr "Berichtsjahr:"
 
-#: app/templates/index.html:13
+#: app/templates/index.html:15
 msgid "Country:"
 msgstr "Land:"
 
-#: app/templates/index.html:14
+#: app/templates/index.html:16
 msgid "Zip:"
 msgstr "PLZ:"
 
-#: app/templates/index.html:15
+#: app/templates/index.html:17
 msgid "Property type:"
 msgstr "Immobilientyp:"
 
-#: app/templates/index.html:16
+#: app/templates/index.html:18
 msgid "Size:"
 msgstr "Größe:"
+
+#: app/templates/index.html:22
+msgid "Delete Building"
+msgstr "Gebäude löschen"
+
+#: app/templates/index.html:32
+msgid "Overall Emissions"
+msgstr "Gesamte Emissionen"
+
+#: app/templates/index.html:35
+msgid "Current"
+msgstr "Aktuell"
+
+#: app/templates/index.html:40
+msgid "2035 (Estimated)"
+msgstr "2035 (Geschätzt)"
+
+#: app/templates/index.html:49
+#, fuzzy
+msgid "Stranding Year"
+msgstr "Berichtsjahr:"
+
+#: app/templates/index.html:57
+msgid "Emission Costs"
+msgstr "Geschätzte Kosten"
+
+#: app/templates/landing_page.html:68
+msgid "Share of global CO2 Emissions By Sector"
+msgstr "Anteil an den weltweiten CO2-Emissionen nach Sektoren"
 
 #: app/templates/auth/login.html:7
 msgid "New User?"
@@ -298,6 +407,16 @@ msgstr "Neuer Benutzer?"
 
 #: app/templates/auth/login.html:7
 msgid "Click to Register!"
+msgstr "Klicken Sie hier, um sich zu registrieren!"
+
+#: app/templates/auth/login.html:8
+#, fuzzy
+msgid "Forgot Password?"
+msgstr "Passwort wiederholen"
+
+#: app/templates/auth/login.html:8
+#, fuzzy
+msgid "Click to Reset!"
 msgstr "Klicken Sie hier, um sich zu registrieren!"
 
 #: app/templates/error/404.html:4
@@ -315,4 +434,7 @@ msgstr "Ein unerwarteter Fehler ist aufgetreten"
 #: app/templates/error/500.html:5
 msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr "Der Administrator wurde benachrichtigt. Wir entschuldigen uns für die Unannehmlichkeiten"
+
+#~ msgid "Home"
+#~ msgstr "Startseite"
 

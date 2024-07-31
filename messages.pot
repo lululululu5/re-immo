@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-19 09:25+0200\n"
+"POT-Creation-Date: 2024-07-31 10:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app/__init__.py:20
+#: app/__init__.py:21
 msgid "Please log in to access this page."
 msgstr ""
 
@@ -31,11 +31,19 @@ msgstr ""
 msgid "Field must be different to %(other_name)s."
 msgstr ""
 
-#: app/auth/forms.py:11 app/auth/forms.py:18
+#: app/auth/email.py:9
+msgid "re:immo Reset your Password"
+msgstr ""
+
+#: app/auth/email.py:19
+msgid "re:immo PLease confirm your Email"
+msgstr ""
+
+#: app/auth/forms.py:11 app/auth/forms.py:18 app/auth/forms.py:37
 msgid "Email"
 msgstr ""
 
-#: app/auth/forms.py:12 app/auth/forms.py:19 app/auth/forms.py:20
+#: app/auth/forms.py:12 app/auth/forms.py:19
 msgid "Password"
 msgstr ""
 
@@ -47,25 +55,85 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: app/auth/forms.py:20
+#: app/auth/forms.py:23 app/auth/forms.py:45
+msgid ""
+"Password must contain at least one uppercase letter, one number, and one "
+"special character, and be at least 8 characters long."
+msgstr ""
+
+#: app/auth/forms.py:24
 msgid "Repeat Password"
 msgstr ""
 
-#: app/auth/forms.py:21 app/auth/routes.py:47
+#: app/auth/forms.py:24
+msgid "password"
+msgstr ""
+
+#: app/auth/forms.py:25 app/auth/routes.py:52
 #: app/templates/auth/register.html:5
 msgid "Register"
 msgstr ""
 
-#: app/auth/routes.py:21
+#: app/auth/forms.py:38
+msgid "Request Password Reset"
+msgstr ""
+
+#: app/auth/forms.py:41
+msgid "New Password"
+msgstr ""
+
+#: app/auth/forms.py:46
+msgid "Repeat New Password"
+msgstr ""
+
+#: app/auth/forms.py:46
+msgid "Passwords must match."
+msgstr ""
+
+#: app/auth/forms.py:47
+msgid "Update Password"
+msgstr ""
+
+#: app/auth/routes.py:22
 msgid "Invalid username or password"
 msgstr ""
 
-#: app/auth/routes.py:28 app/templates/auth/login.html:5
+#: app/auth/routes.py:25
+msgid "Email Address not confirmed. Please confirm to access the platform."
+msgstr ""
+
+#: app/auth/routes.py:32 app/templates/auth/login.html:5
 msgid "Sign In"
 msgstr ""
 
-#: app/auth/routes.py:45
-msgid "Congratulation, you are now a registered user!"
+#: app/auth/routes.py:50
+msgid ""
+"Congratulation, you are now a registered user. Confirm your email to "
+"access the platform!"
+msgstr ""
+
+#: app/auth/routes.py:78
+msgid "Check your email for the instructions to reset your password"
+msgstr ""
+
+#: app/auth/routes.py:80
+msgid "Reset Password Request"
+msgstr ""
+
+#: app/auth/routes.py:93
+msgid "Your password has been reset."
+msgstr ""
+
+#: app/auth/routes.py:95
+msgid "Reset Password"
+msgstr ""
+
+#: app/auth/routes.py:103
+msgid "Invalid email address or token expired. Please contact us."
+msgstr ""
+
+#: app/auth/routes.py:108
+msgid "Email Address confirmed you will redirected to the Login page."
 msgstr ""
 
 #: app/main/forms.py:35
@@ -81,67 +149,71 @@ msgid "Country*"
 msgstr ""
 
 #: app/main/forms.py:38
-msgid "Property Type*"
+msgid "Construction Year*"
 msgstr ""
 
 #: app/main/forms.py:39
-msgid "Size in SQM*"
+msgid "Property Type*"
 msgstr ""
 
 #: app/main/forms.py:40
+msgid "Size in SQM*"
+msgstr ""
+
+#: app/main/forms.py:41
 msgid "Reporting Year*"
 msgstr ""
 
-#: app/main/forms.py:44
+#: app/main/forms.py:45
 msgid "Grid Electricity in kWh"
 msgstr ""
 
-#: app/main/forms.py:45
+#: app/main/forms.py:46
 msgid "Natural Gas in kWh"
 msgstr ""
 
-#: app/main/forms.py:46
+#: app/main/forms.py:47
 msgid "Fuel Oil in kWh"
 msgstr ""
 
-#: app/main/forms.py:47
+#: app/main/forms.py:48
 msgid "Dist in Heating in kWh"
 msgstr ""
 
-#: app/main/forms.py:48
+#: app/main/forms.py:49
 msgid "District Cooling in kWh"
 msgstr ""
 
-#: app/main/forms.py:50
+#: app/main/forms.py:51
 msgid "Other Type 1"
 msgstr ""
 
-#: app/main/forms.py:51 app/main/forms.py:57 app/main/forms.py:65
+#: app/main/forms.py:52 app/main/forms.py:58 app/main/forms.py:66
 #: app/main/forms.py:72
 msgid "Select any"
 msgstr ""
 
-#: app/main/forms.py:54
+#: app/main/forms.py:55
 msgid "Other 1 in kWh"
 msgstr ""
 
-#: app/main/forms.py:56
+#: app/main/forms.py:57
 msgid "Other Type 2"
 msgstr ""
 
-#: app/main/forms.py:58
+#: app/main/forms.py:59
 msgid "Energy Type fields need to be different"
 msgstr ""
 
-#: app/main/forms.py:60
+#: app/main/forms.py:61
 msgid "Other 2 in kWh"
 msgstr ""
 
-#: app/main/forms.py:64
+#: app/main/forms.py:65
 msgid "F-Gas 1 Type"
 msgstr ""
 
-#: app/main/forms.py:68
+#: app/main/forms.py:69
 msgid "Leakage F Gas 1"
 msgstr ""
 
@@ -181,8 +253,8 @@ msgstr ""
 msgid "Planned Retrofit Investement in Euro"
 msgstr ""
 
-#: app/main/forms.py:89 app/main/routes.py:62 app/templates/add_building.html:4
-#: app/templates/index.html:5
+#: app/main/forms.py:89 app/main/routes.py:108
+#: app/templates/add_building.html:4 app/templates/index.html:8
 msgid "Add Building"
 msgstr ""
 
@@ -190,50 +262,54 @@ msgstr ""
 msgid "Postal Code and Country do not match."
 msgstr ""
 
-#: app/main/routes.py:25
+#: app/main/routes.py:67
 msgid ""
 "You cannot have more than one building. But you can edit or delete your "
 "existing building."
 msgstr ""
 
-#: app/main/routes.py:60
+#: app/main/routes.py:106
 msgid "Building successfully created."
 msgstr ""
 
-#: app/main/routes.py:69
+#: app/main/routes.py:115
 msgid "You first need to add a building."
 msgstr ""
 
-#: app/main/routes.py:104
+#: app/main/routes.py:149
 msgid "Building successfully updated."
 msgstr ""
 
-#: app/main/routes.py:135
+#: app/main/routes.py:182
 msgid "Save Building"
 msgstr ""
 
-#: app/main/routes.py:136 app/templates/edit_building.html:5
-#: app/templates/index.html:7
+#: app/main/routes.py:183 app/templates/edit_building.html:5
+#: app/templates/index.html:21
 msgid "Edit Building"
 msgstr ""
 
-#: app/main/routes.py:143
+#: app/main/routes.py:190
 msgid "Building successfully deleted."
 msgstr ""
 
-#: app/templates/add_building.html:13 app/templates/edit_building.html:15
+#: app/templates/_crrem_graph.html:3
+msgid "CRREM Graph"
+msgstr ""
+
+#: app/templates/add_building.html:14 app/templates/edit_building.html:16
 msgid "Energy Consumption per Year"
 msgstr ""
 
-#: app/templates/add_building.html:23 app/templates/edit_building.html:25
+#: app/templates/add_building.html:24 app/templates/edit_building.html:26
 msgid "Fugitive Emissions per Year"
 msgstr ""
 
-#: app/templates/add_building.html:28 app/templates/edit_building.html:30
+#: app/templates/add_building.html:29 app/templates/edit_building.html:31
 msgid "Renewable Energy per Year"
 msgstr ""
 
-#: app/templates/add_building.html:34 app/templates/edit_building.html:36
+#: app/templates/add_building.html:35 app/templates/edit_building.html:37
 msgid "Planned Retrofit"
 msgstr ""
 
@@ -241,49 +317,77 @@ msgstr ""
 msgid "Welcome to re:immo"
 msgstr ""
 
-#: app/templates/base.html:27
-msgid "Home"
+#: app/templates/base.html:29
+msgid "Info"
 msgstr ""
 
-#: app/templates/base.html:33
+#: app/templates/base.html:35
 msgid "Login"
 msgstr ""
 
-#: app/templates/base.html:37
+#: app/templates/base.html:39
 msgid "Logout"
 msgstr ""
 
-#: app/templates/index.html:3
+#: app/templates/index.html:6
 #, python-format
 msgid "Hi, %(username)s!"
 msgstr ""
 
-#: app/templates/index.html:8
-msgid "Delete Building"
-msgstr ""
-
-#: app/templates/index.html:11
+#: app/templates/index.html:12
 msgid "Address:"
 msgstr ""
 
-#: app/templates/index.html:12
-msgid "Reporting year:"
-msgstr ""
-
 #: app/templates/index.html:13
-msgid "Country:"
+msgid "Construction year:"
 msgstr ""
 
 #: app/templates/index.html:14
-msgid "Zip:"
+msgid "Reporting year:"
 msgstr ""
 
 #: app/templates/index.html:15
-msgid "Property type:"
+msgid "Country:"
 msgstr ""
 
 #: app/templates/index.html:16
+msgid "Zip:"
+msgstr ""
+
+#: app/templates/index.html:17
+msgid "Property type:"
+msgstr ""
+
+#: app/templates/index.html:18
 msgid "Size:"
+msgstr ""
+
+#: app/templates/index.html:22
+msgid "Delete Building"
+msgstr ""
+
+#: app/templates/index.html:32
+msgid "Overall Emissions"
+msgstr ""
+
+#: app/templates/index.html:35
+msgid "Current"
+msgstr ""
+
+#: app/templates/index.html:40
+msgid "2035 (Estimated)"
+msgstr ""
+
+#: app/templates/index.html:49
+msgid "Stranding Year"
+msgstr ""
+
+#: app/templates/index.html:57
+msgid "Emission Costs"
+msgstr ""
+
+#: app/templates/landing_page.html:68
+msgid "Share of global CO2 Emissions By Sector"
 msgstr ""
 
 #: app/templates/auth/login.html:7
@@ -292,6 +396,14 @@ msgstr ""
 
 #: app/templates/auth/login.html:7
 msgid "Click to Register!"
+msgstr ""
+
+#: app/templates/auth/login.html:8
+msgid "Forgot Password?"
+msgstr ""
+
+#: app/templates/auth/login.html:8
+msgid "Click to Reset!"
 msgstr ""
 
 #: app/templates/error/404.html:4
