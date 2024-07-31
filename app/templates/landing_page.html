@@ -6,9 +6,9 @@
     <div class="jumbotron text-center my-5" style="background-image: url('static/images/hero_background.jpg'); background-size: cover; background-position: center center; height: 400px; color: white;">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-center">
-                <h1 class="display-4">Assess Your Home's Carbon Risk in Minutes</h1>
-                <p class="lead">Discover how easy it is to assess and improve your property's compliance with climate goals.</p>
-                <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg">Check Your Property Now</a>
+                <h1 class="display-4">{{_("Assess Your Home's Carbon Risk in Minutes")}}</h1>
+                <p class="lead">{{_("Discover how easy it is to assess and improve your property's compliance with climate goals.")}}</p>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg">{{_("Check Your Property Now")}}</a>
             </div>
         </div>
     </div>
@@ -20,22 +20,22 @@
         <div class="col-md-4">
             <div class="border rounded p-4">
                 <i class="fas fa-pencil-alt fa-3x mb-3"></i>
-                <h5>Step 1</h5>
-                <p>Enter details about your property with just a few clicks.</p>
+                <h5>{{_("Step 1")}}</h5>
+                <p>{{_("Enter details about your property with just a few clicks.")}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="border rounded p-4">
                 <i class="fas fa-bolt fa-3x mb-3"></i>
-                <h5>Step 2</h5>
-                <p>Instantly see if your property aligns with climate change goals.</p>
+                <h5>{{_("Step 2")}}</h5>
+                <p>{{_("Instantly see if your property aligns with climate change goals.")}}</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="border rounded p-4">
                 <i class="fas fa-check-circle fa-3x mb-3"></i>
-                <h5>Step 3</h5>
-                <p>Understand what investments might be necessary to comply.</p>
+                <h5>{{_("Step 3")}}</h5>
+                <p>{{_("Understand what investments might be necessary to comply.")}}</p>
             </div>
         </div>
     </div>
@@ -45,13 +45,13 @@
     <div class="row my-5">
         <div class="col-md-6">
             <i class="fas fa-hand-pointer fa-3x mb-3"></i>
-            <h5>Ease of Use</h5>
-            <p>No complicated processes. Get results with a few clicks.</p>
+            <h5>{{_("Ease of Use")}}</h5>
+            <p>{{_("No complicated processes. Get results with a few clicks.")}}</p>
         </div>
         <div class="col-md-6">
             <i class="fas fa-flask fa-3x mb-3"></i>
-            <h5>Scientific Accuracy</h5>
-            <p>Powered by CRREM models, our assessments follow the highest scientific standards.</p>
+            <h5>{{_("Scientific Accuracy")}}</h5>
+            <p>{{_("Powered by CRREM models, our assessments follow the highest scientific standards.")}}</p>
         </div>
     </div>
 
@@ -59,10 +59,10 @@
     <div class="border rounded p-4">
         <div class="row my-5">
             <div class="col-md-6">
-                <h5>Why It Matters</h5>
-                <p>Real estate is one of the biggest climate change contributing sectors. Let's understand how we can combat this.</p>
-                <p>With climate change regulations tightening, knowing your property's carbon risk is essential for future-proofing your investment.</p>
-                <p>Ensure your property meets national and international climate targets.</p>
+                <h5>{{_("Why It Matters")}}</h5>
+                <p>{{_("Real estate is one of the biggest climate change contributing sectors. Let's understand how we can combat this.")}}</p>
+                <p>{{_("With climate change regulations tightening, knowing your property's carbon risk is essential for future-proofing your investment.")}}</p>
+                <p>{{_("Ensure your property meets national and international climate targets.")}}</p>
             </div>
             <div class="col-md-6 text-center">
                 <h5 class="card-title">{{ _("Share of global CO2 Emissions By Sector") }}</h5>
@@ -78,13 +78,13 @@
             <div class="card-header" id="headingOne">
                 <h2 class="mb-0">
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        How accurate are the assessments?
+                        {{_("How accurate are the assessments?")}}
                     </button>
                 </h2>
             </div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
                 <div class="card-body">
-                    Our assessments are based on CRREM models, which are known for their scientific rigor and accuracy in measuring carbon risks.
+                    {{_("Our assessments are based on CRREM models, which are known for their scientific rigor and accuracy in measuring carbon risks.")}}
                 </div>
             </div>
         </div>
@@ -92,13 +92,13 @@
             <div class="card-header" id="headingTwo">
                 <h2 class="mb-0">
                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        What data do I need to provide?
+                        {{_("What data do I need to provide?")}}
                     </button>
                 </h2>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
                 <div class="card-body">
-                    You'll need to provide basic information about your property, such as location, size, and energy usage.
+                    {{_("You'll need to provide basic information about your property, such as location, size, and energy usage.")}}
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
     <footer class="footer bg-light py-4">
         <div class="container">
 
-        <h5>Contact Information</h5>
+        <h5>{{_("Contact Information")}}</h5>
         <p>Email: support@example.com</p>
         <p>Phone: +123 456 7890</p>
 
@@ -124,7 +124,7 @@
             labels: ['Buildings', 'Construction', 'Transportation', 'Other', 'Industry (non-construction)'],
             datasets: [{
                 data: [28, 11, 22, 9, 29],
-                backgroundColor: ['#26846C', '#26846C', '#6c757d', '#6c757d', '#6c757d'], // Highlighted colors for Buildings and Construction, others in grey
+                backgroundColor: ['#26846C', '#26846C', '#6c757d', '#6c757d', '#6c757d'],
                 borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
                 borderWidth: 1
             }]

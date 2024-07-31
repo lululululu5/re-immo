@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-31 11:03+0200\n"
+"POT-Creation-Date: 2024-07-31 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -426,8 +426,108 @@ msgstr ""
 msgid "Emission Costs"
 msgstr ""
 
+#: app/templates/landing_page.html:9
+msgid "Assess Your Home's Carbon Risk in Minutes"
+msgstr ""
+
+#: app/templates/landing_page.html:10
+msgid ""
+"Discover how easy it is to assess and improve your property's compliance "
+"with climate goals."
+msgstr ""
+
+#: app/templates/landing_page.html:11
+msgid "Check Your Property Now"
+msgstr ""
+
+#: app/templates/landing_page.html:23
+msgid "Step 1"
+msgstr ""
+
+#: app/templates/landing_page.html:24
+msgid "Enter details about your property with just a few clicks."
+msgstr ""
+
+#: app/templates/landing_page.html:30
+msgid "Step 2"
+msgstr ""
+
+#: app/templates/landing_page.html:31
+msgid "Instantly see if your property aligns with climate change goals."
+msgstr ""
+
+#: app/templates/landing_page.html:37
+msgid "Step 3"
+msgstr ""
+
+#: app/templates/landing_page.html:38
+msgid "Understand what investments might be necessary to comply."
+msgstr ""
+
+#: app/templates/landing_page.html:48
+msgid "Ease of Use"
+msgstr ""
+
+#: app/templates/landing_page.html:49
+msgid "No complicated processes. Get results with a few clicks."
+msgstr ""
+
+#: app/templates/landing_page.html:53
+msgid "Scientific Accuracy"
+msgstr ""
+
+#: app/templates/landing_page.html:54
+msgid ""
+"Powered by CRREM models, our assessments follow the highest scientific "
+"standards."
+msgstr ""
+
+#: app/templates/landing_page.html:62
+msgid "Why It Matters"
+msgstr ""
+
+#: app/templates/landing_page.html:63
+msgid ""
+"Real estate is one of the biggest climate change contributing sectors. "
+"Let's understand how we can combat this."
+msgstr ""
+
+#: app/templates/landing_page.html:64
+msgid ""
+"With climate change regulations tightening, knowing your property's "
+"carbon risk is essential for future-proofing your investment."
+msgstr ""
+
+#: app/templates/landing_page.html:65
+msgid "Ensure your property meets national and international climate targets."
+msgstr ""
+
 #: app/templates/landing_page.html:68
 msgid "Share of global CO2 Emissions By Sector"
+msgstr ""
+
+#: app/templates/landing_page.html:81
+msgid "How accurate are the assessments?"
+msgstr ""
+
+#: app/templates/landing_page.html:87
+msgid ""
+"Our assessments are based on CRREM models, which are known for their "
+"scientific rigor and accuracy in measuring carbon risks."
+msgstr ""
+
+#: app/templates/landing_page.html:95
+msgid "What data do I need to provide?"
+msgstr ""
+
+#: app/templates/landing_page.html:101
+msgid ""
+"You'll need to provide basic information about your property, such as "
+"location, size, and energy usage."
+msgstr ""
+
+#: app/templates/landing_page.html:111
+msgid "Contact Information"
 msgstr ""
 
 #: app/templates/auth/login.html:7

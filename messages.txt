@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-31 11:51+0200\n"
+"POT-Creation-Date: 2024-07-31 11:41+0200\n"
 "PO-Revision-Date: 2024-07-17 13:58+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -465,9 +465,7 @@ msgstr "Bewerten Sie das CO2-Risiko Ihres Hauses in wenigen Minuten"
 msgid ""
 "Discover how easy it is to assess and improve your property's compliance "
 "with climate goals."
-msgstr ""
-"Entdecken Sie, wie einfach es ist, die Einhaltung der Klimaziele in Ihrer"
-" Immobilie zu bewerten und zu verbessern."
+msgstr "Entdecken Sie, wie einfach es ist, die Einhaltung der Klimaziele in Ihrer Immobilie zu bewerten und zu verbessern."
 
 #: app/templates/landing_page.html:11
 msgid "Check Your Property Now"
@@ -495,9 +493,7 @@ msgstr "Schritt 3"
 
 #: app/templates/landing_page.html:38
 msgid "Understand what investments might be necessary to comply."
-msgstr ""
-"Verstehe welche Investitionen zur Einhaltung der Vorschriften "
-"erforderlich sein könnten."
+msgstr "Verstehe welche Investitionen zur Einhaltung der Vorschriften erforderlich sein könnten."
 
 #: app/templates/landing_page.html:48
 msgid "Ease of Use"
@@ -512,39 +508,24 @@ msgid "Scientific Accuracy"
 msgstr "Wissenschaftliche Genauigkeit"
 
 #: app/templates/landing_page.html:54
-msgid ""
-"Powered by CRREM models, our assessments follow the highest scientific "
-"standards."
-msgstr ""
-"nsere Bewertungen basieren auf CRREM-Modellen und folgen den höchsten "
-"wissenschaftlichen Standards."
+msgid "Powered by CRREM models, our assessments follow the highest scientific standards."
+msgstr "nsere Bewertungen basieren auf CRREM-Modellen und folgen den höchsten wissenschaftlichen Standards."
 
 #: app/templates/landing_page.html:62
 msgid "Why It Matters"
 msgstr "Warum das wichtig ist"
 
 #: app/templates/landing_page.html:63
-msgid ""
-"Real estate is one of the biggest climate change contributing sectors. "
-"Let's understand how we can combat this."
-msgstr ""
-"Der Immobiliensektor ist einer der Sektoren, die am stärksten zum "
-"Klimawandel beitragen. Wir müssen verstehen, wie wir das bekämpfen können"
+msgid "Real estate is one of the biggest climate change contributing sectors. Let's understand how we can combat this."
+msgstr "Der Immobiliensektor ist einer der Sektoren, die am stärksten zum Klimawandel beitragen. Wir müssen verstehen, wie wir das bekämpfen können"
 
 #: app/templates/landing_page.html:64
-msgid ""
-"With climate change regulations tightening, knowing your property's "
-"carbon risk is essential for future-proofing your investment."
-msgstr ""
-"Angesichts der sich verschärfenden Vorschriften zum Klimawandel ist die "
-"Kenntnis des CO2-Risikos Deiner Immobilie für die Zukunftssicherung "
-"Deiner Investition von entscheidender Bedeutung"
+msgid "With climate change regulations tightening, knowing your property's carbon risk is essential for future-proofing your investment."
+msgstr "Angesichts der sich verschärfenden Vorschriften zum Klimawandel ist die Kenntnis des CO2-Risikos Deiner Immobilie für die Zukunftssicherung Deiner Investition von entscheidender Bedeutung"
 
 #: app/templates/landing_page.html:65
 msgid "Ensure your property meets national and international climate targets."
-msgstr ""
-"Stelle sicher, dass Deine Immobilie die nationalen und internationalen "
-"Klimaziele erfüllt."
+msgstr "Stelle sicher, dass Deine Immobilie die nationalen und internationalen Klimaziele erfüllt."
 
 #: app/templates/landing_page.html:68
 msgid "Share of global CO2 Emissions By Sector"
@@ -555,25 +536,16 @@ msgid "How accurate are the assessments?"
 msgstr "Wie genau sind die Bewertungen?"
 
 #: app/templates/landing_page.html:87
-msgid ""
-"Our assessments are based on CRREM models, which are known for their "
-"scientific rigor and accuracy in measuring carbon risks."
-msgstr ""
-"Unsere Bewertungen basieren auf den CRREM-Modellen, die für ihre "
-"wissenschaftliche Strenge und Genauigkeit bei der Messung von "
-"Kohlenstoffrisiken bekannt sind."
+msgid "Our assessments are based on CRREM models, which are known for their scientific rigor and accuracy in measuring carbon risks."
+msgstr "Unsere Bewertungen basieren auf den CRREM-Modellen, die für ihre wissenschaftliche Strenge und Genauigkeit bei der Messung von Kohlenstoffrisiken bekannt sind."
 
 #: app/templates/landing_page.html:95
 msgid "What data do I need to provide?"
 msgstr "Welche Daten muss ich zur Verfügung stellen?"
 
 #: app/templates/landing_page.html:101
-msgid ""
-"You'll need to provide basic information about your property, such as "
-"location, size, and energy usage."
-msgstr ""
-"Du mussts grundlegende Angaben zu Deiner Immobilie machen, z. B. zu "
-"Standort, Größe und Energieverbrauch."
+msgid "You'll need to provide basic information about your property, such as location, size, and energy usage."
+msgstr "Du mussts grundlegende Angaben zu Deiner Immobilie machen, z. B. zu Standort, Größe und Energieverbrauch."
 
 #: app/templates/landing_page.html:111
 msgid "Contact Information"
