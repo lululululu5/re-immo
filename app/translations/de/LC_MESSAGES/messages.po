@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-31 10:47+0200\n"
+"POT-Creation-Date: 2024-07-31 11:03+0200\n"
 "PO-Revision-Date: 2024-07-17 13:58+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -58,8 +58,12 @@ msgid "Sign in"
 msgstr "Anmelden"
 
 #: app/auth/forms.py:23 app/auth/forms.py:45
-msgid "Password must contain at least one uppercase letter, one number, and one special character, and be at least 8 characters long."
-msgstr "Das Passwort muss mindestens einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten und mindestens 8 Zeichen lang sein."
+msgid ""
+"Password must contain at least one uppercase letter, one number, and one "
+"special character, and be at least 8 characters long."
+msgstr ""
+"Das Passwort muss mindestens einen Großbuchstaben, eine Zahl und ein "
+"Sonderzeichen enthalten und mindestens 8 Zeichen lang sein."
 
 #: app/auth/forms.py:24
 msgid "Repeat Password"
@@ -105,7 +109,9 @@ msgstr "Ungültiger Benutzername oder Passwort"
 
 #: app/auth/routes.py:25
 msgid "Email Address not confirmed. Please confirm to access the platform."
-msgstr "E-Mail Adresse nicht bestätigt. Bitte bestätigen Sie, um auf die Plattform zuzugreifen."
+msgstr ""
+"E-Mail Adresse nicht bestätigt. Bitte bestätigen Sie, um auf die "
+"Plattform zuzugreifen."
 
 #: app/auth/routes.py:32 app/templates/auth/login.html:5
 msgid "Sign In"
@@ -113,12 +119,16 @@ msgstr "Anmelden"
 
 #: app/auth/routes.py:50
 #, fuzzy
-msgid "Congratulation, you are now a registered user. Confirm your email to access the platform!"
+msgid ""
+"Congratulation, you are now a registered user. Confirm your email to "
+"access the platform!"
 msgstr "Glückwunsch, Sie sind jetzt ein registrierter Benutzer!"
 
 #: app/auth/routes.py:78
 msgid "Check your email for the instructions to reset your password"
-msgstr "Überprüfen Sie Ihre E-Mail auf die Anweisungen zum Zurücksetzen Ihres Passworts."
+msgstr ""
+"Überprüfen Sie Ihre E-Mail auf die Anweisungen zum Zurücksetzen Ihres "
+"Passworts."
 
 #: app/auth/routes.py:80
 #, fuzzy
@@ -136,7 +146,9 @@ msgstr "Passwort wiederholen"
 
 #: app/auth/routes.py:103
 msgid "Invalid email address or token expired. Please contact us."
-msgstr "Ungültige E-Mail-Adresse oder das Token ist abgelaufen. Bitte kontaktieren Sie uns."
+msgstr ""
+"Ungültige E-Mail-Adresse oder das Token ist abgelaufen. Bitte "
+"kontaktieren Sie uns."
 
 #: app/auth/routes.py:108
 msgid "Email Address confirmed you will redirected to the Login page."
@@ -270,9 +282,12 @@ msgid "Postal Code and Country do not match."
 msgstr "Postleitzahl und Land stimmen nicht überein."
 
 #: app/main/routes.py:67
-msgid "You cannot have more than one building. But you can edit or delete your "
+msgid ""
+"You cannot have more than one building. But you can edit or delete your "
 "existing building."
-msgstr "Sie können nicht mehr als ein Gebäude haben. Aber Sie können Ihr bestehendes Gebäude bearbeiten oder löschen."
+msgstr ""
+"Sie können nicht mehr als ein Gebäude haben. Aber Sie können Ihr "
+"bestehendes Gebäude bearbeiten oder löschen."
 
 #: app/main/routes.py:106
 msgid "Building successfully created."
@@ -302,6 +317,52 @@ msgstr "Gebäude erfolgreich gelöscht."
 #: app/templates/_crrem_graph.html:3
 msgid "CRREM Graph"
 msgstr "CRREM Graph"
+
+#: app/templates/_crrem_graph.html:6
+msgid ""
+"This chart illustrates the building's greenhouse gas emissions over time "
+"in relation to CRREM targets. The "
+msgstr ""
+
+#: app/templates/_crrem_graph.html:7
+msgid "blue line"
+msgstr "Blaue Linie"
+
+#: app/templates/_crrem_graph.html:7
+msgid "represents the decarbonisation targets, the"
+msgstr "steht für die Dekarbonisierungsziele, die"
+
+#: app/templates/_crrem_graph.html:8
+msgid "red line"
+msgstr "Rote Linie"
+
+#: app/templates/_crrem_graph.html:8
+msgid "shows the actual emissions per year, and the "
+msgstr "zeigt die tatsächlichen Emissionen pro Jahr, und die "
+
+#: app/templates/_crrem_graph.html:9
+msgid "purple line"
+msgstr "Lila Linie"
+
+#: app/templates/_crrem_graph.html:9
+msgid ""
+" indicates excess emissions compared to the targets. The vertical lines "
+"mark significant events:  "
+msgstr "zeigt an, dass die Emissionen im Vergleich zu den Zielvorgaben zu hoch sind. Die vertikalen Linien markieren wichtige Ereignisse:  "
+
+#: app/templates/_crrem_graph.html:10 app/templates/index.html:49
+#, fuzzy
+msgid "Stranding Year"
+msgstr "Berichtsjahr:"
+
+#: app/templates/_crrem_graph.html:11
+#, fuzzy
+msgid "Retrofit Year"
+msgstr "Geplantes Retrofit Jahr"
+
+#: app/templates/_crrem_graph.html:11
+msgid "(when a major retrofit is completed)."
+msgstr "(wenn eine größere Renovierung abgeschlossen ist)."
 
 #: app/templates/add_building.html:14 app/templates/edit_building.html:16
 #, fuzzy
@@ -388,11 +449,6 @@ msgstr "Aktuell"
 msgid "2035 (Estimated)"
 msgstr "2035 (Geschätzt)"
 
-#: app/templates/index.html:49
-#, fuzzy
-msgid "Stranding Year"
-msgstr "Berichtsjahr:"
-
 #: app/templates/index.html:57
 msgid "Emission Costs"
 msgstr "Geschätzte Kosten"
@@ -433,7 +489,9 @@ msgstr "Ein unerwarteter Fehler ist aufgetreten"
 
 #: app/templates/error/500.html:5
 msgid "The administrator has been notified. Sorry for the inconvenience!"
-msgstr "Der Administrator wurde benachrichtigt. Wir entschuldigen uns für die Unannehmlichkeiten"
+msgstr ""
+"Der Administrator wurde benachrichtigt. Wir entschuldigen uns für die "
+"Unannehmlichkeiten"
 
 #~ msgid "Home"
 #~ msgstr "Startseite"

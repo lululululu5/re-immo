@@ -3,12 +3,12 @@
         <h5 class="card-title">{{ _("CRREM Graph") }}</h5>
         <canvas id="crremChart" width="400" height="200"></canvas></br>
         <blockquote class="blockquote alert alert-light mt-4" role="alert">
-            <p>This chart illustrates the building's greenhouse gas emissions over time in relation to CRREM targets. 
-            The <span style="color:rgba(75, 192, 192, 1);">blue line</span> represents the decarbonisation targets, 
-            the <span style="color:rgba(255, 99, 132, 1);">red line</span> shows the actual emissions per year, 
-            and the <span style="color:rgba(153, 102, 255, 1);">purple line</span> indicates excess emissions compared to the targets. 
-            The vertical lines mark significant events: <strong>Stranding Year</strong> (when emissions first exceed the target) and 
-            <strong>Retrofit Year</strong> (when a major retrofit is completed).</p>
+            <p>{{_("This chart illustrates the building's greenhouse gas emissions over time in relation to CRREM targets. The ")}}
+            <span style="color:rgba(75, 192, 192, 1);">{{_("blue line")}}</span> {{_("represents the decarbonisation targets, the")}}
+            <span style="color:rgba(255, 99, 132, 1);">{{_("red line")}}</span> {{_("shows the actual emissions per year, and the ")}}
+            <span style="color:rgba(153, 102, 255, 1);">{{_("purple line")}}</span>{{_(" indicates excess emissions compared to the targets. The vertical lines mark significant events:  ")}}
+            <strong>{{_("Stranding Year")}}</strong> {{+("(when emissions first exceed the target) and ")}}
+            <strong>{{_("Retrofit Year")}}</strong> {{_("(when a major retrofit is completed).")}}</p>
         </blockquote>
     </div>
 </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-31 10:47+0200\n"
+"POT-Creation-Date: 2024-07-31 11:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -297,6 +297,50 @@ msgstr ""
 msgid "CRREM Graph"
 msgstr ""
 
+#: app/templates/_crrem_graph.html:6
+msgid ""
+"This chart illustrates the building's greenhouse gas emissions over time "
+"in relation to CRREM targets. The "
+msgstr ""
+
+#: app/templates/_crrem_graph.html:7
+msgid "blue line"
+msgstr ""
+
+#: app/templates/_crrem_graph.html:7
+msgid "represents the decarbonisation targets, the"
+msgstr ""
+
+#: app/templates/_crrem_graph.html:8
+msgid "red line"
+msgstr ""
+
+#: app/templates/_crrem_graph.html:8
+msgid "shows the actual emissions per year, and the "
+msgstr ""
+
+#: app/templates/_crrem_graph.html:9
+msgid "purple line"
+msgstr ""
+
+#: app/templates/_crrem_graph.html:9
+msgid ""
+" indicates excess emissions compared to the targets. The vertical lines "
+"mark significant events:  "
+msgstr ""
+
+#: app/templates/_crrem_graph.html:10 app/templates/index.html:49
+msgid "Stranding Year"
+msgstr ""
+
+#: app/templates/_crrem_graph.html:11
+msgid "Retrofit Year"
+msgstr ""
+
+#: app/templates/_crrem_graph.html:11
+msgid "(when a major retrofit is completed)."
+msgstr ""
+
 #: app/templates/add_building.html:14 app/templates/edit_building.html:16
 msgid "Energy Consumption per Year"
 msgstr ""
@@ -376,10 +420,6 @@ msgstr ""
 
 #: app/templates/index.html:40
 msgid "2035 (Estimated)"
-msgstr ""
-
-#: app/templates/index.html:49
-msgid "Stranding Year"
 msgstr ""
 
 #: app/templates/index.html:57
