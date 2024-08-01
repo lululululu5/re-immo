@@ -13,23 +13,33 @@ RE-Immo is a tool designed to analyze the carbon risk of your property based on 
 To set up and run the project locally, follow these steps:
 
 1. Clone the project repository:
-``` git clone https://github.com/lululululu5/re-immo ```
+``` 
+git clone https://github.com/lululululu5/re-immo 
+```
 
 2. Navigate to the project directory:
 
-``` cd re-immo ```
+``` 
+cd re-immo 
+```
 
 3. Setup a virtual python environment
 
-``` python -m venv venv ```
+``` 
+python -m venv venv 
+```
 
 4. Activate the virtual environment
 - On MacOs/Linux: 
-``` source venv/bin/activate ```
+``` 
+source venv/bin/activate 
+```
 
 5. Install the required dependencies
 
-``` pip install -r requirements.txt ```
+``` 
+pip install -r requirements.txt 
+```
 
 6. Initilaize the database: 
 
@@ -42,7 +52,9 @@ flask db upgrade
 
 7. Run the Flask application
 
-``` flask run ```
+``` 
+flask run [--debug]
+```
 
 
 ## Technologies Used
