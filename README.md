@@ -33,9 +33,9 @@ To set up and run the project locally, follow these steps:
 
 6. Initilaize the database: 
 
-``` flask db init
-flask db migrate
-flask db upgrade ```
+``` flask db init ```
+``` flask db migrate ```
+``` flask db upgrade ```
 
 7. Run the Flask application
 
