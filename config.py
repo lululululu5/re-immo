@@ -11,5 +11,5 @@ class Config:
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') # Replace with actual email once domain is up and running.
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') # Replace with actual email once domain is up and running.
-    ADMINS = ['info@re-immo.com'] # Replace with actual email once domain is up and running.
+    ADMIN = os.environ.get("ADMIN") # Replace with actual email once domain is up and running.
     LANGUAGES = ["en", "de"]

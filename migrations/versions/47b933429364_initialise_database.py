@@ -1,8 +1,8 @@
-"""Initialised database with necessary modules
+"""Initialise Database
 
-Revision ID: 75b0d1d4d471
+Revision ID: 47b933429364
 Revises: 
-Create Date: 2024-07-22 17:50:17.982748
+Create Date: 2024-08-05 14:21:16.697470
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '75b0d1d4d471'
+revision = '47b933429364'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade():
     sa.Column('email', sa.String(length=128), nullable=False),
     sa.Column('password_hash', sa.String(length=256), nullable=True),
     sa.Column('user_type', sa.Enum('general', 'partner', 'admin', name='usertypes'), nullable=False),
+    sa.Column('confirmed_email', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('users', schema=None) as batch_op:
@@ -39,6 +40,7 @@ def upgrade():
     sa.Column('zip', sa.String(length=16), nullable=False),
     sa.Column('property_type', sa.Enum('RSF', 'RMF', name='propertytypes'), nullable=False),
     sa.Column('size', sa.Integer(), nullable=False),
+    sa.Column('construction_year', sa.Integer(), nullable=False),
     sa.Column('nuts0', sa.String(length=64), nullable=False),
     sa.Column('nuts3_id', sa.String(length=64), nullable=False),
     sa.Column('nuts3_name', sa.String(length=128), nullable=False),
@@ -90,6 +92,7 @@ def upgrade():
     sa.Column('id', sa.String(length=64), nullable=False),
     sa.Column('inclusion', sa.Boolean(), nullable=False),
     sa.Column('heat_norm', sa.Float(), nullable=False),
+    sa.Column('cool_norm', sa.Float(), nullable=False),
     sa.Column('weather_norm_heat', sa.Float(), nullable=False),
     sa.Column('weather_norm_cold', sa.Float(), nullable=False),
     sa.Column('dist_heating_norm', sa.Float(), nullable=False),
@@ -97,6 +100,13 @@ def upgrade():
     sa.Column('reporting_coverage', sa.Float(), nullable=False),
     sa.Column('off_site_settings', sa.Float(), nullable=False),
     sa.Column('occupancy_norm', sa.Float(), nullable=False),
+    sa.Column('grid_elec_coverage', sa.Float(), nullable=False),
+    sa.Column('natural_gas_coverage', sa.Float(), nullable=False),
+    sa.Column('fuel_oil_coverage', sa.Float(), nullable=False),
+    sa.Column('dist_heating_coverage', sa.Float(), nullable=False),
+    sa.Column('dist_cooling_coverage', sa.Float(), nullable=False),
+    sa.Column('o1_coverage', sa.Float(), nullable=False),
+    sa.Column('o2_coverage', sa.Float(), nullable=False),
     sa.Column('building_id', sa.String(length=64), nullable=False),
     sa.ForeignKeyConstraint(['building_id'], ['buildings.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -41,8 +41,8 @@ class BuildingModelCase(unittest.TestCase):
         db.session.commit()
         
         # Create buildings
-        self.building_good = Building(address="Proski 100", reporting_year=2020,  country="DE", zip="10247", property_type="RMF", size=1000, grid_elec=1000, fuel_oil=2000, dist_heating=1000, dist_cooling=5000, retrofit_year=2035, retrofit_investment=100000, user_id=self.user.id)
-        self.building_bad = Building(address="Hauptstrasse 1", reporting_year=2023,  country="DE", zip="30161", property_type="RMF", size=1000, grid_elec=44600, natural_gas=50000, fuel_oil=6000, dist_heating=74600, dist_cooling=2500, o1_energy_type="biogas", o1_consumption=10000, o2_energy_type="wood_pellets", o2_consumption=1000, f_gas_1_type="METHANE_CH4", f_gas_1_amount=100, pv_wind_consumed=5000, pv_wind_exported=10000, hp_solar_consumed=2500, hp_solar_exported=5000, retrofit_year=2030, retrofit_investment=100000, user_id=self.user.id)
+        self.building_good = Building(address="Proski 100", reporting_year=2020,  country="DE", zip="10247", property_type="RMF", size=1000, construction_year=2000, grid_elec=1000, fuel_oil=2000, dist_heating=1000, dist_cooling=5000, retrofit_year=2035, retrofit_investment=100000, user_id=self.user.id)
+        self.building_bad = Building(address="Hauptstrasse 1", reporting_year=2023,  country="DE", zip="30161", property_type="RMF", size=1000, construction_year=1985, grid_elec=44600, natural_gas=50000, fuel_oil=6000, dist_heating=74600, dist_cooling=2500, o1_energy_type="biogas", o1_consumption=10000, o2_energy_type="wood_pellets", o2_consumption=1000, f_gas_1_type="METHANE_CH4", f_gas_1_amount=100, pv_wind_consumed=5000, pv_wind_exported=10000, hp_solar_consumed=2500, hp_solar_exported=5000, retrofit_year=2030, retrofit_investment=100000, user_id=self.user.id)
         db.session.add(self.building_good)
         db.session.add(self.building_bad)
         db.session.commit()
