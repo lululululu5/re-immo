@@ -237,7 +237,9 @@ class BuildingCalculations:
             grid_ratio = grid_y_interest/grid_y_reporting
 
             total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, building.reporting_year) # For calculations we need to use the first year which is 2020
-            energy_ratio = building.grid_elec / total_energy_procurement
+            energy_ratio = 0 
+            if total_energy_procurement > 0:
+                energy_ratio = building.grid_elec / total_energy_procurement
 
         
             electricity_factor = baseline_emissions["grid_elec"]["share"] * ((grid_ratio * energy_ratio + (1-energy_ratio)) * (

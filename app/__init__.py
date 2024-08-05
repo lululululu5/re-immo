@@ -3,7 +3,7 @@ from logging.handlers import RotatingFileHandler, SMTPHandler
 import os
 
 from flask import Flask, request, current_app
-from config import Config
+from config import configs
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -21,8 +21,9 @@ login.login_view = "auth.login"
 login.login_message = _l("Please log in to access this page.")
 babel = Babel()
 mail = Mail()
+env = os.environ.get("FLASK_APP_ENV", "default")
 
-def create_app(config_class=Config):
+def create_app(config_class=configs[env]):
     app=Flask(__name__)
     app.config.from_object(config_class)
     
@@ -42,7 +43,7 @@ def create_app(config_class=Config):
     app.register_blueprint(error_bp)
     
     
-    if not app.debug and not app.testing:
+    if env=="prod":
         if app.config['MAIL_SERVER']:
             auth = None
             if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
