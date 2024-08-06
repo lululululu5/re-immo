@@ -236,8 +236,8 @@ class BuildingCalculations:
             grid_y_interest = BuildingCalculations.grid_calculation(building, year_of_interest)
             grid_ratio = grid_y_interest/grid_y_reporting
 
-            total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, building.reporting_year) # For calculations we need to use the first year which is 2020
             energy_ratio = 0 
+            total_energy_procurement = BuildingCalculations.total_energy_procurement_year(building, building.reporting_year) # For calculations we need to use the first year which is 2020
             if total_energy_procurement > 0:
                 energy_ratio = building.grid_elec / total_energy_procurement
 
