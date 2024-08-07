@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
                                          Regexp(
                                              regex=r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
                                              message=_l("Password must contain at least one uppercase letter, one number, and one special character, and be at least 8 characters long."))])
-    password2 = PasswordField(_l("Repeat Password"), validators=[DataRequired(), EqualTo((_l("password")), message="Password needs to be the same.")])
+    password2 = PasswordField(_l("Repeat Password"), validators=[DataRequired(), EqualTo("password", message="Password needs to be the same.")])
     submit = SubmitField(_l("Register"))
     
     
