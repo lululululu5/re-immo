@@ -38,7 +38,7 @@ class BuildingAssessmentForm(FlaskForm):
     construction_year = IntegerField(_l("Construction Year*"), validators=[DataRequired(), NumberRange(min=1400, max=current_year)])
     property_type = SelectField(_l("Property Type*"), choices=[("RMF", "Residential Multi Family"), ("RSF", "Residential Single Family")], validators=[DataRequired()])
     size = IntegerField(_l("Size in SQM*"), validators=[DataRequired(), NumberRange(min=0)])
-    reporting_year = IntegerField(_l("Reporting Year*"), validators=[DataRequired(), NumberRange(min=2000, max=current_year)])
+    reporting_year = IntegerField(_l("Reporting Year*"), validators=[DataRequired(), NumberRange(min=2020, max=current_year)])
     
     
     # Energy consumption
